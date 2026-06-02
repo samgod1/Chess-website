@@ -1,0 +1,6 @@
+.home-page {
+	.hero-section {
+		height: 100dvh;
+		background-color: var(--c-primary);
+	}
+}
