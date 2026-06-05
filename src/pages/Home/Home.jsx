@@ -2,11 +2,12 @@ import React from "react";
 import { Link } from "react-router-dom";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
-import { SplitText } from "gsap/all";
+import { SplitText, ScrollTrigger } from "gsap/all";
 
 import "./Home.css";
 
 gsap.registerPlugin(SplitText);
+gsap.registerPlugin(ScrollTrigger);
 
 const Home = () => {
 	useGSAP(() => {
@@ -39,6 +40,18 @@ const Home = () => {
 			},
 			"-=.5",
 		);
+
+		gsap.to(".courses-section", {
+			yPercent: "-100",
+			scrollTrigger: {
+				trigger: ".hero-section",
+				start: "top top",
+				bottom: "bottom top",
+				pin: ".hero-section",
+				scrub: true,
+				markers: true,
+			},
+		});
 	}, []);
 
 	return (
@@ -81,6 +94,10 @@ const Home = () => {
 				</div>
 				<div className="gradient"></div>
 			</section>
+
+			<section className="courses-section">Hello world</section>
+
+			<section className="puzzles-section"></section>
 		</div>
 	);
 };

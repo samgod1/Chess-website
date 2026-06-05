@@ -1,4 +1,5 @@
 .home-page {
+	/* HERO SECTION */
 	.hero-section {
 		height: 100dvh;
 		background-color: var(--c-primary);
@@ -8,6 +9,7 @@
 		overflow: hidden;
 		display: flex;
 		flex-direction: column;
+		position: relative;
 
 		/* Navbar */
 		.nav-container {
@@ -111,5 +113,21 @@
 			/* transform: translateY(50%); */
 			transform: translateX(-25%);
 		}
+	}
+
+	/* COURSES SECTION */
+	.courses-section {
+		height: 100dvh;
+		padding: 0 60px;
+		border-radius: 1rem;
+		background-color: red;
+		z-index: 20;
+		position: absolute;
+		width: 100%;
+	}
+
+	.puzzles-section {
+		height: 200px;
+		background-color: blue;
 	}
 }
