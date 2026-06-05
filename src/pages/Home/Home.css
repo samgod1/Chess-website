@@ -2,5 +2,114 @@
 	.hero-section {
 		height: 100dvh;
 		background-color: var(--c-primary);
+		padding: 0 60px;
+		font-family: "Geist";
+		position: relative;
+		overflow: hidden;
+		display: flex;
+		flex-direction: column;
+
+		/* Navbar */
+		.nav-container {
+			height: 128px;
+			display: flex;
+			justify-content: end;
+			align-items: end;
+
+			nav {
+				display: flex;
+				background-color: var(--c-secondary);
+				width: 670px;
+				border-radius: 0.5rem;
+				justify-content: space-between;
+				align-items: center;
+				padding: 1rem 1.5rem;
+				font-size: 1.25rem;
+
+				.logo {
+					font-weight: bold;
+					font-size: 1.5rem;
+				}
+
+				ul {
+					display: flex;
+					align-items: center;
+					gap: 1rem;
+
+					button {
+						background-color: var(--c-accent);
+						color: var(--c-secondary);
+						font-size: 1.5rem;
+						font-weight: 600;
+						padding: 0.75rem 2rem;
+						border-radius: 0.5rem;
+						align-self: flex-start;
+					}
+				}
+			}
+		}
+
+		/* Main content */
+		.container {
+			margin: 4rem 0rem;
+			flex-grow: 1;
+			position: relative;
+
+			.main-content {
+				z-index: 5;
+				display: flex;
+				flex-direction: column;
+				gap: 1.5rem;
+				width: auto;
+				position: absolute;
+
+				.hero-text {
+					display: flex;
+					flex-direction: column;
+					font-size: 96px;
+					line-height: 95px;
+					color: var(--c-secondary);
+					font-weight: bold;
+
+					.hide-text {
+						overflow: hidden;
+						display: inline-block;
+					}
+				}
+
+				.cta {
+					background-color: var(--c-accent);
+					color: var(--c-secondary);
+					font-size: 2rem;
+					font-weight: 600;
+					padding: 0.75rem 2rem;
+					border-radius: 0.5rem;
+					align-self: flex-start;
+				}
+			}
+
+			.img-container {
+				display: flex;
+				justify-content: end;
+				position: absolute;
+				bottom: 0;
+				right: 0;
+				z-index: 5;
+			}
+		}
+
+		.gradient {
+			z-index: 1;
+			border-radius: 50%;
+			height: 1155px;
+			width: 1141px;
+			background-color: var(--c-primary-light);
+			position: absolute;
+			filter: blur(8rem);
+			top: 50%;
+			left: 50%;
+			/* transform: translateY(50%); */
+			transform: translateX(-25%);
+		}
 	}
 }
