@@ -41,35 +41,14 @@ const Home = () => {
 			"-=.5",
 		);
 
-		// gsap.to(".courses-section", {
-		// 	yPercent: "-100",
-		// 	scrollTrigger: {
-		// 		trigger: ".hero-section",
-		// 		start: "top top",
-		// 		bottom: "bottom top",
-		// 		pin: ".hero-section",
-		// 		scrub: true,
-		// 	},
-		// });
-		// gsap.to(".courses-section", {
-		// 	yPercent: -100,
-		// 	scrollTrigger: {
-		// 		trigger: ".hero-section",
-		// 		start: "top top",
-		// 		end: "bottom bottom",
-		// 		scrub: true,
-		// 	},
-		// });
-
-		// gsap.to(".hero-section", {
-		// 	scrollTrigger: {
-		// 		trigger: ".hero-section",
-		// 		start: "top top",
-		// 		end: "bottom bottom",
-		// 		pin: true,
-		// 		scrub: true,
-		// 	},
-		// });
+		ScrollTrigger.create({
+			trigger: ".hero-section",
+			start: "top top",
+			end: "bottom top",
+			pin: true,
+			pinSpacing: false,
+			scrub: true,
+		});
 	}, []);
 
 	return (
@@ -111,7 +90,13 @@ const Home = () => {
 				<div className="gradient"></div>
 			</section>
 
-			<section className="courses-section">Hello world</section>
+			<section className="courses-section">
+				<p className="text">
+					Brand has courses for all levels of players. The courses are
+					structured precisely to help you improve quickly. The courses are
+					designed by top chess players with decades of experience
+				</p>
+			</section>
 
 			<section className="puzzles-section"></section>
 		</div>
