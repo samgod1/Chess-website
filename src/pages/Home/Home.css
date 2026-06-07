@@ -1,68 +1,71 @@
 .home-page {
+	/* Navbar */
+	.nav-container {
+		height: 128px;
+		display: flex;
+		justify-content: end;
+		align-items: end;
+		position: fixed;
+		width: 100%;
+		padding: 0rem 3.75rem;
+		top: 0;
+		z-index: 15;
+
+		nav {
+			display: flex;
+			background-color: var(--c-secondary);
+			width: 670px;
+			border-radius: 0.5rem;
+			justify-content: space-between;
+			align-items: center;
+			padding: 1rem 1.5rem;
+			font-size: 1.25rem;
+
+			.logo {
+				font-weight: bold;
+				font-size: 1.5rem;
+			}
+
+			ul {
+				display: flex;
+				align-items: center;
+				gap: 1rem;
+
+				button {
+					background-color: var(--c-accent);
+					color: var(--c-secondary);
+					font-size: 1.5rem;
+					font-weight: 600;
+					padding: 0.75rem 2rem;
+					border-radius: 0.5rem;
+					align-self: flex-start;
+				}
+			}
+		}
+	}
+
 	/* HERO SECTION */
 	.hero-section {
 		height: 100dvh;
 		background-color: var(--c-primary);
-		padding: 0 60px;
+		padding-top: calc(4rem + 128px); /* Original padding + navbar height */
+		padding-bottom: 4rem;
+		padding-left: 3.75rem;
+		padding-right: 3.75rem;
 		font-family: "Geist";
-		position: relative;
 		overflow: hidden;
-		display: flex;
-		flex-direction: column;
 		position: relative;
 
-		/* Navbar */
-		.nav-container {
-			height: 128px;
-			display: flex;
-			justify-content: end;
-			align-items: end;
-
-			nav {
-				display: flex;
-				background-color: var(--c-secondary);
-				width: 670px;
-				border-radius: 0.5rem;
-				justify-content: space-between;
-				align-items: center;
-				padding: 1rem 1.5rem;
-				font-size: 1.25rem;
-
-				.logo {
-					font-weight: bold;
-					font-size: 1.5rem;
-				}
-
-				ul {
-					display: flex;
-					align-items: center;
-					gap: 1rem;
-
-					button {
-						background-color: var(--c-accent);
-						color: var(--c-secondary);
-						font-size: 1.5rem;
-						font-weight: 600;
-						padding: 0.75rem 2rem;
-						border-radius: 0.5rem;
-						align-self: flex-start;
-					}
-				}
-			}
-		}
-
-		/* Main content */
-		.container {
-			margin: 4rem 0rem;
-			flex-grow: 1;
+		.hero-container {
 			position: relative;
+			height: 100%;
+			width: 100%;
 
 			.main-content {
 				z-index: 5;
 				display: flex;
 				flex-direction: column;
 				gap: 1.5rem;
-				width: auto;
 				position: absolute;
 
 				.hero-text {
@@ -122,8 +125,6 @@
 		border-radius: 1rem;
 		background-color: red;
 		z-index: 20;
-		position: absolute;
-		width: 100%;
 	}
 
 	.puzzles-section {

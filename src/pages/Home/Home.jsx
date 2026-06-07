@@ -41,41 +41,58 @@ const Home = () => {
 			"-=.5",
 		);
 
-		gsap.to(".courses-section", {
-			yPercent: "-100",
-			scrollTrigger: {
-				trigger: ".hero-section",
-				start: "top top",
-				bottom: "bottom top",
-				pin: ".hero-section",
-				scrub: true,
-				markers: true,
-			},
-		});
+		// gsap.to(".courses-section", {
+		// 	yPercent: "-100",
+		// 	scrollTrigger: {
+		// 		trigger: ".hero-section",
+		// 		start: "top top",
+		// 		bottom: "bottom top",
+		// 		pin: ".hero-section",
+		// 		scrub: true,
+		// 	},
+		// });
+		// gsap.to(".courses-section", {
+		// 	yPercent: -100,
+		// 	scrollTrigger: {
+		// 		trigger: ".hero-section",
+		// 		start: "top top",
+		// 		end: "bottom bottom",
+		// 		scrub: true,
+		// 	},
+		// });
+
+		// gsap.to(".hero-section", {
+		// 	scrollTrigger: {
+		// 		trigger: ".hero-section",
+		// 		start: "top top",
+		// 		end: "bottom bottom",
+		// 		pin: true,
+		// 		scrub: true,
+		// 	},
+		// });
 	}, []);
 
 	return (
 		<div className="home-page">
+			<div className="nav-container">
+				<nav>
+					<span className="logo">Logo</span>
+					<ul>
+						<li>
+							<Link to="/courses">Courses</Link>
+						</li>
+						<li>
+							<Link to="/puzzles">Puzzles</Link>
+						</li>
+						<li>
+							<Link to="/visualization">Visualization</Link>
+						</li>
+						<button>Let's go</button>
+					</ul>
+				</nav>
+			</div>
 			<section className="hero-section">
-				<div className="nav-container">
-					<nav>
-						<span className="logo">Logo</span>
-						<ul>
-							<li>
-								<Link to="/courses">Courses</Link>
-							</li>
-							<li>
-								<Link to="/puzzles">Puzzles</Link>
-							</li>
-							<li>
-								<Link to="/visualization">Visualization</Link>
-							</li>
-							<button>Let's go</button>
-						</ul>
-					</nav>
-				</div>
-
-				<div className="container">
+				<div className="hero-container">
 					<div className="main-content">
 						<div className="hero-text">
 							<span className="hide-text">
@@ -85,7 +102,6 @@ const Home = () => {
 								<p className="h-text">CHESS IS FUN</p>
 							</span>
 						</div>
-
 						<button className="cta">Let's go</button>
 					</div>
 					<div className="img-container">
