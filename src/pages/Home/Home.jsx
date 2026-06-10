@@ -41,6 +41,7 @@ const Home = () => {
 			"-=.5",
 		);
 
+		// Stacking page animation
 		ScrollTrigger.create({
 			trigger: ".hero-section",
 			start: "top top",
@@ -49,7 +50,64 @@ const Home = () => {
 			pinSpacing: false,
 			scrub: true,
 		});
+
+		// const coursesTextSplit = SplitText.create(".text", { type: "words" });
+
+		// gsap.from(coursesTextSplit.words, {
+		// 	opacity: 0,
+		// 	stagger: 0.1,
+		// 	scrollTrigger: {
+		// 		trigger: ".courses-section",
+		// 		start: "top bottom",
+		// 		end: "+=500px",
+		// 		scrub: true,
+		// 	},
+		// });
+
+		const textRevealTl = gsap.timeline({
+			scrollTrigger: {
+				trigger: ".courses-section",
+				start: "top top",
+				end: "bottom top",
+				pin: true,
+				pinSpacing: true,
+				scrub: true,
+			},
+		});
+
+		textRevealTl.to(".ghost-block", {
+			opacity: 0,
+			stagger: 0.1,
+		});
+
+		textRevealTl.from(
+			".word",
+			{
+				opacity: 0,
+				stagger: 0.1,
+			},
+			"<",
+		);
+
+		// gsap.to(".ghost-block", {
+		// 	opacity: 0,
+		// 	stagger: 0.1,
+		// 	scrollTrigger: {
+		// 		trigger: ".courses-section",
+		// 		start: "top top",
+		// 		end: "bottom top",
+		// 		pin: true,
+		// 		pinSpacing: true,
+		// 		scrub: true,
+		// 	},
+		// });
 	}, []);
+
+	const coursesText =
+		"Brand has courses for all levels of players. The courses are structured precisely to help you improve quickly. The courses are designed by top chess players with decades of experience.";
+
+	const coursesTextArray = coursesText.split(" ");
+	console.log(coursesTextArray);
 
 	return (
 		<div className="home-page">
@@ -91,11 +149,20 @@ const Home = () => {
 			</section>
 
 			<section className="courses-section">
-				<p className="text">
-					Brand has courses for all levels of players. The courses are
-					structured precisely to help you improve quickly. The courses are
-					designed by top chess players with decades of experience
-				</p>
+				<div className="text-content">
+					<p className="text">
+						{coursesTextArray.map((text, i) => (
+							<React.Fragment key={i}>
+								<span className="wrapper">
+									<span className="word">{text}</span>
+									<span className="ghost-block"></span>
+								</span>
+								<span> </span>
+							</React.Fragment>
+						))}
+					</p>
+				</div>
+				<div className="thumbnail-content">hello world</div>
 			</section>
 
 			<section className="puzzles-section"></section>

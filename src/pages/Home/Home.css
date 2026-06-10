@@ -1,4 +1,6 @@
 .home-page {
+	font-family: "Geist";
+
 	/* Navbar */
 	.nav-container {
 		height: 128px;
@@ -20,7 +22,6 @@
 			align-items: center;
 			padding: 1rem 1.5rem;
 			font-size: 1.25rem;
-			font-family: "Geist";
 
 			.logo {
 				font-weight: bold;
@@ -53,7 +54,6 @@
 		padding-bottom: 4rem;
 		padding-left: 3.75rem;
 		padding-right: 3.75rem;
-		font-family: "Geist";
 		overflow: hidden;
 		position: relative;
 
@@ -122,11 +122,42 @@
 	/* COURSES SECTION */
 	.courses-section {
 		height: 100dvh;
-		padding: 0 60px;
+		padding: 4rem 3.75rem;
 		border-radius: 1rem;
 		position: relative;
 		background-color: var(--c-secondary);
 		z-index: 20;
+		display: flex;
+
+		.text-content {
+			width: 50%;
+
+			.text {
+				font-size: 2.5rem;
+				text-wrap: wrap;
+				letter-spacing: -1%;
+				line-height: 1.1;
+
+				.wrapper {
+					position: relative;
+
+					.ghost-block {
+						background-color: var(--c-secondary-dark);
+						border-radius: 1rem;
+						position: absolute;
+						top: 50%;
+						left: 50%;
+						transform: translate(-50%, -50%);
+						width: 100%;
+						height: calc(100% - 0.75rem);
+					}
+				}
+			}
+		}
+
+		.thumbnail-content {
+			width: 50%;
+		}
 	}
 
 	.puzzles-section {

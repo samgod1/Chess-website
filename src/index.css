@@ -2,6 +2,7 @@
 	--c-primary: hsl(245, 56%, 8%);
 	--c-primary-light: hsl(245, 56%, 25%);
 	--c-secondary: hsl(0, 0%, 90%);
+	--c-secondary-dark: hsl(0, 0%, 60%);
 	--c-accent: hsl(177, 74%, 35%);
 }
 
