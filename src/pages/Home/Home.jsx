@@ -49,21 +49,12 @@ const Home = () => {
 			pin: true,
 			pinSpacing: false,
 			scrub: true,
+			animation: gsap.to(".hero-container", {
+				scale: 0.9,
+			}),
 		});
 
-		// const coursesTextSplit = SplitText.create(".text", { type: "words" });
-
-		// gsap.from(coursesTextSplit.words, {
-		// 	opacity: 0,
-		// 	stagger: 0.1,
-		// 	scrollTrigger: {
-		// 		trigger: ".courses-section",
-		// 		start: "top bottom",
-		// 		end: "+=500px",
-		// 		scrub: true,
-		// 	},
-		// });
-
+		// Text revealing animation in courses section
 		const textRevealTl = gsap.timeline({
 			scrollTrigger: {
 				trigger: ".courses-section",
@@ -88,26 +79,12 @@ const Home = () => {
 			},
 			"<",
 		);
-
-		// gsap.to(".ghost-block", {
-		// 	opacity: 0,
-		// 	stagger: 0.1,
-		// 	scrollTrigger: {
-		// 		trigger: ".courses-section",
-		// 		start: "top top",
-		// 		end: "bottom top",
-		// 		pin: true,
-		// 		pinSpacing: true,
-		// 		scrub: true,
-		// 	},
-		// });
 	}, []);
 
 	const coursesText =
 		"Brand has courses for all levels of players. The courses are structured precisely to help you improve quickly. The courses are designed by top chess players with decades of experience.";
 
 	const coursesTextArray = coursesText.split(" ");
-	console.log(coursesTextArray);
 
 	return (
 		<div className="home-page">
