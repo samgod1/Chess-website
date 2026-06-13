@@ -42,7 +42,7 @@ const Home = () => {
 			"-=.5",
 		);
 
-		// Stacking page animation
+		// Stacking and shrinking page animation
 		ScrollTrigger.create({
 			trigger: ".hero-section",
 			start: "top top",
@@ -56,23 +56,24 @@ const Home = () => {
 		});
 
 		// Text revealing animation in courses section
-		const textRevealTl = gsap.timeline({
+		const coursesSectionTl = gsap.timeline({
 			scrollTrigger: {
 				trigger: ".courses-section",
 				start: "top top",
-				end: "bottom top",
+				end: "+=1000px",
 				pin: true,
 				pinSpacing: true,
 				scrub: true,
 			},
 		});
 
-		textRevealTl.to(".ghost-block", {
+		// Text Reveal Animation
+		coursesSectionTl.to(".ghost-block", {
 			opacity: 0,
 			stagger: 0.1,
 		});
 
-		textRevealTl.from(
+		coursesSectionTl.from(
 			".word",
 			{
 				opacity: 0,
@@ -80,6 +81,15 @@ const Home = () => {
 			},
 			"<",
 		);
+
+		// Card Stacking animation
+		coursesSectionTl.to("#second-card", {
+			top: "1rem",
+		});
+
+		coursesSectionTl.to("#third-card", {
+			top: "2rem",
+		});
 	}, []);
 
 	const coursesTextArray = coursesText.split(" ");
@@ -137,7 +147,24 @@ const Home = () => {
 						))}
 					</p>
 				</div>
-				<div className="thumbnail-content">hello world</div>
+				<div className="thumbnail-content">
+					<div className="wrapper">
+						<div className="text">
+							<div className="title">Learn to move the pieces</div>
+						</div>
+						<div className="card-container" id="first-card">
+							<div className="thumbnail-card">
+								<img src="" alt="first-thumbnail" />
+							</div>
+							<div className="thumbnail-card" id="second-card">
+								<img src="" alt="second-thumbnail" />
+							</div>
+							<div className="thumbnail-card" id="third-card">
+								<img src="" alt="third-thumbnail" />
+							</div>
+						</div>
+					</div>
+				</div>
 			</section>
 
 			<section className="puzzles-section"></section>
