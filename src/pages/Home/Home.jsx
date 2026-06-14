@@ -70,16 +70,16 @@ const Home = () => {
         // Text Reveal Animation
         coursesSectionTl.to(".ghost-block", {
             opacity: 0,
-            stagger: 0.05,
-            duration: 2,
+            stagger: 0.075,
+            duration: 1,
         });
 
         coursesSectionTl.from(
             ".word",
             {
                 opacity: 0,
-                stagger: 0.05,
-                duration: 2,
+                stagger: 0.075,
+                duration: 1,
             },
             "<",
         );
@@ -87,12 +87,12 @@ const Home = () => {
         // Card Stacking animation
         coursesSectionTl.to("#second-card", {
             top: "1rem",
-            duration: 3,
+            duration: 4,
         });
 
         coursesSectionTl.to("#third-card", {
             top: "2rem",
-            duration: 3,
+            duration: 4,
         });
     }, []);
 
