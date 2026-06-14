@@ -1,4 +1,5 @@
 import React from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
@@ -11,6 +12,8 @@ gsap.registerPlugin(SplitText);
 gsap.registerPlugin(ScrollTrigger);
 
 const Home = () => {
+    const [courseTitle, setCourseTitle] = useState("How to play chess");
+
     useGSAP(() => {
         let split = SplitText.create(".hero-text", { type: "lines" });
 
@@ -85,14 +88,28 @@ const Home = () => {
         );
 
         // Card Stacking animation
-        coursesSectionTl.to("#second-card", {
+        const thumbnailAnime = coursesSectionTl.to("#second-card", {
             top: "1rem",
             duration: 4,
+            onUpdate: function () {
+                if (this.progress() === 1) {
+                    setCourseTitle("Intermediate chess openings");
+                } else {
+                    setCourseTitle("How to play chess");
+                }
+            },
         });
 
         coursesSectionTl.to("#third-card", {
             top: "2rem",
             duration: 4,
+            onUpdate: function () {
+                if (this.progress() === 1) {
+                    setCourseTitle("Professional chess openings");
+                } else {
+                    setCourseTitle("Intermediate chess openings");
+                }
+            },
         });
     }, []);
 
@@ -154,19 +171,30 @@ const Home = () => {
                 <div className="thumbnail-content">
                     <div className="wrapper">
                         <div className="text">
-                            <div className="title">
-                                Learn to move the pieces
+                            <div className="level">
+                                <span>Level: </span>
+                                <span>Beginner</span>
                             </div>
+                            <div className="title">{courseTitle}</div>
                         </div>
                         <div className="card-container" id="first-card">
                             <div className="thumbnail-card">
-                                <img src="" alt="first-thumbnail" />
+                                <img
+                                    src="thumbnail2.jpg"
+                                    alt="first-thumbnail"
+                                />
                             </div>
                             <div className="thumbnail-card" id="second-card">
-                                <img src="" alt="second-thumbnail" />
+                                <img
+                                    src="thumbnail1.jpg"
+                                    alt="second-thumbnail"
+                                />
                             </div>
                             <div className="thumbnail-card" id="third-card">
-                                <img src="" alt="third-thumbnail" />
+                                <img
+                                    src="thumbnail3.jpg"
+                                    alt="third-thumbnail"
+                                />
                             </div>
                         </div>
                     </div>
