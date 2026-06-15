@@ -166,8 +166,8 @@
 
             .wrapper {
                 width: 100%;
-                .text {
-                    .title {
+                .courseInfo {
+                    .courseTitle {
                         font-size: 2.5rem;
                     }
                 }

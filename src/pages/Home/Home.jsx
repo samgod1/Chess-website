@@ -12,6 +12,7 @@ gsap.registerPlugin(SplitText);
 gsap.registerPlugin(ScrollTrigger);
 
 const Home = () => {
+    const [courseLevel, setCourseLevel] = useState("Beginner");
     const [courseTitle, setCourseTitle] = useState("How to play chess");
 
     useGSAP(() => {
@@ -88,28 +89,60 @@ const Home = () => {
         );
 
         // Card Stacking animation
-        const thumbnailAnime = coursesSectionTl.to("#second-card", {
+        coursesSectionTl.to("#second-card", {
             top: "1rem",
             duration: 4,
-            onUpdate: function () {
-                if (this.progress() === 1) {
+        });
+
+        coursesSectionTl.to(".courseTitle", {
+            opacity: 0,
+        });
+
+        coursesSectionTl.call(
+            () => {
+                const direction = coursesSectionTl.scrollTrigger.direction;
+                if (direction === 1) {
+                    setCourseLevel("Intermediate");
                     setCourseTitle("Intermediate chess openings");
-                } else {
+                } else if (direction === -1) {
+                    setCourseLevel("Beginner");
                     setCourseTitle("How to play chess");
                 }
             },
+            null,
+            ">",
+        );
+
+        coursesSectionTl.to(".courseTitle", {
+            opacity: 1,
         });
 
         coursesSectionTl.to("#third-card", {
             top: "2rem",
             duration: 4,
-            onUpdate: function () {
-                if (this.progress() === 1) {
+        });
+
+        coursesSectionTl.to(".courseTitle", {
+            opacity: 0,
+        });
+
+        coursesSectionTl.call(
+            () => {
+                const direction = coursesSectionTl.scrollTrigger.direction;
+                if (direction === 1) {
+                    setCourseLevel("Professional");
                     setCourseTitle("Professional chess openings");
-                } else {
+                } else if (direction === -1) {
+                    setCourseLevel("Intermediate");
                     setCourseTitle("Intermediate chess openings");
                 }
             },
+            null,
+            ">",
+        );
+
+        coursesSectionTl.to(".courseTitle", {
+            opacity: 1,
         });
     }, []);
 
@@ -170,12 +203,14 @@ const Home = () => {
                 </div>
                 <div className="thumbnail-content">
                     <div className="wrapper">
-                        <div className="text">
+                        <div className="courseInfo">
                             <div className="level">
                                 <span>Level: </span>
-                                <span>Beginner</span>
+                                <span className="courseLevel">
+                                    {courseLevel}
+                                </span>
                             </div>
-                            <div className="title">{courseTitle}</div>
+                            <div className="courseTitle">{courseTitle}</div>
                         </div>
                         <div className="card-container" id="first-card">
                             <div className="thumbnail-card">
