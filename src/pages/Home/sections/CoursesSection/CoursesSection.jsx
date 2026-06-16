@@ -123,13 +123,22 @@ const CoursesSection = () => {
                     </div>
                     <div className="card-container" id="first-card">
                         <div className="thumbnail-card">
-                            <img src="thumbnail2.jpg" alt="first-thumbnail" />
+                            <img
+                                src="/images/thumbnail2.jpg"
+                                alt="first-thumbnail"
+                            />
                         </div>
                         <div className="thumbnail-card" id="second-card">
-                            <img src="thumbnail1.jpg" alt="second-thumbnail" />
+                            <img
+                                src="/images/thumbnail1.jpg"
+                                alt="second-thumbnail"
+                            />
                         </div>
                         <div className="thumbnail-card" id="third-card">
-                            <img src="thumbnail3.jpg" alt="third-thumbnail" />
+                            <img
+                                src="/images/thumbnail3.jpg"
+                                alt="third-thumbnail"
+                            />
                         </div>
                     </div>
                 </div>

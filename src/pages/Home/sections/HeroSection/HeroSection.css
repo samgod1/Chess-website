@@ -1,7 +1,7 @@
 .hero-section {
     height: 100dvh;
     background-color: var(--c-primary);
-    padding-top: calc(7rem + 128px); /* Original padding + navbar height */
+    padding-top: calc(7rem + 8rem); /* Original padding + navbar height */
     padding-bottom: 4rem;
     padding-left: 3.75rem;
     padding-right: 3.75rem;

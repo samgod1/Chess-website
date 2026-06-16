@@ -1,0 +1,49 @@
+.puzzle-section {
+    height: 100dvh;
+    background-color: var(--c-primary);
+    padding: 0rem 3.75rem;
+    padding-top: 8rem; /* Height of navbar */
+    display: flex;
+
+    .wrapper {
+        width: 50%;
+        height: 100%;
+    }
+
+    #first {
+        display: flex;
+        align-items: center;
+
+        .text-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            color: var(--c-secondary);
+
+            h1 {
+                font-size: 4rem;
+                line-height: 4.5rem;
+            }
+            p {
+                font-size: 1.5rem;
+                color: var(--c-secondary-dark-1);
+            }
+        }
+    }
+
+    #second {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .svg-container {
+            width: 35.625rem;
+            height: 35.625rem;
+
+            img {
+                width: 100%;
+                height: 100%;
+            }
+        }
+    }
+}

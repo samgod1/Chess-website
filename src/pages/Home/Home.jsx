@@ -5,7 +5,11 @@ import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/all";
 
 import "./Home.css";
-import { HeroSection, CoursesSection } from "./sections/index.js";
+import {
+    HeroSection,
+    CoursesSection,
+    PuzzleSection,
+} from "./sections/index.js";
 import { Navbar } from "../../components/index.js";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -16,6 +20,7 @@ const Home = () => {
             <Navbar />
             <HeroSection />
             <CoursesSection />
+            <PuzzleSection />
         </div>
     );
 };
