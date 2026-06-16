@@ -18,7 +18,7 @@
         align-items: center;
         padding: 1rem 1.5rem;
         font-size: 1.25rem;
-        box-shadow: none;
+        box-shadow: 3px 3px 10px var(--c-primary);
 
         .logo {
             font-weight: bold;
