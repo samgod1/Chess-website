@@ -15,7 +15,6 @@
             text-wrap: wrap;
             letter-spacing: -0.3%;
             line-height: 1.2;
-
             font-weight: 500;
 
             .wrapper {
@@ -84,9 +83,4 @@
             }
         }
     }
-}
-
-.puzzles-section {
-    height: 200px;
-    background-color: blue;
 }

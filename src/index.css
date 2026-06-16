@@ -1,44 +1,80 @@
 :root {
-	--c-primary: hsl(245, 56%, 8%);
-	--c-primary-light: hsl(245, 56%, 25%);
-	--c-secondary: hsl(0, 0%, 90%);
-	--c-secondary-dark: hsl(0, 0%, 60%);
-	--c-accent: hsl(177, 74%, 35%);
+    --c-primary: hsl(245, 56%, 8%);
+    --c-primary-light: hsl(245, 56%, 25%);
+    --c-secondary: hsl(0, 0%, 90%);
+    --c-secondary-dark: hsl(0, 0%, 60%);
+    --c-accent: hsl(177, 74%, 35%);
 }
 
 /* geist-regular */
 @font-face {
-	font-display: swap;
-	font-family: "Geist";
-	font-style: normal;
-	font-weight: 400;
-	src: url("/fonts/geist-v5-latin-regular.woff2") format("woff2");
+    font-display: swap;
+    font-family: "Geist";
+    font-style: normal;
+    font-weight: 400;
+    src: url("/fonts/geist-v5-latin-regular.woff2") format("woff2");
+}
+
+/* geist-500 - latin */
+@font-face {
+    font-display: swap;
+    font-family: "Geist";
+    font-style: normal;
+    font-weight: 500;
+    src: url("/fonts/geist-v5-latin-500.woff2") format("woff2");
+}
+
+/* geist-700 - latin */
+@font-face {
+    font-display: swap;
+    font-family: "Geist";
+    font-style: normal;
+    font-weight: 700;
+    src: url("/fonts/geist-v5-latin-700.woff2") format("woff2");
+}
+
+/* geist-800 - latin */
+@font-face {
+    font-display: swap;
+    font-family: "Geist";
+    font-style: normal;
+    font-weight: 800;
+    src: url("/fonts/geist-v5-latin-800.woff2") format("woff2");
+}
+
+/* geist-900 - latin */
+@font-face {
+    font-display: swap;
+    font-family: "Geist";
+    font-style: normal;
+    font-weight: 900;
+    src: url("/fonts/geist-v5-latin-900.woff2") format("woff2");
 }
 
 * {
-	padding: 0;
-	margin: 0;
-	box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
 }
 
 button,
 input,
 textarea,
 select {
-	font: inherit;
-	color: inherit;
-	background: none;
-	border: none;
-	padding: 0;
-	cursor: pointer;
+    font: inherit;
+    color: inherit;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
 }
 
 a {
-	color: inherit;
-	text-decoration: none;
+    color: inherit;
+    text-decoration: none;
 }
 
 ul,
 ol {
-	list-style: none;
+    list-style: none;
 }
