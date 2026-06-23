@@ -1,0 +1,12 @@
+.visualization-section {
+    height: 100dvh;
+    background-color: var(--c-primary);
+    position: relative;
+
+    .img-container {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        bottom: 0;
+    }
+}

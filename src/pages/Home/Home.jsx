@@ -9,6 +9,7 @@ import {
     HeroSection,
     CoursesSection,
     PuzzleSection,
+    VisualizationSection,
 } from "./sections/index.js";
 import { Navbar } from "../../components/index.js";
 
@@ -21,6 +22,7 @@ const Home = () => {
             <HeroSection />
             <CoursesSection />
             <PuzzleSection />
+            <VisualizationSection />
         </div>
     );
 };
