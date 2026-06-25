@@ -1,9 +1,0 @@
-.thought {
-    background-color: var(--c-secondary);
-    border-top-right-radius: 1rem;
-    border-top-left-radius: 1rem;
-    border-bottom-left-radius: 1rem;
-    padding: 0.5rem 3rem;
-    font-size: 2rem;
-    display: inline-block;
-}

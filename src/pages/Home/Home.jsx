@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
-import { ScrollTrigger } from "gsap/all";
+import { ScrollTrigger, SplitText } from "gsap/all";
 
 import "./Home.css";
 import {
@@ -13,7 +13,8 @@ import {
 } from "./sections/index.js";
 import { Navbar } from "../../components/index.js";
 
-gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger, SplitText);
+// gsap.registerPlugin(SplitText);
 
 const Home = () => {
     return (
