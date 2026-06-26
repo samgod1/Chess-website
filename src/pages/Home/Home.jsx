@@ -14,12 +14,10 @@ import {
 import { Navbar } from "../../components/index.js";
 
 gsap.registerPlugin(ScrollTrigger, SplitText);
-// gsap.registerPlugin(SplitText);
 
 const Home = () => {
     return (
         <div className="home-page">
-            <Navbar />
             <HeroSection />
             <CoursesSection />
             <PuzzleSection />

@@ -1,22 +1,33 @@
 import { useState } from "react";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router";
 
 import "./App.css";
-import Home from "./pages/Home/Home";
+import { Home, Course } from "./pages/index.js";
+import RootLayout from "./pages/RootLayout.jsx";
 
 const router = createBrowserRouter([
-	{
-		path: "/",
-		element: <Home />,
-	},
+    {
+        path: "/",
+        element: <RootLayout />,
+        children: [
+            {
+                index: true,
+                element: <Home />,
+            },
+            {
+                path: "course",
+                element: <Course />,
+            },
+        ],
+    },
 ]);
 
 function App() {
-	return (
-		<>
-			<RouterProvider router={router} />
-		</>
-	);
+    return (
+        <>
+            <RouterProvider router={router} />
+        </>
+    );
 }
 
 export default App;
