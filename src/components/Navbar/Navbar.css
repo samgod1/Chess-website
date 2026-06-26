@@ -1,18 +1,19 @@
 .nav-container {
     height: 128px;
+    position: fixed;
     display: flex;
     justify-content: end;
     align-items: end;
-    position: fixed;
     width: 100%;
     padding: 0rem 3.75rem;
     top: 0;
     z-index: 25;
+    font-family: "Geist";
 
     nav {
         display: flex;
         background-color: var(--c-secondary);
-        width: 670px;
+        width: 41.675rem;
         border-radius: 0.5rem;
         justify-content: space-between;
         align-items: center;

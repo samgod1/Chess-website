@@ -1,7 +1,7 @@
 import "./Course.css";
 
 const Course = () => {
-    return <div></div>;
+    return <div className="course-page"></div>;
 };
 
 export default Course;
