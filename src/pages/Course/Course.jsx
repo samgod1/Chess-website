@@ -2,7 +2,7 @@ import { useState } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 
-import { Accordion } from "../../components/index.js";
+import { Accordion, ProgressBar } from "../../components/index.js";
 
 import "./Course.css";
 
@@ -21,11 +21,32 @@ const Course = () => {
                         image={"/images/silver-medal.png"}
                     />
                     <Accordion
-                        text={"Advanced"}
+                        text={"Professional"}
                         image={"/images/gold-medal.png"}
                     />
                 </div>
-                <div className="info"></div>
+                <div className="info">
+                    <div className="progress-container">
+                        <span>Progress</span>
+                        <ProgressBar total={10} completed={0} />
+                        <div className="progress-count"></div>
+                    </div>
+                    <div className="learning-info">
+                        <span>What you'll learn</span>
+                        <div className="beginner">
+                            <span>Beginner</span>
+                            <ul></ul>
+                        </div>
+                        <div className="intermediate">
+                            <span>Intermediate</span>
+                            <ul></ul>
+                        </div>
+                        <div className="professional">
+                            <span>Professional</span>
+                            <ul></ul>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     );
