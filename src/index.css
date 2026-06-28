@@ -1,6 +1,7 @@
 :root {
     --c-primary: hsl(245, 56%, 8%);
     --c-primary-light: hsl(245, 56%, 25%);
+    --c-primary-light-2: hsl(245, 30%, 15%);
     --c-secondary: hsl(0, 0%, 90%);
     --c-secondary-dark-1: hsl(0, 0%, 75%);
     --c-secondary-dark: hsl(0, 0%, 60%);

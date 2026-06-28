@@ -1,0 +1,28 @@
+.accordion {
+    background-color: var(--c-primary-light-2);
+    border: 1px solid var(--c-secondary-dark-1);
+    border-radius: 1rem;
+    color: var(--c-secondary);
+    display: flex;
+    flex-direction: column;
+
+    .card {
+        cursor: pointer;
+        padding: 1.5rem 1.75rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .difficulty {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-size: 2rem;
+        }
+    }
+    .hidden-inner {
+        height: 0;
+        overflow: hidden;
+        padding: 0rem 1.75rem;
+    }
+}

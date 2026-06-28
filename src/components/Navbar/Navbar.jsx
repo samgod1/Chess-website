@@ -14,7 +14,7 @@ const Navbar = () => {
         const containerHeight =
             document.querySelector(".nav-container").offsetHeight;
         const navHeight = document.querySelector("nav").offsetHeight;
-        const yCenter = -((containerH - navH) / 2);
+        const yCenter = -((containerHeight - navHeight) / 2);
 
         navTl.current = gsap.timeline({ paused: true });
         navTl.current.to("nav", {
