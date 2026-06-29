@@ -1,6 +1,6 @@
 .accordion {
-    background-color: var(--c-primary-light-2);
-    border: 1px solid var(--c-secondary-dark-1);
+    background-color: var(--c-primary-light-1);
+    border: 1px solid var(--c-secondary-dark);
     border-radius: 1rem;
     color: var(--c-secondary);
     display: flex;

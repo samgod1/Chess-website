@@ -21,7 +21,7 @@
                 position: relative;
 
                 .ghost-block {
-                    background-color: var(--c-secondary-dark);
+                    background-color: var(--c-secondary-dark-1);
                     border-radius: 1rem;
                     position: absolute;
                     top: 50%;

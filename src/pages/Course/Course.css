@@ -11,10 +11,9 @@
         margin-bottom: 1.25rem;
     }
 
-    .wrapper {
+    .main-content {
         display: flex;
         gap: 1.25rem;
-        height: 300px;
 
         .course {
             width: 70%;
@@ -24,14 +23,84 @@
             flex-direction: column;
             gap: 1rem;
         }
+
         .info {
-            background-color: var(--c-primary-light-2);
-            border: 1px solid var(--c-secondary-dark-1);
+            background-color: var(--c-primary-light-1);
+            border: 1px solid var(--c-secondary-dark);
             border-radius: 1rem;
             width: 30%;
             height: 100%;
             border-radius: 1rem;
             padding: 2rem 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+
+            h2 {
+                font-size: 1.5rem;
+                font-weight: 400;
+            }
+
+            h3 {
+                font-size: 1.25rem;
+                font-weight: 400;
+                color: var(--c-secondary-dark);
+            }
+
+            .progress-container {
+                display: flex;
+                flex-direction: column;
+                gap: 0.75rem;
+
+                .progress-info {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 0.5rem;
+
+                    .progress-count {
+                        font-size: 1.25rem;
+                        color: var(--c-secondary-dark);
+                    }
+                }
+            }
+
+            .learning-info {
+                display: flex;
+                flex-direction: column;
+                gap: 0.75rem;
+
+                .levels-info {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 0.5rem;
+
+                    ul {
+                        list-style: disc;
+                        list-style-position: inside;
+
+                        li {
+                            color: var(--c-secondary-dark-1);
+                        }
+                    }
+
+                    div {
+                        display: flex;
+                        flex-direction: column;
+                        gap: 0.25rem;
+                    }
+                }
+            }
+
+            .badges {
+                display: flex;
+                flex-direction: column;
+                gap: 0.75rem;
+
+                .earned {
+                    display: flex;
+                    gap: 0.25rem;
+                }
+            }
         }
     }
 }
