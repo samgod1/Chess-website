@@ -1,0 +1,32 @@
+.course-card {
+    padding: 1.5rem;
+    border: 1px solid var(--c-secondary-dark-1);
+    border-radius: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--c-primary-light-2);
+
+    .content {
+        display: flex;
+        gap: 1.25rem;
+
+        img {
+            height: 100px;
+            aspect-ratio: 16/9;
+        }
+
+        .text {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+
+            h1 {
+                font-size: 1.5rem;
+                font-weight: 500;
+            }
+            p {
+            }
+        }
+    }
+}

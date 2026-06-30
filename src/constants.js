@@ -15,4 +15,13 @@ const visualizedMoves = [
     { move: "rd8", top: "35%", right: "-2%" },
 ];
 
-export { coursesTextArray, visualizedMoves };
+const beginnerCourse = [
+    {
+        title: "Hello world",
+        desc: "alkdjflajflsjdf",
+        thumbnail: "",
+        link: "",
+    },
+];
+
+export { coursesTextArray, visualizedMoves, beginnerCourse };

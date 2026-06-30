@@ -3,8 +3,9 @@ import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 
 import "./Accordion.css";
+import CourseCard from "../../pages/Course/CourseCard/CourseCard";
 
-const Accordion = ({ text, image }) => {
+const Accordion = ({ text, image, info }) => {
     const [isOpen, setIsOpen] = useState(false);
 
     const hiddenInnerRef = useRef(null);
@@ -54,10 +55,18 @@ const Accordion = ({ text, image }) => {
                 />
             </div>
             <div className="hidden-inner" ref={hiddenInnerRef}>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora
-                adipisci in eos qui labore molestiae unde aliquid nemo
-                perferendis illo animi similique laborum maiores, tempore vitae
-                ea omnis deserunt ipsam?
+                <div className="course-cards-container">
+                    {info.map(({ title, desc, thumbnail, link }) => {
+                        return (
+                            <CourseCard
+                                title={title}
+                                desc={desc}
+                                thumbnail={thumbnail}
+                                link={link}
+                            />
+                        );
+                    })}
+                </div>
             </div>
         </div>
     );

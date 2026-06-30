@@ -24,5 +24,11 @@
         height: 0;
         overflow: hidden;
         padding: 0rem 1.75rem;
+
+        .course-cards-container {
+            display: flex;
+            flex-direction: column;
+            padding-bottom: 1.75rem;
+        }
     }
 }
