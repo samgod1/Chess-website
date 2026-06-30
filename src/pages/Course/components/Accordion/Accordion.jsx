@@ -3,7 +3,7 @@ import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 
 import "./Accordion.css";
-import CourseCard from "../../pages/Course/CourseCard/CourseCard";
+import { CourseCard } from "../index.js";
 
 const Accordion = ({ text, image, info }) => {
     const [isOpen, setIsOpen] = useState(false);
@@ -56,13 +56,14 @@ const Accordion = ({ text, image, info }) => {
             </div>
             <div className="hidden-inner" ref={hiddenInnerRef}>
                 <div className="course-cards-container">
-                    {info.map(({ title, desc, thumbnail, link }) => {
+                    {info.map(({ title, desc, thumbnail, link }, i) => {
                         return (
                             <CourseCard
                                 title={title}
                                 desc={desc}
                                 thumbnail={thumbnail}
                                 link={link}
+                                key={i}
                             />
                         );
                     })}

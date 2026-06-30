@@ -2,7 +2,7 @@ import { useState } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 
-import { Accordion, ProgressBar } from "../../components/index.js";
+import { Accordion, ProgressBar } from "./components/index.js";
 import { beginnerCourse } from "../../constants.js";
 
 import "./Course.css";
