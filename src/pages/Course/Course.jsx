@@ -3,7 +3,11 @@ import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 
 import { Accordion, ProgressBar } from "./components/index.js";
-import { beginnerCourse } from "../../constants.js";
+import {
+    beginnerCourse,
+    intermediateCourse,
+    professionalCourse,
+} from "../../constants.js";
 
 import "./Course.css";
 
@@ -24,12 +28,12 @@ const Course = () => {
                     <Accordion
                         text={"Intermediate"}
                         image={"/images/silver-medal.png"}
-                        info={beginnerCourse}
+                        info={intermediateCourse}
                     />
                     <Accordion
                         text={"Professional"}
                         image={"/images/gold-medal.png"}
-                        info={beginnerCourse}
+                        info={professionalCourse}
                     />
                 </div>
                 <div className="info">

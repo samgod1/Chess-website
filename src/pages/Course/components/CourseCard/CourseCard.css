@@ -1,11 +1,13 @@
 .course-card {
-    padding: 1.5rem;
+    padding: 1.25rem;
     border: 1px solid var(--c-secondary-dark-1);
     border-radius: 1rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 1.25rem;
     background-color: var(--c-primary-light-2);
+    cursor: pointer;
 
     .content {
         display: flex;
@@ -14,6 +16,7 @@
         img {
             height: 100px;
             aspect-ratio: 16/9;
+            border-radius: 0.5rem;
         }
 
         .text {
@@ -24,8 +27,10 @@
             h1 {
                 font-size: 1.5rem;
                 font-weight: 500;
+                color: var(--c-secondary);
             }
             p {
+                color: var(--c-secondary-dark);
             }
         }
     }
