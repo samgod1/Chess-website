@@ -56,17 +56,20 @@ const Accordion = ({ text, image, info }) => {
             </div>
             <div className="hidden-inner" ref={hiddenInnerRef}>
                 <div className="course-cards-container">
-                    {info.map(({ title, desc, thumbnail, link }, i) => {
-                        return (
-                            <CourseCard
-                                title={title}
-                                desc={desc}
-                                thumbnail={thumbnail}
-                                link={link}
-                                key={i}
-                            />
-                        );
-                    })}
+                    {info.map(
+                        ({ courseId, title, desc, thumbnail, link }, i) => {
+                            return (
+                                <CourseCard
+                                    courseId={courseId}
+                                    title={title}
+                                    desc={desc}
+                                    thumbnail={thumbnail}
+                                    link={link}
+                                    key={i}
+                                />
+                            );
+                        },
+                    )}
                 </div>
             </div>
         </div>

@@ -1,12 +1,19 @@
 import { useState } from "react";
+import { useNavigate } from "react-router";
 
 import "./CourseCard.css";
 
-const CourseCard = ({ title, desc, thumbnail }) => {
+const CourseCard = ({ courseId, title, desc, thumbnail }) => {
     const [isCompleted, setIsCompleted] = useState(false);
+    const navigate = useNavigate();
 
     return (
-        <div className="course-card">
+        <div
+            className="course-card"
+            onClick={() => {
+                navigate("/course/" + courseId);
+            }}
+        >
             <div className="content">
                 <img src={thumbnail} alt="thumbnail" />
                 <div className="text">

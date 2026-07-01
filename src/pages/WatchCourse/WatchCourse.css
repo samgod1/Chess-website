@@ -1,0 +1,15 @@
+.watch-course {
+    height: 100dvh;
+    background-color: var(--c-primary);
+    padding: 0 3.75rem;
+    padding-top: 8rem; /* Height of navbar */
+    padding-bottom: 1rem;
+    overflow: hidden;
+
+    iframe {
+        width: 100%;
+        height: 100%;
+        border-width: 0;
+        border-radius: 1rem;
+    }
+}

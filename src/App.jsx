@@ -2,7 +2,7 @@ import { useState } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router";
 
 import "./App.css";
-import { Home, Course } from "./pages/index.js";
+import { Home, Course, WatchCourse } from "./pages/index.js";
 import RootLayout from "./pages/RootLayout.jsx";
 
 const router = createBrowserRouter([
@@ -17,6 +17,10 @@ const router = createBrowserRouter([
             {
                 path: "course",
                 element: <Course />,
+            },
+            {
+                path: "course/:courseId",
+                element: <WatchCourse />,
             },
         ],
     },
