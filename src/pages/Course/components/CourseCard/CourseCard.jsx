@@ -2,7 +2,7 @@ import { useState } from "react";
 
 import "./CourseCard.css";
 
-const CourseCard = ({ title, desc, thumbnail, link }) => {
+const CourseCard = ({ title, desc, thumbnail }) => {
     const [isCompleted, setIsCompleted] = useState(false);
 
     return (
