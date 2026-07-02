@@ -17,7 +17,9 @@ const Course = () => {
 
     return (
         <div className="course-page">
-            <div className="banner">This is a banner</div>
+            <div className="banner">
+                <img src="/images/banner.png" alt="banner" />
+            </div>
             <div className="main-content">
                 <div className="course">
                     <Accordion
