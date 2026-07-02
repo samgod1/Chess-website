@@ -1,6 +1,6 @@
-import { useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router";
-import { useLocation } from "react-router";
+import { useNavigate, useLocation, useParams } from "react-router";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 
@@ -8,6 +8,11 @@ import "./Navbar.css";
 
 const Navbar = () => {
     const { pathname } = useLocation();
+    const params = useParams();
+    const navigate = useNavigate();
+
+    const [isWatchingCourse, setIsWatchingCourse] = useState(false);
+
     const navTl = useRef(null);
 
     useGSAP(() => {
@@ -31,24 +36,46 @@ const Navbar = () => {
         }
     }, [pathname]);
 
+    useEffect(() => {
+        if (params.courseId) {
+            setIsWatchingCourse(true);
+        } else {
+            setIsWatchingCourse(false);
+        }
+    }, [params]);
+
     return (
         <div className="nav-container">
             <nav>
                 <Link className="logo" to="/">
                     Logo
                 </Link>
-                <ul>
-                    <li>
-                        <Link to="/course">Courses</Link>
-                    </li>
-                    <li>
-                        <Link to="/puzzles">Puzzles</Link>
-                    </li>
-                    <li>
-                        <Link to="/visualization">Visualization</Link>
-                    </li>
-                    <button>Let's go</button>
-                </ul>
+                {isWatchingCourse ? (
+                    <div className="buttons-container">
+                        <button
+                            className="back"
+                            onClick={() => {
+                                navigate("/course");
+                            }}
+                        >
+                            Go Back
+                        </button>
+                        <button className="finish">Finish lesson</button>
+                    </div>
+                ) : (
+                    <ul>
+                        <li>
+                            <Link to="/course">Courses</Link>
+                        </li>
+                        <li>
+                            <Link to="/puzzles">Puzzles</Link>
+                        </li>
+                        <li>
+                            <Link to="/visualization">Visualization</Link>
+                        </li>
+                        <button>Let's go</button>
+                    </ul>
+                )}
             </nav>
         </div>
     );

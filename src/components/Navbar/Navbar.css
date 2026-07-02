@@ -26,6 +26,25 @@
             font-size: 1.5rem;
         }
 
+        .buttons-container {
+            display: flex;
+            gap: 1rem;
+            button {
+                color: var(--c-secondary);
+                font-size: 1.5rem;
+                font-weight: 500;
+                padding: 0.5rem 2rem;
+                border-radius: 0.5rem;
+                align-self: flex-start;
+            }
+            .back {
+                background-color: var(--c-secondary-dark-1);
+            }
+            .finish {
+                background-color: var(--c-accent);
+            }
+        }
+
         ul {
             display: flex;
             align-items: center;
