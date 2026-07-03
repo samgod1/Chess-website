@@ -48,12 +48,6 @@ const Navbar = () => {
         }
     }, [params]);
 
-    useEffect(() => {
-        console.log(completed);
-        console.log(params);
-        console.log(location);
-    }, [completed]);
-
     return (
         <div className="nav-container">
             <nav>
@@ -65,15 +59,20 @@ const Navbar = () => {
                         <Link className="back" to={"/course"}>
                             Go Back
                         </Link>
-                        <button
-                            className="finish"
-                            onClick={() => {
-                                setCompleted([...completed, params.courseId]);
-                                navigate("/course");
-                            }}
-                        >
-                            Finish lesson
-                        </button>
+                        {!completed.includes(params.courseId) && (
+                            <button
+                                className="finish"
+                                onClick={() => {
+                                    setCompleted([
+                                        ...completed,
+                                        params.courseId,
+                                    ]);
+                                    navigate("/course");
+                                }}
+                            >
+                                Finish lesson
+                            </button>
+                        )}
                     </div>
                 ) : (
                     <ul>
