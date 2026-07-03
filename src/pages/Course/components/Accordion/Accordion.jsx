@@ -4,12 +4,16 @@ import { useGSAP } from "@gsap/react";
 
 import "./Accordion.css";
 import { CourseCard } from "../index.js";
+import { CourseContext } from "../../../../contexts/CourseContext.jsx";
+import { useContext } from "react";
 
 const Accordion = ({ text, image, info }) => {
     const [isOpen, setIsOpen] = useState(false);
 
     const hiddenInnerRef = useRef(null);
     const downArrowRef = useRef(null);
+
+    const { completed } = useContext(CourseContext);
 
     useGSAP(() => {
         if (isOpen) {
@@ -58,16 +62,31 @@ const Accordion = ({ text, image, info }) => {
                 <div className="course-cards-container">
                     {info.map(
                         ({ courseId, title, desc, thumbnail, link }, i) => {
-                            return (
-                                <CourseCard
-                                    courseId={courseId}
-                                    title={title}
-                                    desc={desc}
-                                    thumbnail={thumbnail}
-                                    link={link}
-                                    key={i}
-                                />
-                            );
+                            if (completed.includes(courseId)) {
+                                return (
+                                    <CourseCard
+                                        courseId={courseId}
+                                        title={title}
+                                        desc={desc}
+                                        thumbnail={thumbnail}
+                                        link={link}
+                                        key={i}
+                                        completed={true}
+                                    />
+                                );
+                            } else {
+                                return (
+                                    <CourseCard
+                                        courseId={courseId}
+                                        title={title}
+                                        desc={desc}
+                                        thumbnail={thumbnail}
+                                        link={link}
+                                        key={i}
+                                        completed={false}
+                                    />
+                                );
+                            }
                         },
                     )}
                 </div>

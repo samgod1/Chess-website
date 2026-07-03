@@ -1,10 +1,8 @@
-import { useState } from "react";
 import { useNavigate } from "react-router";
 
 import "./CourseCard.css";
 
-const CourseCard = ({ courseId, title, desc, thumbnail }) => {
-    const [isCompleted, setIsCompleted] = useState(false);
+const CourseCard = ({ courseId, title, desc, thumbnail, completed }) => {
     const navigate = useNavigate();
 
     return (
@@ -21,7 +19,7 @@ const CourseCard = ({ courseId, title, desc, thumbnail }) => {
                     <p>{desc}</p>
                 </div>
             </div>
-            {isCompleted ? (
+            {completed ? (
                 <img
                     src="/images/complete.png"
                     alt="complete"

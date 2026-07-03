@@ -1,19 +1,23 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useContext } from "react";
 import { Link } from "react-router";
-import { useNavigate, useLocation, useParams } from "react-router";
+import { useLocation, useParams, useNavigate } from "react-router";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 
 import "./Navbar.css";
+import { CourseContext } from "../../contexts/CourseContext.jsx";
 
 const Navbar = () => {
     const { pathname } = useLocation();
+    const location = useLocation();
     const params = useParams();
     const navigate = useNavigate();
 
     const [isWatchingCourse, setIsWatchingCourse] = useState(false);
 
     const navTl = useRef(null);
+
+    const { completed, setCompleted } = useContext(CourseContext);
 
     useGSAP(() => {
         const containerHeight =
@@ -44,6 +48,12 @@ const Navbar = () => {
         }
     }, [params]);
 
+    useEffect(() => {
+        console.log(completed);
+        console.log(params);
+        console.log(location);
+    }, [completed]);
+
     return (
         <div className="nav-container">
             <nav>
@@ -52,15 +62,18 @@ const Navbar = () => {
                 </Link>
                 {isWatchingCourse ? (
                     <div className="buttons-container">
+                        <Link className="back" to={"/course"}>
+                            Go Back
+                        </Link>
                         <button
-                            className="back"
+                            className="finish"
                             onClick={() => {
+                                setCompleted([...completed, params.courseId]);
                                 navigate("/course");
                             }}
                         >
-                            Go Back
+                            Finish lesson
                         </button>
-                        <button className="finish">Finish lesson</button>
                     </div>
                 ) : (
                     <ul>

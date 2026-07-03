@@ -38,7 +38,9 @@
                 align-self: flex-start;
             }
             .back {
-                background-color: var(--c-secondary-dark-1);
+                display: flex;
+                justify-content: center;
+                align-items: center;
             }
             .finish {
                 background-color: var(--c-accent);

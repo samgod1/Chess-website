@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 
@@ -8,12 +8,15 @@ import {
     intermediateCourse,
     professionalCourse,
 } from "../../constants.js";
+import { CourseContext } from "../../contexts/CourseContext.jsx";
 
 import "./Course.css";
 
 const Course = () => {
-    const [completed, setCompleted] = useState(0);
+    // const [completed, setCompleted] = useState(0);
     const [total, setTotal] = useState(10);
+
+    const { completed, setCompleted } = useContext(CourseContext);
 
     return (
         <div className="course-page">
@@ -42,9 +45,12 @@ const Course = () => {
                     <div className="progress-container">
                         <h2>Progress</h2>
                         <div className="progress-info">
-                            <ProgressBar total={total} completed={completed} />
+                            <ProgressBar
+                                total={total}
+                                completed={completed.length}
+                            />
                             <div className="progress-count">
-                                {completed}/{total}
+                                {completed.length}/{total}
                             </div>
                         </div>
                     </div>
