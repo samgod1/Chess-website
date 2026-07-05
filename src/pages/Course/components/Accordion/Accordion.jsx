@@ -1,22 +1,19 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useContext } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 
 import "./Accordion.css";
 import { CourseCard } from "../index.js";
 import { CourseContext } from "../../../../contexts/CourseContext.jsx";
-import { useContext } from "react";
 
-const Accordion = ({ text, image, info }) => {
-    const [isOpen, setIsOpen] = useState(false);
-
+const Accordion = ({ text, image, info, isOpen, setIsOpen, index }) => {
     const hiddenInnerRef = useRef(null);
     const downArrowRef = useRef(null);
 
     const { completed } = useContext(CourseContext);
 
     useGSAP(() => {
-        if (isOpen) {
+        if (isOpen[index]) {
             gsap.to(hiddenInnerRef.current, {
                 height: "auto",
             });
@@ -42,7 +39,11 @@ const Accordion = ({ text, image, info }) => {
             <div
                 className="card"
                 onClick={() => {
-                    setIsOpen(!isOpen);
+                    setIsOpen((prev) => {
+                        const updatedArray = [...prev];
+                        updatedArray[index] = !updatedArray[index];
+                        return updatedArray;
+                    });
                 }}
             >
                 <div className="difficulty">

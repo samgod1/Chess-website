@@ -13,10 +13,10 @@ import { CourseContext } from "../../contexts/CourseContext.jsx";
 import "./Course.css";
 
 const Course = () => {
-    // const [completed, setCompleted] = useState(0);
     const [total, setTotal] = useState(10);
 
-    const { completed, setCompleted } = useContext(CourseContext);
+    const { completed, setCompleted, isOpen, setIsOpen } =
+        useContext(CourseContext);
 
     return (
         <div className="course-page">
@@ -29,16 +29,25 @@ const Course = () => {
                         text={"Beginner"}
                         image={"/images/bronze-medal.png"}
                         info={beginnerCourse}
+                        isOpen={isOpen}
+                        setIsOpen={setIsOpen}
+                        index={0}
                     />
                     <Accordion
                         text={"Intermediate"}
                         image={"/images/silver-medal.png"}
                         info={intermediateCourse}
+                        isOpen={isOpen}
+                        setIsOpen={setIsOpen}
+                        index={1}
                     />
                     <Accordion
                         text={"Professional"}
                         image={"/images/gold-medal.png"}
                         info={professionalCourse}
+                        isOpen={isOpen}
+                        setIsOpen={setIsOpen}
+                        index={2}
                     />
                 </div>
                 <div className="info">
