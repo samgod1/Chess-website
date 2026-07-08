@@ -17,6 +17,7 @@ const Navbar = () => {
     const [isWatchingCourse, setIsWatchingCourse] = useState(false);
 
     const navTl = useRef(null);
+    const firstRender = useRef(true);
 
     const { completed, setCompleted } = useContext(CourseContext);
 
@@ -41,6 +42,10 @@ const Navbar = () => {
             width: "100%",
             y: yCenter,
         });
+
+        if (pathname !== "/") {
+            navTl.current.progress(1);
+        }
     }, []);
 
     useGSAP(() => {
