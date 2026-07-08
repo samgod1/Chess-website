@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useContext } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 
@@ -13,9 +13,7 @@ import { CourseContext } from "../../contexts/CourseContext.jsx";
 import "./Course.css";
 
 const Course = () => {
-    const [total, setTotal] = useState(10);
-
-    const { completed, setCompleted, isOpen, setIsOpen } =
+    const { completed, setCompleted, isOpen, setIsOpen, total } =
         useContext(CourseContext);
 
     return (
