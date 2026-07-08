@@ -6,9 +6,7 @@ import App from "./App.jsx";
 import CourseContextProvider from "./contexts/CourseContext.jsx";
 
 createRoot(document.getElementById("root")).render(
-    <StrictMode>
-        <CourseContextProvider>
-            <App />
-        </CourseContextProvider>
-    </StrictMode>,
+    <CourseContextProvider>
+        <App />
+    </CourseContextProvider>,
 );
