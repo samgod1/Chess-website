@@ -11,6 +11,9 @@ importers:
       '@gsap/react':
         specifier: ^2.1.2
         version: 2.1.2(gsap@3.15.0)(react@19.2.6)
+      '@hiseb/confetti':
+        specifier: ^2.1.0
+        version: 2.1.0
       gsap:
         specifier: ^3.15.0
         version: 3.15.0
@@ -174,6 +177,9 @@ packages:
     peerDependencies:
       gsap: ^3.12.5
       react: '>=17'
+
+  '@hiseb/confetti@2.1.0':
+    resolution: {integrity: sha512-yPalKd34NfmEsUTXj3ZrlNtj1J21WgoocDs8+92W/Quzl2j5ECuxX5L0jQp16tgvp+uIYdeNAmizP1WPyt5hfQ==}
 
   '@humanfs/core@0.19.2':
     resolution: {integrity: sha512-UhXNm+CFMWcbChXywFwkmhqjs3PRCmcSa/hfBgLIb7oQ5HNb1wS0icWsGtSAUNgefHeI+eBrA8I1fxmbHsGdvA==}
@@ -1011,6 +1017,8 @@ snapshots:
     dependencies:
       gsap: 3.15.0
       react: 19.2.6
+
+  '@hiseb/confetti@2.1.0': {}
 
   '@humanfs/core@0.19.2':
     dependencies:

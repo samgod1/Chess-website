@@ -3,6 +3,7 @@ import { Link } from "react-router";
 import { useLocation, useParams, useNavigate } from "react-router";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
+import confetti from "@hiseb/confetti";
 
 import "./Navbar.css";
 import { CourseContext } from "../../contexts/CourseContext.jsx";
@@ -18,6 +19,16 @@ const Navbar = () => {
     const navTl = useRef(null);
 
     const { completed, setCompleted } = useContext(CourseContext);
+
+    function finishLesson() {
+        setCompleted([...completed, params.courseId]);
+        navigate("/course");
+        confetti({
+            size: 2,
+            velocity: 300,
+            fade: true,
+        });
+    }
 
     useGSAP(() => {
         const containerHeight =
@@ -60,16 +71,7 @@ const Navbar = () => {
                             Go Back
                         </Link>
                         {!completed.includes(params.courseId) && (
-                            <button
-                                className="finish"
-                                onClick={() => {
-                                    setCompleted([
-                                        ...completed,
-                                        params.courseId,
-                                    ]);
-                                    navigate("/course");
-                                }}
-                            >
+                            <button className="finish" onClick={finishLesson}>
                                 Finish lesson
                             </button>
                         )}
