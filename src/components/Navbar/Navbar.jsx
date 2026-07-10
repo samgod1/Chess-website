@@ -17,7 +17,6 @@ const Navbar = () => {
     const [isWatchingCourse, setIsWatchingCourse] = useState(false);
 
     const navTl = useRef(null);
-    const firstRender = useRef(true);
 
     const { completed, setCompleted } = useContext(CourseContext);
 
