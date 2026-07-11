@@ -91,7 +91,13 @@ const Navbar = () => {
                         <li>
                             <Link to="/visualization">Visualization</Link>
                         </li>
-                        <button>Let's go</button>
+                        <button
+                            onClick={() => {
+                                navigate("/signup");
+                            }}
+                        >
+                            Let's go
+                        </button>
                     </ul>
                 )}
             </nav>
