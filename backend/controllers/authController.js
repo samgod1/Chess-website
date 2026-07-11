@@ -1,14 +1,50 @@
-export const Signup = (req, res) => {
-    const formData = req.body;
-    console.log(req.body);
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
-    return res.status(200).json({ message: "endpoint reached" });
+import User from "../schema/userSchema.js";
+
+export const Signup = async (req, res) => {
+    try {
+        const { email, password } = req.body;
+
+        if (!email.includes("@")) {
+            return res
+                .status(401)
+                .json({ message: "Email must contain @ symbol" });
+        }
+
+        if (password.length <= 6) {
+            return res.status(401).json({
+                message: "Password should be greater than 6 characters",
+            });
+        }
+
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(password, salt);
+
+        const user = await User.create({ email, password: hashedPassword });
+
+        const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
+            expiresIn: "7d",
+        });
+
+        res.cookie("jwt", jwt, {
+            httpOnly: true,
+            sameSite: "none",
+            maxAge: 604800000,
+        });
+
+        return res.status(200).json({ message: "endpoint reached" });
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json("Error during signup");
+    }
 };
 
-export const Login = (req, res) => {
+export const Login = async (req, res) => {
     return;
 };
 
-export const Logout = (req, res) => {
+export const Logout = async (req, res) => {
     return;
 };
