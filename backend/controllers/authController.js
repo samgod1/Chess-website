@@ -5,9 +5,9 @@ import User from "../schema/userSchema.js";
 
 export const Signup = async (req, res) => {
     try {
-        const { email, password } = req.body;
+        const { email, password, username } = req.body;
 
-        if ((!email, !password)) {
+        if ((!email, !password, !username)) {
             return res
                 .status(401)
                 .json({ message: "Please fill out all the fields" });
@@ -25,10 +25,20 @@ export const Signup = async (req, res) => {
             });
         }
 
+        if (username.length < 3) {
+            return res.status(401).json({
+                message: "Username should be greater than 2 characters",
+            });
+        }
+
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
 
-        const user = await User.create({ email, password: hashedPassword });
+        const user = await User.create({
+            email,
+            password: hashedPassword,
+            username,
+        });
 
         const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
             expiresIn: "7d",
