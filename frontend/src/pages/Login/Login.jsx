@@ -6,10 +6,7 @@ const Login = () => {
     return (
         <div className="login-page">
             <div className="img-container">
-                <img
-                    src="/images/login-page-img.png"
-                    alt="abstract-chess-image"
-                />
+                <img src="/images/login-page-img.png" alt="login-page-image" />
             </div>
 
             <div className="form-container">
