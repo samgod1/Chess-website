@@ -1,8 +1,13 @@
+import { useState } from "react";
 import { Link } from "react-router";
 
 import "./Login.css";
+import login from "../../../apis/auth/login";
 
 const Login = () => {
+    const [email, setEmail] = useState(null);
+    const [password, setPassword] = useState(null);
+
     return (
         <div className="login-page">
             <div className="img-container">
@@ -10,23 +15,38 @@ const Login = () => {
             </div>
 
             <div className="form-container">
-                <div className="form">
+                <form
+                    className="form"
+                    onSubmit={(e) => {
+                        e.preventDefault();
+                        login(email, password);
+                    }}
+                >
                     <h1>Welcome back</h1>
                     <div className="input-container">
                         <div className="input-group">
                             <label>Email</label>
-                            <input type="text" placeholder="Enter your email" />
+                            <input
+                                type="text"
+                                placeholder="Enter your email"
+                                onChange={(e) => setEmail(e.target.value)}
+                                required
+                            />
                         </div>
                         <div className="input-group">
                             <label>Password</label>
                             <input
                                 type="password"
                                 placeholder="Enter your password"
+                                onChange={(e) => setPassword(e.target.value)}
+                                required
                             />
                         </div>
                     </div>
                     <div className="buttons-container">
-                        <button className="login-button">Login</button>
+                        <button className="login-button" type="submit">
+                            Login
+                        </button>
                         <p className="divider">-------- or --------</p>
                         <button className="guest-button">Login as guest</button>
                     </div>
@@ -34,7 +54,7 @@ const Login = () => {
                         Don't have an account?{" "}
                         <Link to={"/signup"}>Signup</Link>
                     </p>
-                </div>
+                </form>
             </div>
         </div>
     );

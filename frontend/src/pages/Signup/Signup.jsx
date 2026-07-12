@@ -21,7 +21,13 @@ const Signup = () => {
 
             {hasContinued ? (
                 <div className="form-container">
-                    <div className="form">
+                    <form
+                        className="form"
+                        onSubmit={(e) => {
+                            e.preventDefault();
+                            signup(email, password, username);
+                        }}
+                    >
                         <div
                             className="back"
                             onClick={() => {
@@ -51,20 +57,21 @@ const Signup = () => {
                             </div>
                         </div>
                         <div className="buttons-container">
-                            <button
-                                className="signup-button"
-                                onClick={() => {
-                                    signup(email, password, username);
-                                }}
-                            >
+                            <button className="signup-button" type="submit">
                                 Signup
                             </button>
                         </div>
-                    </div>
+                    </form>
                 </div>
             ) : (
                 <div className="form-container">
-                    <div className="form">
+                    <form
+                        className="form"
+                        onSubmit={(e) => {
+                            e.preventDefault();
+                            setHasContinued(true);
+                        }}
+                    >
                         <h1>Create your account</h1>
                         <div className="input-container">
                             <div className="input-group">
@@ -89,12 +96,7 @@ const Signup = () => {
                             </div>
                         </div>
                         <div className="buttons-container">
-                            <button
-                                className="continue-button"
-                                onClick={() => {
-                                    setHasContinued(true);
-                                }}
-                            >
+                            <button className="continue-button" type="submit">
                                 Continue
                             </button>
                             <p className="divider">-------- or --------</p>
@@ -106,7 +108,7 @@ const Signup = () => {
                             Already have an account?{" "}
                             <Link to={"/login"}>Login</Link>
                         </p>
-                    </div>
+                    </form>
                 </div>
             )}
         </div>
