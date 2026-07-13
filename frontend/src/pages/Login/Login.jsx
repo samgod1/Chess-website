@@ -1,10 +1,12 @@
 import { useState } from "react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 
 import "./Login.css";
 import login from "../../../apis/auth/login";
 
 const Login = () => {
+    const navigate = useNavigate();
+
     const [email, setEmail] = useState(null);
     const [password, setPassword] = useState(null);
 
@@ -19,7 +21,10 @@ const Login = () => {
                     className="form"
                     onSubmit={(e) => {
                         e.preventDefault();
-                        login(email, password);
+                        const success = login(email, password);
+                        if (success) {
+                            navigate("/course");
+                        }
                     }}
                 >
                     <h1>Welcome back</h1>

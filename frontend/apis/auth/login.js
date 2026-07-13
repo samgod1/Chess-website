@@ -13,11 +13,16 @@ const login = async (email, password) => {
 
         const data = await response.json();
 
+        console.log(data);
+
         if (response.ok) {
-            localStorage.setItem(token, data.token);
+            localStorage.setItem("token", data.token);
+            return true;
         }
+        return false;
     } catch (error) {
         console.log(error);
+        return false;
     }
 };
 

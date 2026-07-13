@@ -1,11 +1,13 @@
 import { useState, useRef } from "react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 
 import "./Signup.css";
 import signup from "../../../apis/auth/signup";
 import guest from "../../../apis/auth/guest";
 
 const Signup = () => {
+    const navigate = useNavigate();
+
     const [hasContinued, setHasContinued] = useState(false); //To switch between forms
     const [email, setEmail] = useState(null);
     const [password, setPassword] = useState(null);
@@ -26,7 +28,10 @@ const Signup = () => {
                         className="form"
                         onSubmit={(e) => {
                             e.preventDefault();
-                            signup(email, password, username);
+                            const success = signup(email, password, username);
+                            if (success) {
+                                navigate("/course");
+                            }
                         }}
                     >
                         <div
@@ -105,7 +110,10 @@ const Signup = () => {
                                 className="guest-button"
                                 onClick={(e) => {
                                     e.preventDefault();
-                                    guest();
+                                    const success = guest();
+                                    if (success) {
+                                        navigate("/course");
+                                    }
                                 }}
                             >
                                 Login as guest

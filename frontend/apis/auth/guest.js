@@ -9,9 +9,12 @@ const guest = async () => {
 
         if (response.ok) {
             localStorage.setItem("token", data.token);
+            return true;
         }
+        return false;
     } catch (error) {
         console.log(error);
+        return false;
     }
 };
 

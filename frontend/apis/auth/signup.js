@@ -15,8 +15,12 @@ const signup = async (email, password, username) => {
 
         if (response.ok) {
             localStorage.setItem("token", data.token);
+            return true;
         }
+
+        return false;
     } catch (error) {
+        return false;
         console.log(error);
     }
 };
