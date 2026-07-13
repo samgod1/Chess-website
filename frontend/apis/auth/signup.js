@@ -1,17 +1,24 @@
 const signup = async (email, password, username) => {
-    const formData = { email, password, username };
+    try {
+        const formData = { email, password, username };
 
-    const response = await fetch(
-        import.meta.env.VITE_BACKEND_URL + "/api/auth/signup",
-        {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(formData),
-            credentials: "include",
-        },
-    );
+        const response = await fetch(
+            import.meta.env.VITE_BACKEND_URL + "/api/auth/signup",
+            {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(formData),
+            },
+        );
 
-    console.log(await response.json());
+        const data = await response.json();
+
+        if (response.ok) {
+            localStorage.setItem("token", data.token);
+        }
+    } catch (error) {
+        console.log(error);
+    }
 };
 
 export default signup;

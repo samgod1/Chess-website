@@ -44,13 +44,9 @@ export const Signup = async (req, res) => {
 
         const jwt = generateToken(user._id);
 
-        res.cookie("jwt", jwt, {
-            httpOnly: true,
-            sameSite: "none",
-            maxAge: 604800000,
-        });
-
-        return res.status(201).json({ message: "Signup successful" });
+        return res
+            .status(201)
+            .json({ message: "Signup successful", token: jwt });
     } catch (error) {
         console.log(error);
         return res.status(500).json("Error during signup");
@@ -85,13 +81,9 @@ export const Login = async (req, res) => {
 
         const jwt = generateToken(user._id);
 
-        res.cookie("jwt", jwt, {
-            httpOnly: true,
-            sameSite: "none",
-            maxAge: 604800000,
-        });
-
-        return res.status(200).json({ message: "Login successful" });
+        return res
+            .status(200)
+            .json({ message: "Login successful", token: jwt });
     } catch (error) {
         console.log(error);
         return res.status(500).json({ message: "Error during signup" });
@@ -107,13 +99,9 @@ export const Guest = async (req, res) => {
 
         const jwt = generateToken(guestUser._id);
 
-        res.cookie("jwt", jwt, {
-            httpOnly: true,
-            sameSite: "none",
-            maxAge: 604800000,
-        });
-
-        return res.status(201).json({ message: "Login as guest successful" });
+        return res
+            .status(201)
+            .json({ message: "Login as guest successful", token: jwt });
     } catch (error) {
         console.log(error);
         return res.status(500).json({ message: "Error during login as guest" });

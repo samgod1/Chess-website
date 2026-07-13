@@ -1,10 +1,18 @@
 const guest = async () => {
-    const response = await fetch(
-        import.meta.env.VITE_BACKEND_URL + "/api/auth/guest",
-        { method: "GET", credentials: "include" },
-    );
+    try {
+        const response = await fetch(
+            import.meta.env.VITE_BACKEND_URL + "/api/auth/guest",
+            { method: "GET" },
+        );
 
-    console.log(await response.json());
+        const data = await response.json();
+
+        if (response.ok) {
+            localStorage.setItem("token", data.token);
+        }
+    } catch (error) {
+        console.log(error);
+    }
 };
 
 export default guest;
