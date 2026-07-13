@@ -2,12 +2,12 @@
     padding: 3.75rem;
     background-color: var(--c-primary);
     height: 100dvh;
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     gap: 1.25rem;
     font-family: "Geist";
 
     .img-container {
-        flex: 1;
         border-radius: 2rem;
         overflow: hidden;
 
@@ -19,7 +19,6 @@
     }
 
     .form-container {
-        flex: 1;
         padding: 3rem;
 
         .form {
