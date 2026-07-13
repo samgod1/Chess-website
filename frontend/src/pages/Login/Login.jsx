@@ -48,7 +48,15 @@ const Login = () => {
                             Login
                         </button>
                         <p className="divider">-------- or --------</p>
-                        <button className="guest-button">Login as guest</button>
+                        <button
+                            className="guest-button"
+                            onClick={(e) => {
+                                e.preventDefault();
+                                guest();
+                            }}
+                        >
+                            Login as guest
+                        </button>
                     </div>
                     <p className="redirect">
                         Don't have an account?{" "}

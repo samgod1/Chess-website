@@ -4,14 +4,22 @@ const userSchema = new mongoose.Schema(
     {
         email: {
             type: "String",
-            required: true,
+            required: function () {
+                return !this.guestAcc;
+            },
         },
         password: {
             type: "String",
-            required: true,
+            required: function () {
+                return !this.guestAcc;
+            },
         },
         username: {
             type: "String",
+            required: true,
+        },
+        guestAcc: {
+            type: "Boolean",
             required: true,
         },
     },

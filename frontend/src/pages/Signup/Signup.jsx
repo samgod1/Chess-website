@@ -3,6 +3,7 @@ import { Link } from "react-router";
 
 import "./Signup.css";
 import signup from "../../../apis/auth/signup";
+import guest from "../../../apis/auth/guest";
 
 const Signup = () => {
     const [hasContinued, setHasContinued] = useState(false); //To switch between forms
@@ -100,7 +101,13 @@ const Signup = () => {
                                 Continue
                             </button>
                             <p className="divider">-------- or --------</p>
-                            <button className="guest-button">
+                            <button
+                                className="guest-button"
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    guest();
+                                }}
+                            >
                                 Login as guest
                             </button>
                         </div>

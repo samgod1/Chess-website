@@ -39,6 +39,7 @@ export const Signup = async (req, res) => {
             email,
             password: hashedPassword,
             username,
+            guestAcc: false,
         });
 
         const jwt = generateToken(user._id);
@@ -94,6 +95,28 @@ export const Login = async (req, res) => {
     } catch (error) {
         console.log(error);
         return res.status(500).json({ message: "Error during signup" });
+    }
+};
+
+export const Guest = async (req, res) => {
+    try {
+        const guestUser = await User.create({
+            username: "Guest",
+            guestAcc: true,
+        });
+
+        const jwt = generateToken(guestUser._id);
+
+        res.cookie("jwt", jwt, {
+            httpOnly: true,
+            sameSite: "none",
+            maxAge: 604800000,
+        });
+
+        return res.status(201).json({ message: "Login as guest successful" });
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({ message: "Error during login as guest" });
     }
 };
 
