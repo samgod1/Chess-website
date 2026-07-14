@@ -53,7 +53,22 @@
             align-items: center;
             gap: 1rem;
 
-            button {
+            .user {
+                background-color: var(--c-accent);
+                color: var(--c-secondary);
+                font-size: 1.5rem;
+                font-weight: 500;
+                border-radius: 0.5rem;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: 0.5rem;
+                /*height is manually adjusted to make the button same height as let's go button*/
+                height: 47px;
+                width: 47px;
+            }
+
+            .lets-go {
                 background-color: var(--c-accent);
                 color: var(--c-secondary);
                 font-size: 1.5rem;

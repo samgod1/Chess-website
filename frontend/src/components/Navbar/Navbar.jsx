@@ -6,13 +6,15 @@ import { useGSAP } from "@gsap/react";
 import confetti from "@hiseb/confetti";
 
 import "./Navbar.css";
-import { CourseContext } from "../../contexts/CourseContext.jsx";
+import { CourseContext, UserContext } from "../../contexts/index.js";
 
 const Navbar = () => {
     const { pathname } = useLocation();
     const location = useLocation();
     const params = useParams();
     const navigate = useNavigate();
+
+    const { user } = useContext(UserContext);
 
     const [isWatchingCourse, setIsWatchingCourse] = useState(false);
 
@@ -91,13 +93,25 @@ const Navbar = () => {
                         <li>
                             <Link to="/visualization">Visualization</Link>
                         </li>
-                        <button
-                            onClick={() => {
-                                navigate("/signup");
-                            }}
-                        >
-                            Let's go
-                        </button>
+                        {user ? (
+                            <button className="user">
+                                <img
+                                    src="/images/user-icon.png"
+                                    alt="user-icon"
+                                    width={32}
+                                    height={32}
+                                />
+                            </button>
+                        ) : (
+                            <button
+                                onClick={() => {
+                                    navigate("/signup");
+                                }}
+                                className="lets-go"
+                            >
+                                Let's go
+                            </button>
+                        )}
                     </ul>
                 )}
             </nav>
