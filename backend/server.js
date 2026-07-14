@@ -3,7 +3,9 @@ import cors from "cors";
 import dotenv from "dotenv";
 
 import authRoute from "./routes/authRoute.js";
+import userRoute from "./routes/userRoute.js";
 import connectDB from "./config/connectDb.js";
+import protectRoute from "./middlewares/protectRoute.js";
 
 dotenv.config();
 
@@ -24,6 +26,7 @@ app.get("/", (req, res) => {
     return res.send("hello world");
 });
 app.use("/api/auth", authRoute);
+app.use("/api/user", protectRoute, userRoute);
 
 app.listen(process.env.PORT, () => {
     console.log("Server is running on port " + process.env.PORT);

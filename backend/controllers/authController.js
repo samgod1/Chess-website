@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken";
 import User from "../schema/userSchema.js";
 import generateToken from "../utils/generateToken.js";
 
-export const Signup = async (req, res) => {
+export const signup = async (req, res) => {
     try {
         const { email, password, username } = req.body;
 
@@ -53,7 +53,7 @@ export const Signup = async (req, res) => {
     }
 };
 
-export const Login = async (req, res) => {
+export const login = async (req, res) => {
     try {
         const { email, password } = req.body;
 
@@ -90,7 +90,7 @@ export const Login = async (req, res) => {
     }
 };
 
-export const Guest = async (req, res) => {
+export const guest = async (req, res) => {
     try {
         const guestUser = await User.create({
             username: "Guest",
