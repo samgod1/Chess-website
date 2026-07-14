@@ -57,7 +57,11 @@ const Login = () => {
                             className="guest-button"
                             onClick={(e) => {
                                 e.preventDefault();
-                                guest();
+                                const success = guest();
+
+                                if (success) {
+                                    navigate("/course");
+                                }
                             }}
                         >
                             Login as guest
