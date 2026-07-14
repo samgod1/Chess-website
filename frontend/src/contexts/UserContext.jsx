@@ -1,9 +1,13 @@
 import { useEffect } from "react";
 import { useState, createContext } from "react";
+import { useLocation, useNavigate } from "react-router";
 
 export const UserContext = createContext();
 
 const UserContextProvider = ({ children }) => {
+    // const location = useLocation();
+    // const navigate = useNavigate();
+
     const [user, setUser] = useState();
 
     async function getUser() {
@@ -21,6 +25,8 @@ const UserContextProvider = ({ children }) => {
 
         if (response.ok) {
             setUser(data);
+        } else {
+            setUser(null);
         }
     }
 

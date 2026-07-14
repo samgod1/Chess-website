@@ -14,12 +14,11 @@ const Navbar = () => {
     const params = useParams();
     const navigate = useNavigate();
 
-    const { user } = useContext(UserContext);
-
     const [isWatchingCourse, setIsWatchingCourse] = useState(false);
 
     const navTl = useRef(null);
 
+    const { user } = useContext(UserContext);
     const { completed, setCompleted } = useContext(CourseContext);
 
     function finishLesson() {

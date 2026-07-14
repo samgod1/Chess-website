@@ -1,6 +1,7 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
+import { useNavigate } from "react-router";
 
 import { Accordion, ProgressBar } from "./components/index.js";
 import {
@@ -8,13 +9,22 @@ import {
     intermediateCourse,
     professionalCourse,
 } from "../../constants.js";
-import { CourseContext } from "../../contexts/CourseContext.jsx";
+import { CourseContext, UserContext } from "../../contexts/index.js";
 
 import "./Course.css";
 
 const Course = () => {
+    const navigate = useNavigate();
+
     const { completed, setCompleted, isOpen, setIsOpen, total } =
         useContext(CourseContext);
+    const { user } = useContext(UserContext);
+
+    useEffect(() => {
+        if (user !== undefined && user === null) {
+            navigate("/signup");
+        }
+    }, [user]);
 
     return (
         <div className="course-page">
