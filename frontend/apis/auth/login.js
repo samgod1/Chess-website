@@ -1,3 +1,6 @@
+import { useContext } from "react";
+import { UserContext } from "../../src/contexts";
+
 const login = async (email, password) => {
     try {
         const formData = { email, password };
@@ -13,12 +16,13 @@ const login = async (email, password) => {
 
         const data = await response.json();
 
-        if (response.ok) {
+        if (data.token) {
             localStorage.setItem("token", data.token);
             return true;
         }
         return false;
     } catch (error) {
+        console.log("hello world");
         console.log(error);
         return false;
     }

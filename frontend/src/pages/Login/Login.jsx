@@ -1,11 +1,15 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router";
 
 import "./Login.css";
-import login from "../../../apis/auth/login";
+import login from "../../../apis/auth/login.js";
+import guest from "../../../apis/auth/guest.js";
+import { UserContext } from "../../contexts/index.js";
 
 const Login = () => {
     const navigate = useNavigate();
+
+    const { getUser } = useContext(UserContext);
 
     const [email, setEmail] = useState(null);
     const [password, setPassword] = useState(null);
@@ -19,10 +23,11 @@ const Login = () => {
             <div className="form-container">
                 <form
                     className="form"
-                    onSubmit={(e) => {
+                    onSubmit={async (e) => {
                         e.preventDefault();
-                        const success = login(email, password);
+                        const success = await login(email, password);
                         if (success) {
+                            await getUser();
                             navigate("/course");
                         }
                     }}
@@ -55,11 +60,12 @@ const Login = () => {
                         <p className="divider">-------- or --------</p>
                         <button
                             className="guest-button"
-                            onClick={(e) => {
+                            onClick={async (e) => {
                                 e.preventDefault();
-                                const success = guest();
+                                const success = await guest();
 
                                 if (success) {
+                                    await getUser();
                                     navigate("/course");
                                 }
                             }}

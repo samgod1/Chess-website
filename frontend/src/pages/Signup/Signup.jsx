@@ -1,12 +1,15 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useContext } from "react";
 import { Link, useNavigate } from "react-router";
 
 import "./Signup.css";
-import signup from "../../../apis/auth/signup";
-import guest from "../../../apis/auth/guest";
+import signup from "../../../apis/auth/signup.js";
+import guest from "../../../apis/auth/guest.js";
+import { UserContext } from "../../contexts";
 
 const Signup = () => {
     const navigate = useNavigate();
+
+    const { getUser } = useContext(UserContext);
 
     const [hasContinued, setHasContinued] = useState(false); //To switch between forms
     const [email, setEmail] = useState(null);
@@ -26,10 +29,15 @@ const Signup = () => {
                 <div className="form-container">
                     <form
                         className="form"
-                        onSubmit={(e) => {
+                        onSubmit={async (e) => {
                             e.preventDefault();
-                            const success = signup(email, password, username);
+                            const success = await signup(
+                                email,
+                                password,
+                                username,
+                            );
                             if (success) {
+                                await getUser();
                                 navigate("/course");
                             }
                         }}
@@ -108,10 +116,11 @@ const Signup = () => {
                             <p className="divider">-------- or --------</p>
                             <button
                                 className="guest-button"
-                                onClick={(e) => {
+                                onClick={async (e) => {
                                     e.preventDefault();
-                                    const success = guest();
+                                    const success = await guest();
                                     if (success) {
+                                        await getUser();
                                         navigate("/course");
                                     }
                                 }}

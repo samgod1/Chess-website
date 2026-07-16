@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { use, useEffect } from "react";
 import { useState, createContext } from "react";
 import { useLocation, useNavigate } from "react-router";
 
@@ -6,29 +6,31 @@ export const UserContext = createContext();
 
 const UserContextProvider = ({ children }) => {
     const [user, setUser] = useState();
+    const [loading, setLoading] = useState(true);
 
     async function getUser() {
         try {
             const token = localStorage.getItem("token");
 
-            const response = await fetch(
-                import.meta.env.VITE_BACKEND_URL + "/api/user/",
-                {
-                    method: "GET",
-                    headers: { Authorization: `Bearer ${token}` },
-                },
-            );
+            if (token) {
+                const response = await fetch(
+                    import.meta.env.VITE_BACKEND_URL + "/api/user/",
+                    {
+                        method: "GET",
+                        headers: { Authorization: `Bearer ${token}` },
+                    },
+                );
 
-            const data = await response.json();
+                const data = await response.json();
 
-            if (response.ok) {
-                setUser(data);
-            } else {
-                setUser(null);
+                if (response.ok) {
+                    setUser(data);
+                }
             }
         } catch (error) {
             console.log(error);
-            console.log(error.response.data.message);
+        } finally {
+            setLoading(false);
         }
     }
 
@@ -37,7 +39,9 @@ const UserContextProvider = ({ children }) => {
     }, []);
 
     return (
-        <UserContext.Provider value={{ user }}>{children}</UserContext.Provider>
+        <UserContext.Provider value={{ user, loading, getUser }}>
+            {children}
+        </UserContext.Provider>
     );
 };
 

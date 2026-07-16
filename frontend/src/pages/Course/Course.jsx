@@ -18,13 +18,13 @@ const Course = () => {
 
     const { completed, setCompleted, isOpen, setIsOpen, total } =
         useContext(CourseContext);
-    const { user } = useContext(UserContext);
+    const { user, loading } = useContext(UserContext);
 
     useEffect(() => {
-        if (user !== undefined && user === null) {
+        if (!loading && !user) {
             navigate("/signup");
         }
-    }, [user]);
+    }, [loading]);
 
     return (
         <div className="course-page">
