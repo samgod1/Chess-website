@@ -11,9 +11,10 @@ const guest = async () => {
             localStorage.setItem("token", data.token);
             return true;
         }
-        return false;
+
+        throw new Error(data.message);
     } catch (error) {
-        console.log(error);
+        toast.error(error.message);
         return false;
     }
 };

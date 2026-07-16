@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router";
+import { Toaster } from "react-hot-toast";
 
 import "./App.css";
 import { Home, Course, WatchCourse, Signup, Login } from "./pages/index.js";
@@ -38,6 +39,7 @@ function App() {
     return (
         <>
             <RouterProvider router={router} />
+            <Toaster position="top-right" />
         </>
     );
 }

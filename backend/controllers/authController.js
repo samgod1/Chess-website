@@ -68,7 +68,7 @@ export const login = async (req, res) => {
         if (!user) {
             return res
                 .status(401)
-                .json({ message: "Email or password is incorrect" });
+                .json({ message: "Either email or password is invalid" });
         }
 
         const isCorrect = await bcrypt.compare(password, user.password);
@@ -76,7 +76,7 @@ export const login = async (req, res) => {
         if (!isCorrect) {
             return res
                 .status(401)
-                .json({ message: "Email or password is incorrect" });
+                .json({ message: "Either email or password is invalid" });
         }
 
         const jwt = generateToken(user._id);

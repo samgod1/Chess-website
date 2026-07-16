@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import { UserContext } from "../../src/contexts";
+import toast from "react-hot-toast";
 
 const login = async (email, password) => {
     try {
@@ -20,10 +21,10 @@ const login = async (email, password) => {
             localStorage.setItem("token", data.token);
             return true;
         }
-        return false;
+
+        throw new Error(data.message);
     } catch (error) {
-        console.log("hello world");
-        console.log(error);
+        toast.error(error.message);
         return false;
     }
 };

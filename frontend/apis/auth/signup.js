@@ -1,3 +1,5 @@
+import toast from "react-hot-toast";
+
 const signup = async (email, password, username) => {
     try {
         const formData = { email, password, username };
@@ -18,10 +20,10 @@ const signup = async (email, password, username) => {
             return true;
         }
 
-        return false;
+        throw new Error(data.message);
     } catch (error) {
+        toast.error(error.message);
         return false;
-        console.log(error);
     }
 };
 
