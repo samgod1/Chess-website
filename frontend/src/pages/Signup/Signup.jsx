@@ -67,6 +67,7 @@ const Signup = () => {
                                         setUsername(e.target.value)
                                     }
                                     required={true}
+                                    value={username}
                                 />
                             </div>
                         </div>
@@ -95,6 +96,7 @@ const Signup = () => {
                                     placeholder="Enter your email"
                                     onChange={(e) => setEmail(e.target.value)}
                                     required={true}
+                                    value={email}
                                 />
                             </div>
                             <div className="input-group">
@@ -106,6 +108,7 @@ const Signup = () => {
                                         setPassword(e.target.value)
                                     }
                                     required={true}
+                                    value={password}
                                 />
                             </div>
                         </div>
