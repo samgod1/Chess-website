@@ -28,7 +28,13 @@ export const signup = async (req, res) => {
 
         if (username.length < 3) {
             return res.status(400).json({
-                message: "Username should be greater than 2 characters",
+                message: "Username must be greater than 2 characters",
+            });
+        }
+
+        if (username.length > 12) {
+            return res.status(400).json({
+                message: "Username cannot be greater than 12 characters",
             });
         }
 
@@ -106,8 +112,4 @@ export const guest = async (req, res) => {
         console.log(error);
         return res.status(500).json({ message: "Error during login as guest" });
     }
-};
-
-export const Logout = async (req, res) => {
-    return;
 };

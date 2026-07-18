@@ -7,6 +7,7 @@ import confetti from "@hiseb/confetti";
 
 import "./Navbar.css";
 import { CourseContext, UserContext } from "../../contexts/index.js";
+import Dropdown from "./components/Dropdown/Dropdown.jsx";
 
 const Navbar = () => {
     const { pathname } = useLocation();
@@ -15,6 +16,7 @@ const Navbar = () => {
     const navigate = useNavigate();
 
     const [isWatchingCourse, setIsWatchingCourse] = useState(false);
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
     const navTl = useRef(null);
 
@@ -47,6 +49,17 @@ const Navbar = () => {
             navTl.current.progress(1);
         }
     }, []);
+
+    useGSAP(() => {
+        if (isDropdownOpen) {
+            gsap.to(".hidden", {
+                height: "auto",
+                duration: 0.2,
+            });
+        } else {
+            gsap.to(".hidden", { height: "0px", duration: 0.2 });
+        }
+    }, [isDropdownOpen]);
 
     useGSAP(() => {
         if (pathname === "/") {
@@ -93,7 +106,13 @@ const Navbar = () => {
                             <Link to="/visualization">Visualization</Link>
                         </li>
                         {user ? (
-                            <button className="user">
+                            <button
+                                className="user"
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    setIsDropdownOpen(!isDropdownOpen);
+                                }}
+                            >
                                 <img
                                     src="/images/user-icon.png"
                                     alt="user-icon"
@@ -113,6 +132,10 @@ const Navbar = () => {
                         )}
                     </ul>
                 )}
+                <Dropdown
+                    isDropdownOpen={isDropdownOpen}
+                    setIsDropdownOpen={setIsDropdownOpen}
+                />
             </nav>
         </div>
     );

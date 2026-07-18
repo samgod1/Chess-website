@@ -5,7 +5,7 @@ import { useLocation, useNavigate } from "react-router";
 export const UserContext = createContext();
 
 const UserContextProvider = ({ children }) => {
-    const [user, setUser] = useState();
+    const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
 
     async function getUser() {
@@ -39,7 +39,7 @@ const UserContextProvider = ({ children }) => {
     }, []);
 
     return (
-        <UserContext.Provider value={{ user, loading, getUser }}>
+        <UserContext.Provider value={{ user, setUser, loading, getUser }}>
             {children}
         </UserContext.Provider>
     );

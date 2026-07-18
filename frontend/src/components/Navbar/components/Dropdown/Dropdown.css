@@ -1,0 +1,42 @@
+.hidden {
+    position: absolute;
+    right: 0;
+    top: 6rem;
+    overflow: hidden;
+    border-radius: 0.5rem;
+    height: 0px;
+
+    .dropdown {
+        background-color: var(--c-secondary);
+        padding: 1rem;
+        color: var(--c-primary);
+        .wrapper {
+            width: 200px;
+
+            .username {
+                padding: 0.5rem;
+            }
+
+            .line {
+                width: 100%;
+                height: 1px;
+                background-color: var(--c-primary-light);
+                margin-bottom: 0.5rem;
+            }
+
+            button {
+                padding: 0.5rem;
+                width: 100%;
+                text-align: start;
+                border-radius: 0.5rem;
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                transition: all 0.2s ease;
+            }
+            button:hover {
+                background-color: var(--c-secondary-dark);
+            }
+        }
+    }
+}
