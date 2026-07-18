@@ -20,6 +20,7 @@
         padding: 1rem 1.5rem;
         font-size: 1.25rem;
         box-shadow: 3px 3px 10px var(--c-primary);
+        position: relative;
 
         .logo {
             font-weight: bold;

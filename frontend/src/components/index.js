@@ -1,4 +1,4 @@
 import Navbar from "./Navbar/Navbar";
-import ProgressBar from "../pages/Course/components/ProgressBar/ProgressBar";
+import Loading from "./Loading/Loading";
 
-export { Navbar, ProgressBar };
+export { Navbar, Loading };

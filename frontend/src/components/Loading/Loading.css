@@ -1,0 +1,26 @@
+.loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100dvh;
+    width: 100%;
+    background-color: var(--c-primary);
+
+    .loading-spinner {
+        img {
+            animation-name: loading;
+            animation-duration: 0.5s;
+            animation-iteration-count: infinite;
+            animation-timing-function: linear;
+        }
+    }
+}
+
+@keyframes loading {
+    from {
+        rotate: 0deg;
+    }
+    to {
+        rotate: 360deg;
+    }
+}
