@@ -32,6 +32,20 @@ const Login = () => {
                         }
                     }}
                 >
+                    <div
+                        className="back"
+                        onClick={() => {
+                            navigate("/");
+                        }}
+                    >
+                        <img
+                            src="/images/arrow-left.png"
+                            alt="arrow-left"
+                            width={24}
+                            height={24}
+                        />
+                        <span>Back</span>
+                    </div>
                     <h1>Welcome back</h1>
                     <div className="input-container">
                         <div className="input-group">
