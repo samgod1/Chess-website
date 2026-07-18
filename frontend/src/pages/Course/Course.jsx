@@ -2,6 +2,7 @@ import { useContext, useEffect } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { useNavigate } from "react-router";
+import toast from "react-hot-toast";
 
 import { Accordion, ProgressBar } from "./components/index.js";
 import {
@@ -23,6 +24,7 @@ const Course = () => {
     useEffect(() => {
         if (!loading && !user) {
             navigate("/signup");
+            toast.error("You have to signup / login first");
         }
     }, [loading]);
 

@@ -1,6 +1,7 @@
 .course-page {
     background-color: var(--c-primary);
     padding: calc(8rem + 1rem) /* Height of navbar + padding */ 3.75rem;
+    padding-bottom: 1rem;
     font-family: "Geist";
     color: var(--c-secondary);
 
