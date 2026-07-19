@@ -81,7 +81,12 @@ const Navbar = () => {
         <div className="nav-container">
             <nav>
                 <Link className="logo" to="/">
-                    Logo
+                    <img
+                        src="/images/logo.png"
+                        alt="logo"
+                        width={40}
+                        height={40}
+                    />
                 </Link>
                 {isWatchingCourse ? (
                     <div className="buttons-container">
