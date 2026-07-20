@@ -17,4 +17,38 @@ const getUser = async (req, res) => {
     }
 };
 
-export default getUser;
+// const getCompleted = async (req, res) => {
+//     try {
+//         const userId = req.userId;
+
+//         const completed = await User.findOne({ _id: userId }).select(
+//             "completed",
+//         );
+
+//         return res.status(200).json(completed);
+//     } catch (error) {
+//         return res
+//             .status(500)
+//             .json("Error during fetching completed course data");
+//     }
+// };
+
+const updateCompleted = async (req, res) => {
+    try {
+        const userId = req.userId;
+        const { completed } = req.body;
+
+        const user = await User.findByIdAndUpdate(userId, {
+            completed: completed,
+        });
+
+        return res.status(200).json({ message: "Success" });
+    } catch (error) {
+        console.log(error);
+        return res
+            .status(500)
+            .json("Error during fetching completed course data");
+    }
+};
+
+export { getUser, updateCompleted };

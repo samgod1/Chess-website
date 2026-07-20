@@ -22,6 +22,10 @@ const userSchema = new mongoose.Schema(
             type: "Boolean",
             required: true,
         },
+        completed: {
+            default: [],
+            type: [String],
+        },
     },
     { timestamps: true },
 );

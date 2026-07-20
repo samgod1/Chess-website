@@ -1,10 +1,13 @@
-import { useState, createContext, useEffect, useRef } from "react";
+import { useState, createContext, useEffect, useRef, useContext } from "react";
+import { UserContext } from "./UserContext.jsx";
 
 import {
     beginnerCourse,
     intermediateCourse,
     professionalCourse,
 } from "../constants.js";
+import getCompleted from "../../apis/user/getCompleted.js";
+import updateCompleted from "../../apis/user/updateCompleted.js";
 
 const total =
     beginnerCourse.length +
@@ -19,16 +22,17 @@ const CourseContextProvider = ({ children }) => {
 
     const firstRender = useRef(true);
 
+    const { user, loading } = useContext(UserContext);
+
     useEffect(() => {
-        const localCompleted = localStorage.getItem("completed");
-        if (localCompleted) {
-            setCompleted(JSON.parse(localCompleted));
+        if (!loading && user) {
+            setCompleted(user?.completed);
         }
-    }, []);
+    }, [loading]);
 
     useEffect(() => {
         if (!firstRender.current) {
-            localStorage.setItem("completed", JSON.stringify(completed));
+            updateCompleted(completed);
         }
         firstRender.current = false;
     }, [completed]);

@@ -107,9 +107,8 @@ const Course = () => {
                         <div className="earned">
                             <div className="professional-badge">
                                 <img
-                                    src="/images/gold-medal.png"
+                                    src="/images/hollow-medal.png"
                                     alt="gold-medal"
-                                    width={40}
                                     height={40}
                                 />
                             </div>
@@ -117,7 +116,6 @@ const Course = () => {
                                 <img
                                     src="/images/silver-medal.png"
                                     alt="silver-medal"
-                                    width={40}
                                     height={40}
                                 />
                             </div>
@@ -125,7 +123,6 @@ const Course = () => {
                                 <img
                                     src="/images/bronze-medal.png"
                                     alt="bronze-medal"
-                                    width={40}
                                     height={40}
                                 />
                             </div>
