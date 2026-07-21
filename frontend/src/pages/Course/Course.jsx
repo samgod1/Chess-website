@@ -17,7 +17,7 @@ import "./Course.css";
 const Course = () => {
     const navigate = useNavigate();
 
-    const { completed, setCompleted, isOpen, setIsOpen, total } =
+    const { completed, setCompleted, isOpen, setIsOpen, total, medals } =
         useContext(CourseContext);
     const { user, loading } = useContext(UserContext);
 
@@ -105,27 +105,58 @@ const Course = () => {
                     <div className="badges">
                         <h2>Earned badges</h2>
                         <div className="earned">
-                            <div className="professional-badge">
-                                <img
-                                    src="/images/hollow-medal.png"
-                                    alt="gold-medal"
-                                    height={40}
-                                />
-                            </div>
-                            <div className="intermediate-badge">
-                                <img
-                                    src="/images/silver-medal.png"
-                                    alt="silver-medal"
-                                    height={40}
-                                />
-                            </div>
-                            <div className="beginner-badge">
-                                <img
-                                    src="/images/bronze-medal.png"
-                                    alt="bronze-medal"
-                                    height={40}
-                                />
-                            </div>
+                            {medals?.includes("gold") ? (
+                                <div className="professional-badge">
+                                    <img
+                                        src="/images/gold-medal.png"
+                                        alt="gold-medal"
+                                        height={40}
+                                    />
+                                </div>
+                            ) : (
+                                <div className="hollow-badge">
+                                    <img
+                                        src="/images/hollow-medal.png"
+                                        alt="hollow-medal"
+                                        height={40}
+                                    />
+                                </div>
+                            )}
+                            {medals?.includes("silver") ? (
+                                <div className="intemediate-badge">
+                                    <img
+                                        src="/images/silver-medal.png"
+                                        alt="silver-medal"
+                                        height={40}
+                                    />
+                                </div>
+                            ) : (
+                                <div className="hollow-badge">
+                                    <img
+                                        src="/images/hollow-medal.png"
+                                        alt="hollow-medal"
+                                        height={40}
+                                    />
+                                </div>
+                            )}
+
+                            {medals?.includes("bronze") ? (
+                                <div className="beginner-badge">
+                                    <img
+                                        src="/images/bronze-medal.png"
+                                        alt="bronze-medal"
+                                        height={40}
+                                    />
+                                </div>
+                            ) : (
+                                <div className="hollow-badge">
+                                    <img
+                                        src="/images/hollow-medal.png"
+                                        alt="hollow-medal"
+                                        height={40}
+                                    />
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>
