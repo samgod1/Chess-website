@@ -1,4 +1,4 @@
-.visualization-page {
+.vision-page {
     background-color: var(--c-primary);
     height: 100dvh;
     padding: calc(8rem) /* Height of navbar + padding */ 3.75rem;
@@ -6,12 +6,6 @@
     display: flex;
     gap: 2rem;
     font-family: "Geist";
-
-    .chessboard {
-        aspect-ratio: 1/1;
-        height: 100%;
-        background-color: white;
-    }
 
     .sidebar {
         color: var(--c-secondary);

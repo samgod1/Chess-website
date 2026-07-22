@@ -1,9 +1,10 @@
 import "./Vision.css";
+import { Chessboard } from "../../components/index.js";
 
 const Vision = () => {
     return (
-        <div className="visualization-page">
-            <div className="chessboard"></div>
+        <div className="vision-page">
+            <Chessboard />
             <div className="sidebar">
                 <div className="sidebar-header">
                     <img
