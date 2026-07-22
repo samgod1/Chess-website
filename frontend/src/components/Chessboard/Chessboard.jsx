@@ -1,12 +1,12 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
+import gsap from "gsap";
 
 import "./Chessboard.css";
 
-const Chessboard = () => {
+const Chessboard = ({ started }) => {
     const alphabets = ["a", "b", "c", "d", "e", "f", "g", "h"];
     const numbers = ["1", "2", "3", "4", "5", "6", "7", "8"];
 
-    const [started, setStarted] = useState(false); //Vision practice
     const [randomSquare, setRandomSquare] = useState(null);
     const [color, setColor] = useState("white");
 
@@ -20,7 +20,29 @@ const Chessboard = () => {
         setRandomSquare(randomSquare);
     }
 
-    useState(() => {
+    function checkUserInput(e) {
+        if (e.target.id === randomSquare) {
+            // animate square green
+            gsap.to(e.target, {
+                backgroundColor: "var(--c-green)",
+                duration: 0.2,
+                yoyo: true,
+                repeat: 1,
+            });
+
+            // play sound
+        } else {
+            //animate square red
+            gsap.to(e.target, {
+                backgroundColor: "var(--c-red)",
+                duration: 0.2,
+                yoyo: true,
+                repeat: 1,
+            });
+        }
+    }
+
+    useEffect(() => {
         if (started) {
             generateRandomChessSquare();
         }
@@ -32,7 +54,7 @@ const Chessboard = () => {
                 <div className="randomSquareDisplay">{randomSquare}</div>
             )}
             <div
-                className="chessboard white"
+                className={`chessboard ${color}`}
                 onClick={() => {
                     if (started) {
                         generateRandomChessSquare();
@@ -49,17 +71,13 @@ const Chessboard = () => {
                                     <div
                                         className="square dark"
                                         id={alphabet + number}
-                                        onClick={(e) => {
-                                            console.log(e.target.id);
-                                        }}
+                                        onClick={checkUserInput}
                                     ></div>
                                 ) : (
                                     <div
                                         className="square light"
                                         id={alphabet + number}
-                                        onClick={(e) => {
-                                            console.log(e.target.id);
-                                        }}
+                                        onClick={checkUserInput}
                                     ></div>
                                 );
                             })}
@@ -72,17 +90,13 @@ const Chessboard = () => {
                                     <div
                                         className="square dark"
                                         id={alphabet + number}
-                                        onClick={(e) => {
-                                            console.log(e.target.id);
-                                        }}
+                                        onClick={checkUserInput}
                                     ></div>
                                 ) : (
                                     <div
                                         className="square light"
                                         id={alphabet + number}
-                                        onClick={(e) => {
-                                            console.log(e.target.id);
-                                        }}
+                                        onClick={checkUserInput}
                                     ></div>
                                 );
                             })}

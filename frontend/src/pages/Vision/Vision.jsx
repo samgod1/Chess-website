@@ -1,10 +1,14 @@
+import { useEffect, useState } from "react";
+
 import "./Vision.css";
 import { Chessboard } from "../../components/index.js";
 
 const Vision = () => {
+    const [started, setStarted] = useState(false); //Vision practice
+
     return (
         <div className="vision-page">
-            <Chessboard />
+            <Chessboard started={started} />
             <div className="sidebar">
                 <div className="sidebar-header">
                     <img
@@ -47,7 +51,14 @@ const Vision = () => {
                             </button>
                         </div>
                     </div>
-                    <button className="start">Start</button>
+                    <button
+                        className="start"
+                        onClick={() => {
+                            setStarted(true);
+                        }}
+                    >
+                        Start
+                    </button>
                 </div>
             </div>
         </div>
