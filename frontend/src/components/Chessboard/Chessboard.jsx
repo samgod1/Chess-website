@@ -3,7 +3,7 @@ import gsap from "gsap";
 
 import "./Chessboard.css";
 
-const Chessboard = ({ started }) => {
+const Chessboard = ({ started, attempts, setAttempts }) => {
     const alphabets = ["a", "b", "c", "d", "e", "f", "g", "h"];
     const numbers = ["1", "2", "3", "4", "5", "6", "7", "8"];
 
@@ -21,24 +21,36 @@ const Chessboard = ({ started }) => {
     }
 
     function checkUserInput(e) {
-        if (e.target.id === randomSquare) {
-            // animate square green
-            gsap.to(e.target, {
-                backgroundColor: "var(--c-green)",
-                duration: 0.2,
-                yoyo: true,
-                repeat: 1,
-            });
+        if (started) {
+            if (e.target.id === randomSquare) {
+                // animate square green
+                gsap.to(e.target, {
+                    backgroundColor: "var(--c-green)",
+                    duration: 0.2,
+                    yoyo: true,
+                    repeat: 1,
+                });
 
-            // play sound
-        } else {
-            //animate square red
-            gsap.to(e.target, {
-                backgroundColor: "var(--c-red)",
-                duration: 0.2,
-                yoyo: true,
-                repeat: 1,
-            });
+                //Later: play sound
+
+                setAttempts([
+                    ...attempts,
+                    { square: e.target.id, isCorrect: true },
+                ]);
+            } else {
+                //animate square red
+                gsap.to(e.target, {
+                    backgroundColor: "var(--c-red)",
+                    duration: 0.2,
+                    yoyo: true,
+                    repeat: 1,
+                });
+
+                setAttempts([
+                    ...attempts,
+                    { square: e.target.id, isCorrect: false },
+                ]);
+            }
         }
     }
 
@@ -64,7 +76,7 @@ const Chessboard = ({ started }) => {
                 {numbers.map((number, i) => {
                     //Alternating ranks
                     return i % 2 == 0 ? (
-                        <div className="rank">
+                        <div className="rank" key={i}>
                             {alphabets.map((alphabet, i) => {
                                 //Alternating squares
                                 return i % 2 == 0 ? (
@@ -72,18 +84,20 @@ const Chessboard = ({ started }) => {
                                         className="square dark"
                                         id={alphabet + number}
                                         onClick={checkUserInput}
+                                        key={i}
                                     ></div>
                                 ) : (
                                     <div
                                         className="square light"
                                         id={alphabet + number}
                                         onClick={checkUserInput}
+                                        key={i}
                                     ></div>
                                 );
                             })}
                         </div>
                     ) : (
-                        <div className="rank">
+                        <div className="rank" key={i}>
                             {alphabets.map((alphabet, i) => {
                                 // Alternating squares
                                 return (i + 1) % 2 == 0 ? (
@@ -91,12 +105,14 @@ const Chessboard = ({ started }) => {
                                         className="square dark"
                                         id={alphabet + number}
                                         onClick={checkUserInput}
+                                        key={i}
                                     ></div>
                                 ) : (
                                     <div
                                         className="square light"
                                         id={alphabet + number}
                                         onClick={checkUserInput}
+                                        key={i}
                                     ></div>
                                 );
                             })}
