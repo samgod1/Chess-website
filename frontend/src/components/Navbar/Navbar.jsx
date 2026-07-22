@@ -108,7 +108,7 @@ const Navbar = () => {
                             <Link to="/puzzles">Puzzles</Link>
                         </li>
                         <li>
-                            <Link to="/visualization">Visualization</Link>
+                            <Link to="/vision">Vision</Link>
                         </li>
                         {user ? (
                             <button

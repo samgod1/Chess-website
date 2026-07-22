@@ -3,7 +3,14 @@ import { createBrowserRouter, RouterProvider } from "react-router";
 import { Toaster } from "react-hot-toast";
 
 import "./App.css";
-import { Home, Course, WatchCourse, Signup, Login } from "./pages/index.js";
+import {
+    Home,
+    Course,
+    WatchCourse,
+    Signup,
+    Login,
+    Vision,
+} from "./pages/index.js";
 import RootLayout from "./pages/RootLayout.jsx";
 
 const router = createBrowserRouter([
@@ -22,6 +29,10 @@ const router = createBrowserRouter([
             {
                 path: "course/:courseId",
                 element: <WatchCourse />,
+            },
+            {
+                path: "vision",
+                element: <Vision />,
             },
         ],
     },

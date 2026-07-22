@@ -1,0 +1,103 @@
+.visualization-page {
+    background-color: var(--c-primary);
+    height: 100dvh;
+    padding: calc(8rem) /* Height of navbar + padding */ 3.75rem;
+    padding-bottom: 1.5rem;
+    display: flex;
+    gap: 2rem;
+    font-family: "Geist";
+
+    .chessboard {
+        aspect-ratio: 1/1;
+        height: 100%;
+        background-color: white;
+    }
+
+    .sidebar {
+        color: var(--c-secondary);
+        height: 100%;
+        border-radius: 1.25rem;
+        border: 1px solid var(--c-secondary-dark);
+        overflow: hidden;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+
+        .sidebar-header {
+            display: flex;
+            gap: 0.5rem;
+            font-size: 2rem;
+            align-items: center;
+            background-color: var(--c-primary-light-1);
+            border-bottom: 1px solid var(--c-secondary-dark);
+            padding: 1rem 2rem;
+        }
+
+        .sidebar-body {
+            padding: 2rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+
+            .moves {
+                flex-grow: 1;
+                display: flex;
+                align-items: baseline;
+                gap: 0.5rem;
+                flex-wrap: wrap;
+
+                .move {
+                    padding: 0.25rem 0.75rem;
+                    border-radius: 0.25rem;
+                }
+
+                .correct {
+                    background-color: var(--c-green);
+                }
+
+                .incorrect {
+                    background-color: var(--c-red);
+                }
+            }
+
+            .options {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+
+                .show-coordinates {
+                    display: flex;
+                    align-items: center;
+                    gap: 0.5rem;
+
+                    input {
+                        width: 1rem;
+                        height: 1rem;
+                    }
+                }
+
+                .button-container {
+                    display: flex;
+                    gap: 0.5rem;
+
+                    button {
+                        background-color: var(--c-secondary-dark-2);
+                        display: flex;
+                        align-items: center;
+                        gap: 0.5rem;
+                        padding: 0.5rem 1rem;
+                        border-radius: 0.25rem;
+                    }
+                }
+            }
+
+            .start {
+                background-color: var(--c-accent);
+                font-size: 1.5rem;
+                padding: 0.75rem 0rem;
+                border-radius: 0.5rem;
+                margin-top: 1rem;
+            }
+        }
+    }
+}
