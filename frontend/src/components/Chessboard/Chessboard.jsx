@@ -21,37 +21,25 @@ const Chessboard = ({ started, attempts, setAttempts }) => {
     }
 
     function checkUserInput(e) {
-        if (started) {
-            if (e.target.id === randomSquare) {
-                // animate square green
-                gsap.to(e.target, {
-                    backgroundColor: "var(--c-green)",
-                    duration: 0.2,
-                    yoyo: true,
-                    repeat: 1,
-                });
+        if (!started) return;
 
-                //Later: play sound
+        const square = e.target;
+        const isCorrect = square.id === randomSquare;
 
-                setAttempts([
-                    ...attempts,
-                    { square: randomSquare, isCorrect: true },
-                ]);
-            } else {
-                //animate square red
-                gsap.to(e.target, {
-                    backgroundColor: "var(--c-red)",
-                    duration: 0.2,
-                    yoyo: true,
-                    repeat: 1,
-                });
+        // Prevent a fast click from racing a previous animation on this square
+        gsap.killTweensOf(square);
 
-                setAttempts([
-                    ...attempts,
-                    { square: randomSquare, isCorrect: false },
-                ]);
-            }
-        }
+        gsap.to(square, {
+            backgroundColor: isCorrect ? "var(--c-green)" : "var(--c-red)",
+            duration: 0.2,
+            yoyo: true,
+            repeat: 1,
+            onInterrupt: () => {
+                gsap.set(square, { clearProps: "backgroundColor" });
+            },
+        });
+
+        setAttempts([...attempts, { square: randomSquare, isCorrect }]);
     }
 
     useEffect(() => {
