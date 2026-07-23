@@ -2,10 +2,13 @@ import { useEffect, useState } from "react";
 
 import "./Vision.css";
 import { Chessboard } from "../../components/index.js";
+import ColorMenu from "./components/ColorMenu/ColorMenu.jsx";
 
 const Vision = () => {
     const [started, setStarted] = useState(false); //Vision practice
     const [attempts, setAttempts] = useState([]);
+    const [color, setColor] = useState("white");
+    const [isColorMenuOpen, setIsColorMenuOpen] = useState(false);
 
     return (
         <div className="vision-page">
@@ -13,6 +16,7 @@ const Vision = () => {
                 started={started}
                 attempts={attempts}
                 setAttempts={setAttempts}
+                color={color}
             />
             <div className="sidebar">
                 <div className="sidebar-header">
@@ -55,7 +59,13 @@ const Vision = () => {
                                 />
                                 <span>Time</span>
                             </button>
-                            <button className="color">
+                            <button
+                                className="color"
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    setIsColorMenuOpen(!isColorMenuOpen);
+                                }}
+                            >
                                 <img
                                     src="/images/color.png"
                                     alt="pawn"
@@ -63,6 +73,14 @@ const Vision = () => {
                                     height={20}
                                 />
                                 <span>Color</span>
+                                {isColorMenuOpen && (
+                                    <ColorMenu
+                                        color={color}
+                                        setColor={setColor}
+                                        isColorMenuOpen={isColorMenuOpen}
+                                        setIsColorMenuOpen={setIsColorMenuOpen}
+                                    />
+                                )}
                             </button>
                         </div>
                     </div>

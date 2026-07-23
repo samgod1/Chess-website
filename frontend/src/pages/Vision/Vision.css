@@ -76,13 +76,15 @@
                     display: flex;
                     gap: 0.5rem;
 
-                    button {
+                    .time,
+                    .color {
                         background-color: var(--c-secondary-dark-2);
                         display: flex;
                         align-items: center;
                         gap: 0.5rem;
                         padding: 0.5rem 1rem;
                         border-radius: 0.25rem;
+                        position: relative;
                     }
                 }
             }

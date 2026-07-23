@@ -3,12 +3,11 @@ import gsap from "gsap";
 
 import "./Chessboard.css";
 
-const Chessboard = ({ started, attempts, setAttempts }) => {
+const Chessboard = ({ started, attempts, setAttempts, color }) => {
     const alphabets = ["a", "b", "c", "d", "e", "f", "g", "h"];
     const numbers = ["1", "2", "3", "4", "5", "6", "7", "8"];
 
     const [randomSquare, setRandomSquare] = useState(null);
-    const [color, setColor] = useState("white");
 
     function generateRandomChessSquare() {
         const firstRandomNumber = Math.floor(Math.random() * 8);
