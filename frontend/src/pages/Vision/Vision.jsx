@@ -3,12 +3,15 @@ import { useEffect, useState } from "react";
 import "./Vision.css";
 import { Chessboard } from "../../components/index.js";
 import ColorMenu from "./components/ColorMenu/ColorMenu.jsx";
+import TimeMenu from "./components/TimeMenu/TimeMenu.jsx";
 
 const Vision = () => {
     const [started, setStarted] = useState(false); //Vision practice
     const [attempts, setAttempts] = useState([]);
     const [color, setColor] = useState("white");
+    const [time, setTime] = useState("15s");
     const [isColorMenuOpen, setIsColorMenuOpen] = useState(false);
+    const [isTimeMenuOpen, setIsTimeMenuOpen] = useState(false);
 
     return (
         <div className="vision-page">
@@ -50,7 +53,16 @@ const Vision = () => {
                             <span>Show coordinates</span>
                         </div>
                         <div className="button-container">
-                            <button className="time">
+                            <button
+                                className="time"
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    setIsTimeMenuOpen(!isTimeMenuOpen);
+                                    if (isColorMenuOpen) {
+                                        setIsColorMenuOpen(false);
+                                    }
+                                }}
+                            >
                                 <img
                                     src="/images/time.png"
                                     alt="time"
@@ -58,12 +70,22 @@ const Vision = () => {
                                     height={20}
                                 />
                                 <span>Time</span>
+                                {isTimeMenuOpen && (
+                                    <TimeMenu
+                                        time={time}
+                                        setTime={setTime}
+                                        setIsTimeMenuOpen={setIsTimeMenuOpen}
+                                    />
+                                )}
                             </button>
                             <button
                                 className="color"
                                 onClick={(e) => {
                                     e.stopPropagation();
                                     setIsColorMenuOpen(!isColorMenuOpen);
+                                    if (isTimeMenuOpen) {
+                                        setIsTimeMenuOpen(false);
+                                    }
                                 }}
                             >
                                 <img
