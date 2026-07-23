@@ -1,0 +1,16 @@
+.progress {
+    display: flex;
+    justify-content: space-between;
+
+    .score {
+        font-size: 3rem;
+    }
+
+    .time-display {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 2rem;
+        color: var(--c-secondary-dark);
+    }
+}

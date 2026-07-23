@@ -2,8 +2,7 @@ import { useEffect, useState } from "react";
 
 import "./Vision.css";
 import { Chessboard } from "../../components/index.js";
-import ColorMenu from "./components/ColorMenu/ColorMenu.jsx";
-import TimeMenu from "./components/TimeMenu/TimeMenu.jsx";
+import { ColorMenu, TimeMenu, Progress } from "./components/index.js";
 
 const Vision = () => {
     const [started, setStarted] = useState(false); //Vision practice
@@ -12,6 +11,7 @@ const Vision = () => {
     const [time, setTime] = useState("15s");
     const [isColorMenuOpen, setIsColorMenuOpen] = useState(false);
     const [isTimeMenuOpen, setIsTimeMenuOpen] = useState(false);
+    const [score, setScore] = useState(0);
 
     return (
         <div className="vision-page">
@@ -20,6 +20,7 @@ const Vision = () => {
                 attempts={attempts}
                 setAttempts={setAttempts}
                 color={color}
+                setScore={setScore}
             />
             <div className="sidebar">
                 <div className="sidebar-header">
@@ -47,73 +48,87 @@ const Vision = () => {
                             })}
                         </div>
                     </div>
-                    <div className="options">
-                        <div className="show-coordinates">
-                            <input type="checkbox" />
-                            <span>Show coordinates</span>
-                        </div>
-                        <div className="button-container">
+                    {started ? (
+                        <Progress score={score} />
+                    ) : (
+                        <>
+                            <div className="options">
+                                <div className="show-coordinates">
+                                    <input type="checkbox" />
+                                    <span>Show coordinates</span>
+                                </div>
+                                <div className="button-container">
+                                    <button
+                                        className="time"
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            setIsTimeMenuOpen(!isTimeMenuOpen);
+                                            if (isColorMenuOpen) {
+                                                setIsColorMenuOpen(false);
+                                            }
+                                        }}
+                                    >
+                                        <img
+                                            src="/images/time.png"
+                                            alt="time"
+                                            width={20}
+                                            height={20}
+                                        />
+                                        <span>Time</span>
+                                        {isTimeMenuOpen && (
+                                            <TimeMenu
+                                                time={time}
+                                                setTime={setTime}
+                                                setIsTimeMenuOpen={
+                                                    setIsTimeMenuOpen
+                                                }
+                                            />
+                                        )}
+                                    </button>
+                                    <button
+                                        className="color"
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            setIsColorMenuOpen(
+                                                !isColorMenuOpen,
+                                            );
+                                            if (isTimeMenuOpen) {
+                                                setIsTimeMenuOpen(false);
+                                            }
+                                        }}
+                                    >
+                                        <img
+                                            src="/images/color.png"
+                                            alt="pawn"
+                                            width={20}
+                                            height={20}
+                                        />
+                                        <span>Color</span>
+                                        {isColorMenuOpen && (
+                                            <ColorMenu
+                                                color={color}
+                                                setColor={setColor}
+                                                isColorMenuOpen={
+                                                    isColorMenuOpen
+                                                }
+                                                setIsColorMenuOpen={
+                                                    setIsColorMenuOpen
+                                                }
+                                            />
+                                        )}
+                                    </button>
+                                </div>
+                            </div>
                             <button
-                                className="time"
-                                onClick={(e) => {
-                                    e.stopPropagation();
-                                    setIsTimeMenuOpen(!isTimeMenuOpen);
-                                    if (isColorMenuOpen) {
-                                        setIsColorMenuOpen(false);
-                                    }
+                                className="start"
+                                onClick={() => {
+                                    setStarted(true);
                                 }}
                             >
-                                <img
-                                    src="/images/time.png"
-                                    alt="time"
-                                    width={20}
-                                    height={20}
-                                />
-                                <span>Time</span>
-                                {isTimeMenuOpen && (
-                                    <TimeMenu
-                                        time={time}
-                                        setTime={setTime}
-                                        setIsTimeMenuOpen={setIsTimeMenuOpen}
-                                    />
-                                )}
+                                Start
                             </button>
-                            <button
-                                className="color"
-                                onClick={(e) => {
-                                    e.stopPropagation();
-                                    setIsColorMenuOpen(!isColorMenuOpen);
-                                    if (isTimeMenuOpen) {
-                                        setIsTimeMenuOpen(false);
-                                    }
-                                }}
-                            >
-                                <img
-                                    src="/images/color.png"
-                                    alt="pawn"
-                                    width={20}
-                                    height={20}
-                                />
-                                <span>Color</span>
-                                {isColorMenuOpen && (
-                                    <ColorMenu
-                                        color={color}
-                                        setColor={setColor}
-                                        isColorMenuOpen={isColorMenuOpen}
-                                        setIsColorMenuOpen={setIsColorMenuOpen}
-                                    />
-                                )}
-                            </button>
-                        </div>
-                    </div>
-                    <button
-                        className="start"
-                        onClick={() => {
-                            setStarted(true);
-                        }}
-                    >
-                        Start
-                    </button>
+                        </>
+                    )}
                 </div>
             </div>
         </div>

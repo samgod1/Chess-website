@@ -3,7 +3,7 @@ import gsap from "gsap";
 
 import "./Chessboard.css";
 
-const Chessboard = ({ started, attempts, setAttempts, color }) => {
+const Chessboard = ({ started, attempts, setAttempts, color, setScore }) => {
     const alphabets = ["a", "b", "c", "d", "e", "f", "g", "h"];
     const numbers = ["1", "2", "3", "4", "5", "6", "7", "8"];
 
@@ -24,6 +24,8 @@ const Chessboard = ({ started, attempts, setAttempts, color }) => {
 
         const square = e.target;
         const isCorrect = square.id === randomSquare;
+
+        if (isCorrect) setScore((prev) => prev + 1);
 
         // Prevent a fast click from racing a previous animation on this square
         gsap.killTweensOf(square);
