@@ -35,7 +35,7 @@ const Chessboard = ({ started, attempts, setAttempts }) => {
 
                 setAttempts([
                     ...attempts,
-                    { square: e.target.id, isCorrect: true },
+                    { square: randomSquare, isCorrect: true },
                 ]);
             } else {
                 //animate square red
@@ -48,7 +48,7 @@ const Chessboard = ({ started, attempts, setAttempts }) => {
 
                 setAttempts([
                     ...attempts,
-                    { square: e.target.id, isCorrect: false },
+                    { square: randomSquare, isCorrect: false },
                 ]);
             }
         }

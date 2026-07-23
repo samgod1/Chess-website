@@ -7,10 +7,6 @@ const Vision = () => {
     const [started, setStarted] = useState(false); //Vision practice
     const [attempts, setAttempts] = useState([]);
 
-    useEffect(() => {
-        console.log(attempts);
-    }, [attempts]);
-
     return (
         <div className="vision-page">
             <Chessboard
@@ -29,18 +25,20 @@ const Vision = () => {
                     <p>Vision</p>
                 </div>
                 <div className="sidebar-body">
-                    <div className="attempts">
-                        {attempts.map(({ square, isCorrect }, i) => {
-                            return isCorrect ? (
-                                <div className="square correct" key={i}>
-                                    {square}
-                                </div>
-                            ) : (
-                                <div className="square incorrect" key={i}>
-                                    {square}
-                                </div>
-                            );
-                        })}
+                    <div className="attempts-container">
+                        <div className="attempts">
+                            {attempts.map(({ square, isCorrect }, i) => {
+                                return isCorrect ? (
+                                    <div className="square correct" key={i}>
+                                        {square}
+                                    </div>
+                                ) : (
+                                    <div className="square incorrect" key={i}>
+                                        {square}
+                                    </div>
+                                );
+                            })}
+                        </div>
                     </div>
                     <div className="options">
                         <div className="show-coordinates">
