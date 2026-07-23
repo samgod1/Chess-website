@@ -49,7 +49,7 @@ const Vision = () => {
                         </div>
                     </div>
                     {started ? (
-                        <Progress score={score} />
+                        <Progress score={score} time={time} />
                     ) : (
                         <>
                             <div className="options">
