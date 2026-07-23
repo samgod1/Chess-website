@@ -1,7 +1,5 @@
 import { useEffect, useRef, useState } from "react";
 
-import "./ColorMenu.css";
-
 const ColorMenu = ({
     color,
     setColor,

@@ -1,7 +1,5 @@
 import { useEffect, useRef, useState } from "react";
 
-import "./TimeMenu.css";
-
 const TimeMenu = ({ time, setTime, setIsTimeMenuOpen }) => {
     const buttons = ["15s", "30s", "45s"];
 
