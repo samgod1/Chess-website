@@ -1,42 +1,29 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import "./Progress.css";
 
-const Progress = ({ score, time }) => {
+const Progress = ({ score, time, started, setStarted }) => {
     const [seconds, setSeconds] = useState(null);
-    const [running, setRunning] = useState(false);
 
-    let startTime = 0;
-    let finishTime = 0;
-    let timerInterval = null;
-
-    function startTimer() {
-        startTime = Date.now();
-        finishTime = Date.now() + 30 * 1000;
-        setRunning(true);
-    }
+    const startTime = useRef(null);
+    const finishTime = useRef(null);
+    const timerInterval = useRef(null);
 
     function updateTimer() {
-        timerInterval = setInterval(() => {
-            const remainingTime = finishTime - Date.now();
-            const timer = Math.floor(remainingTime / 1000);
-            setSeconds(timer);
+        const remainingTime = finishTime.current - Date.now();
+        const timer = Math.floor(remainingTime / 1000);
+        setSeconds(String(timer).padStart(2, 0));
 
-            if (timer <= 0) {
-                stopTimer();
-            }
-        }, 100);
+        //Stop timer
+        if (timer <= 0) {
+            clearInterval(timerInterval.current);
+            setStarted(false);
+        }
     }
 
-    function stopTimer() {
-        setRunning(false);
-        clearInterval(timerInterval);
-    }
-
-    // clearInterval(interval);
     useEffect(() => {
-        startTimer();
-        updateTimer();
+        finishTime.current = Date.now() + 30 * 1000;
+        timerInterval.current = setInterval(updateTimer, 100);
     }, []);
 
     return (
