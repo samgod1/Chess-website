@@ -8,7 +8,7 @@ const Vision = () => {
     const [started, setStarted] = useState(false); //Vision practice
     const [attempts, setAttempts] = useState([]);
     const [color, setColor] = useState("white");
-    const [time, setTime] = useState("15s");
+    const [time, setTime] = useState(30);
     const [isColorMenuOpen, setIsColorMenuOpen] = useState(false);
     const [isTimeMenuOpen, setIsTimeMenuOpen] = useState(false);
     const [score, setScore] = useState(0);

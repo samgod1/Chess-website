@@ -25,9 +25,11 @@ const TimeMenu = ({ time, setTime, setIsTimeMenuOpen }) => {
                 <li
                     onClick={(e) => {
                         e.stopPropagation();
-                        setTime(option);
+                        setTime(Number(option.split("s")[0]));
                     }}
-                    className={time == option ? "selected" : ""}
+                    className={
+                        time == Number(option.split("s")[0]) ? "selected" : ""
+                    }
                     key={i}
                 >
                     {option}

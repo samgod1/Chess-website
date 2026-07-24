@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import "./Progress.css";
 
 const Progress = ({ score, time, started, setStarted }) => {
-    const [seconds, setSeconds] = useState(null);
+    const [seconds, setSeconds] = useState(time);
 
     const startTime = useRef(null);
     const finishTime = useRef(null);
@@ -22,7 +22,7 @@ const Progress = ({ score, time, started, setStarted }) => {
     }
 
     useEffect(() => {
-        finishTime.current = Date.now() + 30 * 1000;
+        finishTime.current = Date.now() + time * 1000;
         timerInterval.current = setInterval(updateTimer, 100);
     }, []);
 
