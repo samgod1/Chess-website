@@ -3,11 +3,23 @@ import gsap from "gsap";
 
 import "./Chessboard.css";
 
-const Chessboard = ({ started, attempts, setAttempts, color, setScore }) => {
+const Chessboard = ({
+    started,
+    attempts,
+    setAttempts,
+    color,
+    setScore,
+    hasCountdownCompleted,
+    setHasCountdownCompleted,
+}) => {
     const alphabets = ["a", "b", "c", "d", "e", "f", "g", "h"];
     const numbers = ["1", "2", "3", "4", "5", "6", "7", "8"];
 
     const [randomSquare, setRandomSquare] = useState(null);
+    const [countdown, setCountdown] = useState(3);
+
+    const countdownInterval = useRef(null);
+    const completed = useRef(false);
 
     function generateRandomChessSquare() {
         const firstRandomNumber = Math.floor(Math.random() * 8);
@@ -43,16 +55,35 @@ const Chessboard = ({ started, attempts, setAttempts, color, setScore }) => {
         setAttempts([...attempts, { square: randomSquare, isCorrect }]);
     }
 
+    function startCountdown() {
+        setCountdown((prev) => {
+            if (prev <= 1) {
+                clearInterval(countdownInterval.current);
+                completed.current = true;
+            }
+            return prev - 1;
+        });
+    }
+
     useEffect(() => {
         if (started) {
+            countdownInterval.current = setInterval(startCountdown, 1000);
             generateRandomChessSquare();
         }
     }, [started]);
 
+    useEffect(() => {
+        if (completed.current) {
+            setHasCountdownCompleted(true);
+        }
+    }, [completed.current]);
+
     return (
         <div className="chessboard-container">
-            {started && (
-                <div className="randomSquareDisplay">{randomSquare}</div>
+            {started && !hasCountdownCompleted ? (
+                <div className="display">{countdown}</div>
+            ) : (
+                <div className="display">{randomSquare}</div>
             )}
             <div
                 className={`chessboard ${color}`}

@@ -2,7 +2,13 @@ import { useEffect, useRef, useState } from "react";
 
 import "./Progress.css";
 
-const Progress = ({ score, time, started, setStarted }) => {
+const Progress = ({
+    score,
+    time,
+    started,
+    setStarted,
+    hasCountdownCompleted,
+}) => {
     const [seconds, setSeconds] = useState(time);
 
     const startTime = useRef(null);
@@ -22,9 +28,11 @@ const Progress = ({ score, time, started, setStarted }) => {
     }
 
     useEffect(() => {
-        finishTime.current = Date.now() + time * 1000;
-        timerInterval.current = setInterval(updateTimer, 100);
-    }, []);
+        if (hasCountdownCompleted) {
+            finishTime.current = Date.now() + time * 1000;
+            timerInterval.current = setInterval(updateTimer, 100);
+        }
+    }, [hasCountdownCompleted]);
 
     return (
         <div className="progress">

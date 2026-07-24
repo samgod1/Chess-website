@@ -12,6 +12,17 @@ const Vision = () => {
     const [isColorMenuOpen, setIsColorMenuOpen] = useState(false);
     const [isTimeMenuOpen, setIsTimeMenuOpen] = useState(false);
     const [score, setScore] = useState(0);
+    const [hasCountdownCompleted, setHasCountdownCompleted] = useState(false);
+
+    useEffect(() => {
+        //reset
+        if (started) {
+            setIsColorMenuOpen(false);
+            setIsTimeMenuOpen(false);
+            setScore(0);
+            setAttempts([]);
+        }
+    }, [started]);
 
     return (
         <div className="vision-page">
@@ -21,6 +32,8 @@ const Vision = () => {
                 setAttempts={setAttempts}
                 color={color}
                 setScore={setScore}
+                hasCountdownCompleted={hasCountdownCompleted}
+                setHasCountdownCompleted={setHasCountdownCompleted}
             />
             <div className="sidebar">
                 <div className="sidebar-header">
@@ -54,6 +67,7 @@ const Vision = () => {
                             time={time}
                             started={started}
                             setStarted={setStarted}
+                            hasCountdownCompleted={hasCountdownCompleted}
                         />
                     ) : (
                         <>

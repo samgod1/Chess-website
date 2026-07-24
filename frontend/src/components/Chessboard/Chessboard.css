@@ -3,7 +3,7 @@
     height: 100%;
     position: relative;
 
-    .randomSquareDisplay {
+    .display {
         position: absolute;
         left: 50%;
         top: 50%;
