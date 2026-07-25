@@ -1,17 +1,10 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useContext } from "react";
 import gsap from "gsap";
 
 import "./Chessboard.css";
+import { VisionContext } from "../../contexts";
 
-const Chessboard = ({
-    started,
-    attempts,
-    setAttempts,
-    color,
-    setScore,
-    hasCountdownCompleted,
-    setHasCountdownCompleted,
-}) => {
+const Chessboard = ({ color }) => {
     const alphabets = ["a", "b", "c", "d", "e", "f", "g", "h"];
     const numbers = ["1", "2", "3", "4", "5", "6", "7", "8"];
 
@@ -20,6 +13,15 @@ const Chessboard = ({
 
     const countdownInterval = useRef(null);
     const completed = useRef(false);
+
+    const {
+        hasStarted,
+        attempts,
+        setAttempts,
+        setScore,
+        hasCountdownCompleted,
+        setHasCountdownCompleted,
+    } = useContext(VisionContext);
 
     function generateRandomChessSquare() {
         const firstRandomNumber = Math.floor(Math.random() * 8);
@@ -32,7 +34,7 @@ const Chessboard = ({
     }
 
     function checkUserInput(e) {
-        if (!started) return;
+        if (!hasStarted) return;
 
         const square = e.target;
         const isCorrect = square.id === randomSquare;
@@ -66,11 +68,11 @@ const Chessboard = ({
     }
 
     useEffect(() => {
-        if (started) {
+        if (hasStarted) {
             countdownInterval.current = setInterval(startCountdown, 1000);
             generateRandomChessSquare();
         }
-    }, [started]);
+    }, [hasStarted]);
 
     useEffect(() => {
         if (completed.current) {
@@ -80,7 +82,7 @@ const Chessboard = ({
 
     return (
         <div className="chessboard-container">
-            {started && !hasCountdownCompleted ? (
+            {hasStarted && !hasCountdownCompleted ? (
                 <div className="display">{countdown}</div>
             ) : (
                 <div className="display">{randomSquare}</div>
@@ -88,7 +90,7 @@ const Chessboard = ({
             <div
                 className={`chessboard ${color}`}
                 onClick={() => {
-                    if (started) {
+                    if (hasStarted) {
                         generateRandomChessSquare();
                     }
                 }}

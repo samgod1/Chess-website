@@ -1,9 +1,13 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useContext } from "react";
 
-const TimeMenu = ({ time, setTime, setIsTimeMenuOpen }) => {
+import { VisionContext } from "../../../../../../../../contexts";
+
+const TimeMenu = ({ setIsTimeMenuOpen }) => {
     const buttons = ["15s", "30s", "45s"];
 
     const timeMenuRef = useRef(null);
+
+    const { time, setTime } = useContext(VisionContext);
 
     function handleClick(e) {
         if (!timeMenuRef.current.contains(e.target)) {

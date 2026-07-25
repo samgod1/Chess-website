@@ -1,0 +1,29 @@
+.sidebar-body {
+    padding: 2rem;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+
+    .attempts-container {
+        flex-grow: 1;
+
+        .attempts {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+
+            .square {
+                padding: 0.25rem 0.75rem;
+                border-radius: 0.25rem;
+            }
+
+            .correct {
+                background-color: var(--c-green);
+            }
+
+            .incorrect {
+                background-color: var(--c-red);
+            }
+        }
+    }
+}

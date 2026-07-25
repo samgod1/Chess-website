@@ -1,15 +1,13 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useContext } from "react";
 
 import "./Progress.css";
+import { VisionContext } from "../../../../../../../../contexts";
 
-const Progress = ({
-    score,
-    time,
-    started,
-    setStarted,
-    hasCountdownCompleted,
-}) => {
+const Progress = ({ time, hasCountdownCompleted }) => {
     const [seconds, setSeconds] = useState(time);
+
+    const { hasStarted, setHasStarted, score, isCountdownCompleted } =
+        useContext(VisionContext);
 
     const startTime = useRef(null);
     const finishTime = useRef(null);
@@ -23,7 +21,7 @@ const Progress = ({
         //Stop timer
         if (timer <= 0) {
             clearInterval(timerInterval.current);
-            setStarted(false);
+            setHasStarted(false);
         }
     }
 
