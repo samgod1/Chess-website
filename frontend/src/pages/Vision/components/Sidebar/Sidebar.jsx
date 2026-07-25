@@ -10,17 +10,15 @@ import {
 } from "../Sidebar/components/SidebarBody/components/index";
 
 const Sidebar = () => {
-    const { hasStarted } = useContext(VisionContext);
+    const { hasStarted, setScore, setAttempts } = useContext(VisionContext);
 
-    // useEffect(() => {
-    //     //Reset
-    //     if (hasStarted) {
-    //         setIsColorMenuOpen(false);
-    //         setIsTimeMenuOpen(false);
-    //         setScore(0);
-    //         setAttempts([]);
-    //     }
-    // }, [hasStarted]);
+    useEffect(() => {
+        //Reset
+        if (hasStarted) {
+            setScore(0);
+            setAttempts([]);
+        }
+    }, [hasStarted]);
 
     return (
         <div className="sidebar">

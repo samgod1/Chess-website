@@ -82,9 +82,10 @@ const Chessboard = ({ color }) => {
 
     return (
         <div className="chessboard-container">
-            {hasStarted && !hasCountdownCompleted ? (
+            {hasStarted && !hasCountdownCompleted && (
                 <div className="display">{countdown}</div>
-            ) : (
+            )}
+            {hasStarted && hasCountdownCompleted && (
                 <div className="display">{randomSquare}</div>
             )}
             <div
