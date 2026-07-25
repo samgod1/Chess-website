@@ -3,11 +3,10 @@ import { useEffect, useRef, useState, useContext } from "react";
 import "./Progress.css";
 import { VisionContext } from "../../../../../../../../contexts";
 
-const Progress = ({ time, hasCountdownCompleted }) => {
-    const [seconds, setSeconds] = useState(time);
-
-    const { hasStarted, setHasStarted, score, isCountdownCompleted } =
+const Progress = () => {
+    const { hasStarted, setHasStarted, time, score, hasCountdownCompleted } =
         useContext(VisionContext);
+    const [seconds, setSeconds] = useState(time);
 
     const startTime = useRef(null);
     const finishTime = useRef(null);

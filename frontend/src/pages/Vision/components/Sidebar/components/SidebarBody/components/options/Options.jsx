@@ -1,11 +1,14 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 
 import "./Options.css";
 import { TimeMenu, ColorMenu } from "../index.js";
+import { VisionContext } from "../../../../../../../../contexts/index.js";
 
 const Options = () => {
     const [isColorMenuOpen, setIsColorMenuOpen] = useState(false);
     const [isTimeMenuOpen, setIsTimeMenuOpen] = useState(false);
+
+    const { setHasStarted } = useContext(VisionContext);
 
     return (
         <>
