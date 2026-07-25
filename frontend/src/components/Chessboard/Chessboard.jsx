@@ -12,7 +12,6 @@ const Chessboard = ({ color }) => {
     const [countdown, setCountdown] = useState(3);
 
     const countdownInterval = useRef(null);
-    const completed = useRef(false);
 
     const {
         hasStarted,
@@ -58,27 +57,25 @@ const Chessboard = ({ color }) => {
     }
 
     function startCountdown() {
-        setCountdown((prev) => {
-            if (prev <= 1) {
-                clearInterval(countdownInterval.current);
-                completed.current = true;
-            }
-            return prev - 1;
-        });
+        countdownInterval.current = setInterval(() => {
+            setCountdown((prev) => prev - 1);
+        }, 1000);
     }
 
     useEffect(() => {
         if (hasStarted) {
-            countdownInterval.current = setInterval(startCountdown, 1000);
-            generateRandomChessSquare();
+            setCountdown(3);
+            startCountdown();
         }
     }, [hasStarted]);
 
     useEffect(() => {
-        if (completed.current) {
+        if (countdown <= 0) {
+            clearInterval(countdownInterval.current);
+            generateRandomChessSquare();
             setHasCountdownCompleted(true);
         }
-    }, [completed.current]);
+    }, [countdown]);
 
     return (
         <div className="chessboard-container">

@@ -4,8 +4,14 @@ import "./Progress.css";
 import { VisionContext } from "../../../../../../../../contexts";
 
 const Progress = () => {
-    const { hasStarted, setHasStarted, time, score, hasCountdownCompleted } =
-        useContext(VisionContext);
+    const {
+        hasStarted,
+        setHasStarted,
+        time,
+        score,
+        hasCountdownCompleted,
+        setHasCountdownCompleted,
+    } = useContext(VisionContext);
     const [seconds, setSeconds] = useState(time);
 
     const startTime = useRef(null);
@@ -21,6 +27,8 @@ const Progress = () => {
         if (timer <= 0) {
             clearInterval(timerInterval.current);
             setHasStarted(false);
+            //Reset countdown completed
+            setHasCountdownCompleted(false);
         }
     }
 
