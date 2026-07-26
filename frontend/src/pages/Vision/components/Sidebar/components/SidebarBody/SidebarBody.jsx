@@ -2,7 +2,7 @@ import { useContext } from "react";
 
 import "./SidebarBody.css";
 import { VisionContext } from "../../../../../../contexts";
-import { Progress, Options } from "./components";
+import { Progress, Options, Info } from "./components";
 
 const SidebarBody = () => {
     const {
@@ -20,6 +20,7 @@ const SidebarBody = () => {
 
     return (
         <div className="sidebar-body">
+            <Info />
             <div className="attempts-container">
                 <div className="attempts">
                     {attempts.map(({ square, isCorrect }, i) => {

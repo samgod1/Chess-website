@@ -8,7 +8,6 @@ const Chessboard = () => {
     const alphabets = ["a", "b", "c", "d", "e", "f", "g", "h"];
     const numbers = ["1", "2", "3", "4", "5", "6", "7", "8"];
 
-    const [randomSquare, setRandomSquare] = useState(null);
     const [countdown, setCountdown] = useState(3);
 
     const countdownInterval = useRef(null);
@@ -21,6 +20,8 @@ const Chessboard = () => {
         hasCountdownCompleted,
         setHasCountdownCompleted,
         color,
+        randomSquare,
+        setRandomSquare,
     } = useContext(VisionContext);
 
     function generateRandomChessSquare() {

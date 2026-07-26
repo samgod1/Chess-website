@@ -10,6 +10,7 @@ const VisionContextProvider = ({ children }) => {
     const [hasCountdownCompleted, setHasCountdownCompleted] = useState(false);
     const [color, setColor] = useState("white");
     const [selectedColor, setSelectedColor] = useState("white");
+    const [randomSquare, setRandomSquare] = useState(null);
 
     function selectRandomColor() {
         const colors = ["white", "black"];
@@ -40,6 +41,8 @@ const VisionContextProvider = ({ children }) => {
                 setColor,
                 selectedColor,
                 setSelectedColor,
+                randomSquare,
+                setRandomSquare,
             }}
         >
             {children}

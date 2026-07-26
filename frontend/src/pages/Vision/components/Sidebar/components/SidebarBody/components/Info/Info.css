@@ -1,0 +1,39 @@
+.info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+
+    .square-container {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+
+        .square {
+            width: 1.5rem;
+            height: 1.5rem;
+            border-radius: 0.25rem;
+            background-color: var(--c-secondary);
+        }
+        span {
+            font-size: 2rem;
+        }
+    }
+    .scores-container {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        color: var(--c-secondary-dark);
+
+        .previous,
+        .best {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+
+            .score {
+                font-size: 1.5rem;
+            }
+        }
+    }
+}
