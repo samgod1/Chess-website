@@ -37,6 +37,9 @@ const Chessboard = () => {
     function checkUserInput(e) {
         if (!hasStarted) return;
 
+        generateRandomChessSquare();
+        hideSquareDisplay();
+
         const square = e.target;
         const isCorrect = square.id === randomSquare;
 
@@ -64,6 +67,20 @@ const Chessboard = () => {
         }, 1000);
     }
 
+    function hideSquareDisplay() {
+        gsap.killTweensOf(".display");
+        gsap.fromTo(
+            ".display",
+            {
+                opacity: 1,
+            },
+            {
+                opacity: 0,
+                delay: 0.5,
+            },
+        );
+    }
+
     useEffect(() => {
         if (hasStarted) {
             setCountdown(3);
@@ -79,6 +96,10 @@ const Chessboard = () => {
         }
     }, [countdown]);
 
+    useEffect(() => {
+        if (hasCountdownCompleted) hideSquareDisplay();
+    }, [hasCountdownCompleted]);
+
     return (
         <div className="chessboard-container">
             {hasStarted && !hasCountdownCompleted && (
@@ -87,14 +108,7 @@ const Chessboard = () => {
             {hasStarted && hasCountdownCompleted && (
                 <div className="display">{randomSquare}</div>
             )}
-            <div
-                className={`chessboard ${color}`}
-                onClick={() => {
-                    if (hasStarted) {
-                        generateRandomChessSquare();
-                    }
-                }}
-            >
+            <div className={`chessboard ${color}`}>
                 {numbers.map((number, i) => {
                     //Alternating ranks
                     return i % 2 == 0 ? (
