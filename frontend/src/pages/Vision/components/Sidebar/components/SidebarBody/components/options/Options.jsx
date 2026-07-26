@@ -36,9 +36,9 @@ const Options = () => {
                         />
                         <span>Time</span>
 
-                        {isTimeMenuOpen && (
-                            <TimeMenu setIsTimeMenuOpen={setIsColorMenuOpen} />
-                        )}
+                        <Activity mode={isTimeMenuOpen ? "visible" : "hidden"}>
+                            <TimeMenu setIsTimeMenuOpen={setIsTimeMenuOpen} />
+                        </Activity>
                     </button>
                     <button
                         className="color"
