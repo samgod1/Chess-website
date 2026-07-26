@@ -1,5 +1,3 @@
-import { useEffect, useState } from "react";
-
 import "./Vision.css";
 import { Chessboard } from "../../components/index.js";
 import Sidebar from "./components/Sidebar/Sidebar.jsx";

@@ -1,8 +1,8 @@
-import { useState, useContext } from "react";
+import { useContext } from "react";
 
 import "./SidebarBody.css";
 import { VisionContext } from "../../../../../../contexts";
-import { Progress, ColorMenu, TimeMenu, Options } from "./components";
+import { Progress, Options } from "./components";
 
 const SidebarBody = () => {
     const {

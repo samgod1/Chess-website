@@ -1,4 +1,4 @@
-import { useState, useContext, Activity, useEffect } from "react";
+import { useState, useContext, Activity } from "react";
 
 import "./Options.css";
 import { TimeMenu, ColorMenu } from "../index.js";

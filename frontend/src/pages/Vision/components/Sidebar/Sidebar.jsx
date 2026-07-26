@@ -1,13 +1,8 @@
-import { useState, useEffect, useContext } from "react";
+import { useEffect, useContext } from "react";
 
 import "./Sidebar.css";
 import { VisionContext } from "../../../../contexts";
 import { SidebarHeader, SidebarBody } from "./components";
-import {
-    ColorMenu,
-    TimeMenu,
-    Progress,
-} from "../Sidebar/components/SidebarBody/components/index";
 
 const Sidebar = () => {
     const { hasStarted, setScore, setAttempts } = useContext(VisionContext);
