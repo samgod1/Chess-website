@@ -1,4 +1,4 @@
-import { useState, createContext } from "react";
+import { useState, useEffect, createContext } from "react";
 
 export const VisionContext = createContext();
 
@@ -8,6 +8,20 @@ const VisionContextProvider = ({ children }) => {
     const [score, setScore] = useState(0);
     const [time, setTime] = useState(30);
     const [hasCountdownCompleted, setHasCountdownCompleted] = useState(false);
+    const [color, setColor] = useState("white");
+    const [selectedColor, setSelectedColor] = useState("white");
+
+    function selectRandomColor() {
+        const colors = ["white", "black"];
+        const randomNumber = Math.floor(Math.random() * 2);
+        console.log(colors[randomNumber]);
+
+        setColor(colors[randomNumber]);
+    }
+
+    useEffect(() => {
+        if (hasStarted && selectedColor == "random") selectRandomColor();
+    }, [hasStarted]);
 
     return (
         <VisionContext.Provider
@@ -22,6 +36,10 @@ const VisionContextProvider = ({ children }) => {
                 setHasCountdownCompleted,
                 time,
                 setTime,
+                color,
+                setColor,
+                selectedColor,
+                setSelectedColor,
             }}
         >
             {children}

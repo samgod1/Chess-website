@@ -4,7 +4,7 @@ import gsap from "gsap";
 import "./Chessboard.css";
 import { VisionContext } from "../../contexts";
 
-const Chessboard = ({ color }) => {
+const Chessboard = () => {
     const alphabets = ["a", "b", "c", "d", "e", "f", "g", "h"];
     const numbers = ["1", "2", "3", "4", "5", "6", "7", "8"];
 
@@ -20,6 +20,7 @@ const Chessboard = ({ color }) => {
         setScore,
         hasCountdownCompleted,
         setHasCountdownCompleted,
+        color,
     } = useContext(VisionContext);
 
     function generateRandomChessSquare() {

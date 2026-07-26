@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, Activity, useEffect } from "react";
 
 import "./Options.css";
 import { TimeMenu, ColorMenu } from "../index.js";
@@ -57,11 +57,11 @@ const Options = () => {
                             height={20}
                         />
                         <span>Color</span>
-                        {isColorMenuOpen && (
+                        <Activity mode={isColorMenuOpen ? "visible" : "hidden"}>
                             <ColorMenu
                                 setIsColorMenuOpen={setIsColorMenuOpen}
                             />
-                        )}
+                        </Activity>
                     </button>
                 </div>
             </div>

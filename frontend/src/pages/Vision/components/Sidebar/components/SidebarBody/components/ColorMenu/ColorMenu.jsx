@@ -7,7 +7,8 @@ const ColorMenu = ({ setIsColorMenuOpen }) => {
 
     const colorMenuRef = useRef(null);
 
-    const { color, setColor } = useContext(VisionContext);
+    const { color, setColor, selectedColor, setSelectedColor } =
+        useContext(VisionContext);
 
     function handleClick(e) {
         if (!colorMenuRef.current.contains(e.target)) {
@@ -29,9 +30,10 @@ const ColorMenu = ({ setIsColorMenuOpen }) => {
                 <li
                     onClick={(e) => {
                         e.stopPropagation();
-                        setColor(option);
+                        setSelectedColor(option);
+                        if (option != "random") setColor(option);
                     }}
-                    className={color == option ? "selected" : ""}
+                    className={selectedColor == option ? "selected" : ""}
                     key={i}
                 >
                     {option}
