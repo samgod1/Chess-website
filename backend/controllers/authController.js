@@ -14,6 +14,12 @@ export const signup = async (req, res) => {
                 .json({ message: "Please fill out all the fields" });
         }
 
+        const user = User.findOne({ email });
+
+        if (user) {
+            return res.status(500).json({ message: "User already exists" });
+        }
+
         if (!email.includes("@")) {
             return res
                 .status(400)
