@@ -3,10 +3,11 @@ import gsap from "gsap";
 
 import "./Chessboard.css";
 import { VisionContext } from "../../contexts";
+import Coords from "./components/Coords.jsx/Coords";
 
 const Chessboard = () => {
-    const alphabets = ["a", "b", "c", "d", "e", "f", "g", "h"];
-    const numbers = ["1", "2", "3", "4", "5", "6", "7", "8"];
+    const files = ["a", "b", "c", "d", "e", "f", "g", "h"];
+    const ranks = ["1", "2", "3", "4", "5", "6", "7", "8"];
 
     const [countdown, setCountdown] = useState(3);
 
@@ -29,7 +30,7 @@ const Chessboard = () => {
         const secondRandomNumber = Math.floor(Math.random() * 8);
 
         const randomSquare =
-            alphabets[firstRandomNumber] + numbers[secondRandomNumber];
+            files[firstRandomNumber] + ranks[secondRandomNumber];
 
         setRandomSquare(randomSquare);
     }
@@ -109,23 +110,23 @@ const Chessboard = () => {
                 <div className="display">{randomSquare}</div>
             )}
             <div className={`chessboard ${color}`}>
-                {numbers.map((number, i) => {
+                {ranks.map((rank, i) => {
                     //Alternating ranks
                     return i % 2 == 0 ? (
                         <div className="rank" key={i}>
-                            {alphabets.map((alphabet, i) => {
+                            {files.map((file, i) => {
                                 //Alternating squares
                                 return i % 2 == 0 ? (
                                     <div
                                         className="square dark"
-                                        id={alphabet + number}
+                                        id={file + rank}
                                         onClick={checkUserInput}
                                         key={i}
                                     ></div>
                                 ) : (
                                     <div
                                         className="square light"
-                                        id={alphabet + number}
+                                        id={file + rank}
                                         onClick={checkUserInput}
                                         key={i}
                                     ></div>
@@ -134,19 +135,19 @@ const Chessboard = () => {
                         </div>
                     ) : (
                         <div className="rank" key={i}>
-                            {alphabets.map((alphabet, i) => {
+                            {files.map((file, i) => {
                                 // Alternating squares
                                 return (i + 1) % 2 == 0 ? (
                                     <div
                                         className="square dark"
-                                        id={alphabet + number}
+                                        id={file + rank}
                                         onClick={checkUserInput}
                                         key={i}
                                     ></div>
                                 ) : (
                                     <div
                                         className="square light"
-                                        id={alphabet + number}
+                                        id={file + rank}
                                         onClick={checkUserInput}
                                         key={i}
                                     ></div>
@@ -155,6 +156,7 @@ const Chessboard = () => {
                         </div>
                     );
                 })}
+                <Coords files={files} ranks={ranks} color={color} />
             </div>
         </div>
     );
