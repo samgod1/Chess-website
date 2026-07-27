@@ -15,8 +15,8 @@ const Info = () => {
             </div>
             <Activity mode={!hasStarted ? "visible" : "hidden"}>
                 <div className="scores-container">
-                    <div className="previous">
-                        <span>Previous:</span>
+                    <div className="current">
+                        <span>Current:</span>
                         <span className="score">{score}</span>
                     </div>
                     <div className="best">

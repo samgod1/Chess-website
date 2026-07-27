@@ -25,7 +25,7 @@
         gap: 0.75rem;
         color: var(--c-secondary-dark);
 
-        .previous,
+        .current,
         .best {
             display: flex;
             align-items: center;
