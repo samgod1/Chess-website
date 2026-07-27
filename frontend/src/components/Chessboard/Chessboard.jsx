@@ -36,7 +36,7 @@ const Chessboard = () => {
     }
 
     function checkUserInput(e) {
-        if (!hasStarted) return;
+        if (!hasStarted || !hasCountdownCompleted) return;
 
         generateRandomChessSquare();
         hideSquareDisplay();
