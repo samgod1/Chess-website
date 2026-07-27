@@ -8,13 +8,20 @@ const Options = () => {
     const [isColorMenuOpen, setIsColorMenuOpen] = useState(false);
     const [isTimeMenuOpen, setIsTimeMenuOpen] = useState(false);
 
-    const { setHasStarted } = useContext(VisionContext);
+    const { setHasStarted, isCoordinates, setIsCoordinates } =
+        useContext(VisionContext);
 
     return (
         <>
             <div className="options">
                 <div className="show-coordinates">
-                    <input type="checkbox" />
+                    <input
+                        type="checkbox"
+                        defaultChecked={isCoordinates}
+                        onClick={() => {
+                            setIsCoordinates(!isCoordinates);
+                        }}
+                    />
                     <span>Show coordinates</span>
                 </div>
                 <div className="button-container">

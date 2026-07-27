@@ -15,6 +15,8 @@ const VisionContextProvider = ({ children }) => {
     const [selectedColor, setSelectedColor] = useState("white");
     const [randomSquare, setRandomSquare] = useState(null);
     const [bestScore, setBestScore] = useState(0);
+    //Don't want this to update chessboard as a whole, so that's why this isn't place in ChessboardContext
+    const [isCoordinates, setIsCoordinates] = useState(true);
 
     const { user, loading } = useContext(UserContext);
     const { setColor } = useContext(ChessboardContext);
@@ -61,6 +63,8 @@ const VisionContextProvider = ({ children }) => {
                 setRandomSquare,
                 bestScore,
                 checkForNewBest,
+                isCoordinates,
+                setIsCoordinates,
             }}
         >
             {children}

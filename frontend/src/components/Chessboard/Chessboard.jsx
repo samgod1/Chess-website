@@ -22,6 +22,7 @@ const Chessboard = () => {
         setHasCountdownCompleted,
         randomSquare,
         setRandomSquare,
+        isCoordinates,
     } = useContext(VisionContext);
 
     const { color } = useContext(ChessboardContext);
@@ -157,7 +158,9 @@ const Chessboard = () => {
                         </div>
                     );
                 })}
-                <Coords files={files} ranks={ranks} color={color} />
+                {isCoordinates && (
+                    <Coords files={files} ranks={ranks} color={color} />
+                )}
             </div>
         </div>
     );
