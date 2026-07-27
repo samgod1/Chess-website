@@ -1,10 +1,11 @@
-import { useEffect, useContext, Activity } from "react";
+import { useState, useEffect, useContext, Activity } from "react";
 
 import "./Info.css";
 import { VisionContext } from "../../../../../../../../contexts/VisionContext.jsx";
 
 const Info = () => {
-    const { randomSquare, score, hasStarted } = useContext(VisionContext);
+    const { randomSquare, score, hasStarted, bestScore } =
+        useContext(VisionContext);
 
     return (
         <div className="info">
@@ -20,7 +21,7 @@ const Info = () => {
                     </div>
                     <div className="best">
                         <span>Best:</span>
-                        <span className="score">0</span>
+                        <span className="score">{bestScore}</span>
                     </div>
                 </div>
             </Activity>

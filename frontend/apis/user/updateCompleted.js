@@ -14,7 +14,7 @@ const updateCompleted = async (completed) => {
             },
         );
     } catch (error) {
-        toast.error(error.message);
+        toast.error(error?.message);
     }
 };
 

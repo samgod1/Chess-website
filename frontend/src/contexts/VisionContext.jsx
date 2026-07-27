@@ -1,4 +1,7 @@
-import { useState, useEffect, createContext } from "react";
+import { useState, useEffect, createContext, useContext } from "react";
+
+import { UserContext } from "./UserContext";
+import updateBestScore from "../../apis/user/updateBestScore";
 
 export const VisionContext = createContext();
 
@@ -11,6 +14,9 @@ const VisionContextProvider = ({ children }) => {
     const [color, setColor] = useState("white");
     const [selectedColor, setSelectedColor] = useState("white");
     const [randomSquare, setRandomSquare] = useState(null);
+    const [bestScore, setBestScore] = useState(0);
+
+    const { user, loading } = useContext(UserContext);
 
     function selectRandomColor() {
         const colors = ["white", "black"];
@@ -20,9 +26,20 @@ const VisionContextProvider = ({ children }) => {
         setColor(colors[randomNumber]);
     }
 
+    function checkForNewBest(scoreRef) {
+        if (scoreRef.current > bestScore) {
+            setBestScore(scoreRef.current);
+            updateBestScore(scoreRef.current);
+        }
+    }
+
     useEffect(() => {
         if (hasStarted && selectedColor == "random") selectRandomColor();
     }, [hasStarted]);
+
+    useEffect(() => {
+        setBestScore(user.bestScore);
+    }, []);
 
     return (
         <VisionContext.Provider
@@ -43,6 +60,8 @@ const VisionContextProvider = ({ children }) => {
                 setSelectedColor,
                 randomSquare,
                 setRandomSquare,
+                bestScore,
+                checkForNewBest,
             }}
         >
             {children}

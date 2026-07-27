@@ -2,6 +2,7 @@ import { useEffect, useRef, useState, useContext } from "react";
 
 import "./Progress.css";
 import { VisionContext } from "../../../../../../../../contexts";
+import updateBestScore from "../../../../../../../../../apis/user/updateBestScore";
 
 const Progress = () => {
     const {
@@ -11,12 +12,14 @@ const Progress = () => {
         score,
         hasCountdownCompleted,
         setHasCountdownCompleted,
+        checkForNewBest,
     } = useContext(VisionContext);
     const [seconds, setSeconds] = useState(time);
 
     const startTime = useRef(null);
     const finishTime = useRef(null);
     const timerInterval = useRef(null);
+    const scoreRef = useRef(0); // For passing value inside updateTimer
 
     function updateTimer() {
         const remainingTime = finishTime.current - Date.now();
@@ -25,19 +28,28 @@ const Progress = () => {
 
         //Stop timer
         if (timer <= 0) {
-            clearInterval(timerInterval.current);
-            setHasStarted(false);
-            //Reset countdown completed
-            setHasCountdownCompleted(false);
+            endTimer();
         }
+    }
+
+    function endTimer() {
+        clearInterval(timerInterval.current);
+        checkForNewBest(scoreRef);
+        setHasStarted(false);
+        //Reset countdown completed
+        setHasCountdownCompleted(false);
     }
 
     useEffect(() => {
         if (hasCountdownCompleted) {
             finishTime.current = Date.now() + time * 1000;
-            timerInterval.current = setInterval(updateTimer, 100);
+            timerInterval.current = setInterval(updateTimer, 1000);
         }
     }, [hasCountdownCompleted]);
+
+    useEffect(() => {
+        scoreRef.current = score;
+    }, [score]);
 
     return (
         <div className="progress">

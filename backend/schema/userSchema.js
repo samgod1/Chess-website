@@ -26,6 +26,10 @@ const userSchema = new mongoose.Schema(
             default: [],
             type: [String],
         },
+        bestScore: {
+            default: 0,
+            type: "Number",
+        },
     },
     { timestamps: true },
 );

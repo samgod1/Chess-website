@@ -31,8 +31,24 @@ const updateCompleted = async (req, res) => {
         console.log(error);
         return res
             .status(500)
-            .json("Error during fetching completed course data");
+            .json("Error during updating completed course data");
     }
 };
 
-export { getUser, updateCompleted };
+const updateBestScore = async (req, res) => {
+    try {
+        const userId = req.userId;
+        const { bestScore } = req.body;
+
+        const user = await User.findByIdAndUpdate(userId, {
+            bestScore: bestScore,
+        });
+
+        return res.status(200).json({ message: "Success" });
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json("Error during updating best score");
+    }
+};
+
+export { getUser, updateCompleted, updateBestScore };

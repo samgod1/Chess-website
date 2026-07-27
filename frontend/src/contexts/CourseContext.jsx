@@ -6,7 +6,6 @@ import {
     intermediateCourse,
     professionalCourse,
 } from "../constants.js";
-import getCompleted from "../../apis/user/getCompleted.js";
 import updateCompleted from "../../apis/user/updateCompleted.js";
 
 const total =
