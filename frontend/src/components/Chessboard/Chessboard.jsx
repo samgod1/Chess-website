@@ -2,7 +2,7 @@ import { useState, useRef, useEffect, useContext } from "react";
 import gsap from "gsap";
 
 import "./Chessboard.css";
-import { VisionContext } from "../../contexts";
+import { VisionContext, ChessboardContext } from "../../contexts";
 import Coords from "./components/Coords.jsx/Coords";
 
 const Chessboard = () => {
@@ -20,10 +20,11 @@ const Chessboard = () => {
         setScore,
         hasCountdownCompleted,
         setHasCountdownCompleted,
-        color,
         randomSquare,
         setRandomSquare,
     } = useContext(VisionContext);
+
+    const { color } = useContext(ChessboardContext);
 
     function generateRandomChessSquare() {
         const firstRandomNumber = Math.floor(Math.random() * 8);
