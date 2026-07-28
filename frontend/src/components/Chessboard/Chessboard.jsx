@@ -14,6 +14,8 @@ const Chessboard = () => {
     const countdownInterval = useRef(null);
     const correctAudioRef = useRef(null);
     const incorrectAudioRef = useRef(null);
+    const countdownAudioRef = useRef(null);
+    const startAudioRef = useRef(null);
 
     const {
         hasStarted,
@@ -98,6 +100,7 @@ const Chessboard = () => {
         if (hasStarted) {
             setCountdown(3);
             startCountdown();
+            countdownAudioRef.current.play();
         }
     }, [hasStarted]);
 
@@ -106,6 +109,12 @@ const Chessboard = () => {
             clearInterval(countdownInterval.current);
             generateRandomChessSquare();
             setHasCountdownCompleted(true);
+            startAudioRef.current.play();
+        }
+
+        if (hasStarted && !countdown <= 0) {
+            countdownAudioRef.current.currentTime = 0;
+            countdownAudioRef.current.play();
         }
     }, [countdown]);
 
@@ -174,6 +183,8 @@ const Chessboard = () => {
             </div>
             <audio src="/sounds/success.mp3" ref={correctAudioRef} />
             <audio src="/sounds/error.mp3" ref={incorrectAudioRef} />
+            <audio src="/sounds/countdown.mp3" ref={countdownAudioRef} />
+            <audio src="/sounds/start.mp3" ref={startAudioRef} />
         </div>
     );
 };

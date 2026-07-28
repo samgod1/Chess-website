@@ -19,7 +19,7 @@ const protectRoute = (req, res, next) => {
         next();
     } catch (error) {
         console.log(error);
-        return res``
+        return res
             .status(401)
             .json({ message: "Error during token verification" });
     }
