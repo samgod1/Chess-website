@@ -12,6 +12,8 @@ const Chessboard = () => {
     const [countdown, setCountdown] = useState(3);
 
     const countdownInterval = useRef(null);
+    const correctAudioRef = useRef(null);
+    const incorrectAudioRef = useRef(null);
 
     const {
         hasStarted,
@@ -60,6 +62,14 @@ const Chessboard = () => {
                 gsap.set(square, { clearProps: "backgroundColor" });
             },
         });
+
+        if (isCorrect) {
+            correctAudioRef.current.currentTime = 0;
+            correctAudioRef.current.play();
+        } else {
+            incorrectAudioRef.current.currentTime = 0;
+            incorrectAudioRef.current.play();
+        }
 
         setAttempts([...attempts, { square: randomSquare, isCorrect }]);
     }
@@ -162,6 +172,8 @@ const Chessboard = () => {
                     <Coords files={files} ranks={ranks} color={color} />
                 )}
             </div>
+            <audio src="/sounds/success.mp3" ref={correctAudioRef} />
+            <audio src="/sounds/error.mp3" ref={incorrectAudioRef} />
         </div>
     );
 };
