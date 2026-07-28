@@ -41,8 +41,8 @@ const VisionContextProvider = ({ children }) => {
     }, [hasStarted]);
 
     useEffect(() => {
-        setBestScore(user.bestScore);
-    }, []);
+        if (!loading && user) setBestScore(user?.bestScore || 0);
+    }, [loading]);
 
     return (
         <VisionContext.Provider

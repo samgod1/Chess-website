@@ -1,10 +1,10 @@
 import { useContext } from "react";
 
-import "./SidebarBody.css";
+import "./VisionSidebarBody.css";
 import { VisionContext } from "../../../../../../contexts";
 import { Progress, Options, Info } from "./components";
 
-const SidebarBody = () => {
+const VisionSidebarBody = () => {
     const {
         attempts,
         setAttempts,
@@ -19,7 +19,7 @@ const SidebarBody = () => {
     } = useContext(VisionContext);
 
     return (
-        <div className="sidebar-body">
+        <div className="vision-sidebar-body">
             <Info />
             <div className="attempts-container">
                 <div className="attempts">
@@ -41,4 +41,4 @@ const SidebarBody = () => {
     );
 };
 
-export default SidebarBody;
+export default VisionSidebarBody;

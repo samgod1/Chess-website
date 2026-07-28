@@ -10,6 +10,7 @@ import {
     Signup,
     Login,
     Vision,
+    Puzzles,
 } from "./pages/index.js";
 import RootLayout from "./pages/RootLayout.jsx";
 
@@ -33,6 +34,10 @@ const router = createBrowserRouter([
             {
                 path: "vision",
                 element: <Vision />,
+            },
+            {
+                path: "puzzles",
+                element: <Puzzles />,
             },
         ],
     },

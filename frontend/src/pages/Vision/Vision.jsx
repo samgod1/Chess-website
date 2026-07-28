@@ -1,16 +1,13 @@
 import "./Vision.css";
 import { Chessboard } from "../../components/index.js";
-import Sidebar from "./components/Sidebar/Sidebar.jsx";
-import VisionContextProvider from "../../contexts/VisionContext.jsx";
+import VisionSidebar from "./components/VisionSidebar/VisionSidebar.jsx";
 
 const Vision = () => {
     return (
-        <VisionContextProvider>
-            <div className="vision-page">
-                <Chessboard />
-                <Sidebar />
-            </div>
-        </VisionContextProvider>
+        <div className="vision-page">
+            <Chessboard />
+            <VisionSidebar />
+        </div>
     );
 };
 

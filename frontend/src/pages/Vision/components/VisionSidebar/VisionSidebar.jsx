@@ -1,8 +1,8 @@
 import { useEffect, useContext } from "react";
 
-import "./Sidebar.css";
+import "./VisionSidebar.css";
 import { VisionContext } from "../../../../contexts";
-import { SidebarHeader, SidebarBody } from "./components";
+import { VisionSidebarHeader, VisionSidebarBody } from "./components";
 
 const Sidebar = () => {
     const { hasStarted, setScore, setAttempts } = useContext(VisionContext);
@@ -16,9 +16,9 @@ const Sidebar = () => {
     }, [hasStarted]);
 
     return (
-        <div className="sidebar">
-            <SidebarHeader />
-            <SidebarBody />
+        <div className="vision-sidebar">
+            <VisionSidebarHeader />
+            <VisionSidebarBody />
         </div>
     );
 };

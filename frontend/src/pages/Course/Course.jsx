@@ -60,7 +60,7 @@ const Course = () => {
                         index={2}
                     />
                 </div>
-                <div className="info">
+                <div className="course-info">
                     <div className="progress-container">
                         <h2>Progress</h2>
                         <div className="progress-info">
