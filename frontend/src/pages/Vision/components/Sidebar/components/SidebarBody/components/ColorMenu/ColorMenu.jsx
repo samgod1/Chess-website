@@ -35,6 +35,7 @@ const ColorMenu = ({ setIsColorMenuOpen }) => {
                         e.stopPropagation();
                         setSelectedColor(option);
                         if (option != "random") setColor(option);
+                        setIsColorMenuOpen(false);
                     }}
                     className={selectedColor == option ? "selected" : ""}
                     key={i}

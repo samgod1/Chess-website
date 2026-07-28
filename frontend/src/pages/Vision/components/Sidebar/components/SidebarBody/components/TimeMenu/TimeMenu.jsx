@@ -28,8 +28,8 @@ const TimeMenu = ({ setIsTimeMenuOpen }) => {
             {buttons.map((option, i) => (
                 <li
                     onClick={(e) => {
-                        e.stopPropagation();
                         setTime(Number(option.split("s")[0]));
+                        setIsTimeMenuOpen(false);
                     }}
                     className={
                         time == Number(option.split("s")[0]) ? "selected" : ""
