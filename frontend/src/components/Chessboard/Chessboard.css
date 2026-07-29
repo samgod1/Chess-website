@@ -38,6 +38,21 @@
                 background-color: black;
             }
         }
+
+        .piece {
+            position: absolute;
+            top: 0;
+            width: 12.5%;
+            height: 12.5%;
+
+            img {
+                width: 100%;
+                height: 100%;
+            }
+        }
+        #black-knight {
+            transform: translate(100%, 0);
+        }
     }
 
     .white {
