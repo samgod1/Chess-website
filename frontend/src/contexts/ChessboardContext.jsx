@@ -4,7 +4,6 @@ export const ChessboardContext = createContext();
 
 const ChessboardContextProvider = ({ children }) => {
     const [color, setColor] = useState("white");
-    const [selectedPiece, setSelectedPiece] = useState(null);
     const [files, setFiles] = useState([
         "a",
         "b",
@@ -28,11 +27,13 @@ const ChessboardContextProvider = ({ children }) => {
     const [fen, setFen] = useState(
         "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
     );
+    const [selectedPiece, setSelectedPiece] = useState(null);
+    const [chessboardWidth, setChessboardWidth] = useState(0);
 
     const chessboardRef = useRef(null);
     const chessboardContainerRef = useRef(null);
 
-    function setChessboardWidth() {
+    function calculateChessboardWidth() {
         let chessboardContainerWidth =
             chessboardContainerRef.current.offsetWidth;
 
@@ -42,6 +43,7 @@ const ChessboardContextProvider = ({ children }) => {
 
         chessboardRef.current.style.width = `${chessboardContainerWidth}px`;
         chessboardRef.current.style.height = `${chessboardContainerWidth}px`;
+        setChessboardWidth(chessboardContainerWidth);
     }
 
     function displayCorrectPiece(piece) {
@@ -156,7 +158,8 @@ const ChessboardContextProvider = ({ children }) => {
                 fen,
                 chessboardRef,
                 chessboardContainerRef,
-                setChessboardWidth,
+                calculateChessboardWidth,
+                chessboardWidth,
                 displayCorrectPiece,
             }}
         >

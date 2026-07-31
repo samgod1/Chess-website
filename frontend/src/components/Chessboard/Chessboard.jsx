@@ -34,7 +34,8 @@ const Chessboard = () => {
         fen,
         chessboardRef,
         chessboardContainerRef,
-        setChessboardWidth,
+        calculateChessboardWidth,
+        chessboardWidth,
         displayCorrectPiece,
     } = useContext(ChessboardContext);
 
@@ -130,7 +131,7 @@ const Chessboard = () => {
     }, [hasCountdownCompleted]);
 
     useEffect(() => {
-        setChessboardWidth();
+        calculateChessboardWidth();
     }, []);
 
     return (
@@ -208,7 +209,7 @@ const Chessboard = () => {
                                     <div
                                         className="piece"
                                         style={{
-                                            transform: `translate(${(chessboardRef.current?.offsetWidth / 8) * (squareIndex - 1) || 0}px, ${(chessboardRef.current?.offsetHeight / 8) * i || 0}px)`,
+                                            transform: `translate(${(chessboardWidth / 8) * (squareIndex - 1) || 0}px, ${(chessboardWidth / 8) * i || 0}px)`,
                                         }}
                                         key={j}
                                     >
