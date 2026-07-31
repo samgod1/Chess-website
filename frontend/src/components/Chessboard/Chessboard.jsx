@@ -7,39 +7,13 @@ import { VisionContext, ChessboardContext } from "../../contexts";
 import Coords from "./components/Coords.jsx/Coords";
 
 const Chessboard = () => {
-    const [files, setFiles] = useState([
-        "a",
-        "b",
-        "c",
-        "d",
-        "e",
-        "f",
-        "g",
-        "h",
-    ]);
-    const [ranks, setRanks] = useState([
-        "1",
-        "2",
-        "3",
-        "4",
-        "5",
-        "6",
-        "7",
-        "8",
-    ]);
     const [countdown, setCountdown] = useState(3);
-    const [fen, setFen] = useState(
-        "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
-    );
-    ``;
 
     const countdownInterval = useRef(null);
     const correctAudioRef = useRef(null);
     const incorrectAudioRef = useRef(null);
     const countdownAudioRef = useRef(null);
     const startAudioRef = useRef(null);
-    const chessboardRef = useRef(null);
-    const chessboardContainerRef = useRef(null);
 
     const {
         hasStarted,
@@ -53,7 +27,16 @@ const Chessboard = () => {
         isCoordinates,
     } = useContext(VisionContext);
 
-    const { color } = useContext(ChessboardContext);
+    const {
+        color,
+        files,
+        ranks,
+        fen,
+        chessboardRef,
+        chessboardContainerRef,
+        setChessboardWidth,
+        displayCorrectPiece,
+    } = useContext(ChessboardContext);
 
     function generateRandomChessSquare() {
         const firstRandomNumber = Math.floor(Math.random() * 8);
@@ -120,108 +103,6 @@ const Chessboard = () => {
         );
     }
 
-    function displayCorrectPiece(piece) {
-        switch (true) {
-            case piece == "p":
-                return (
-                    <img
-                        src={`/images/chess-piece-set/black-pawn.png`}
-                        alt={"black-pawn"}
-                    />
-                );
-                break;
-            case piece == "n":
-                return (
-                    <img
-                        src={`/images/chess-piece-set/black-knight.png`}
-                        alt={"black-knight"}
-                    />
-                );
-                break;
-            case piece == "b":
-                return (
-                    <img
-                        src={`/images/chess-piece-set/black-bishop.png`}
-                        alt={"black-bishop"}
-                    />
-                );
-                break;
-            case piece == "k":
-                return (
-                    <img
-                        src={`/images/chess-piece-set/black-king.png`}
-                        alt={"black-king"}
-                    />
-                );
-                break;
-            case piece == "q":
-                return (
-                    <img
-                        src={`/images/chess-piece-set/black-queen.png`}
-                        alt={"black-queen"}
-                    />
-                );
-                break;
-            case piece == "r":
-                return (
-                    <img
-                        src={`/images/chess-piece-set/black-rook.png`}
-                        alt={"black-rook"}
-                    />
-                );
-                break;
-
-            case piece == "P":
-                return (
-                    <img
-                        src={`/images/chess-piece-set/white-pawn.png`}
-                        alt={"white-pawn"}
-                    />
-                );
-                break;
-            case piece == "N":
-                return (
-                    <img
-                        src={`/images/chess-piece-set/white-knight.png`}
-                        alt={"black-pawn"}
-                    />
-                );
-                break;
-            case piece == "B":
-                return (
-                    <img
-                        src={`/images/chess-piece-set/white-bishop.png`}
-                        alt={"white-bishop"}
-                    />
-                );
-                break;
-            case piece == "K":
-                return (
-                    <img
-                        src={`/images/chess-piece-set/white-king.png`}
-                        alt={"white-king"}
-                    />
-                );
-                break;
-            case piece == "Q":
-                return (
-                    <img
-                        src={`/images/chess-piece-set/white-queen.png`}
-                        alt={"white-queen"}
-                    />
-                );
-                break;
-            case piece == "R":
-                return (
-                    <img
-                        src={`/images/chess-piece-set/white-rook.png`}
-                        alt={"white-rook"}
-                    />
-                );
-                break;
-        }
-    }
-
     useEffect(() => {
         if (hasStarted) {
             setCountdown(3);
@@ -249,15 +130,7 @@ const Chessboard = () => {
     }, [hasCountdownCompleted]);
 
     useEffect(() => {
-        let chessboardContainerWidth =
-            chessboardContainerRef.current.offsetWidth;
-
-        while (chessboardContainerWidth % 4 != 0) {
-            chessboardContainerWidth -= 1;
-        }
-
-        chessboardRef.current.style.width = `${chessboardContainerWidth}px`;
-        chessboardRef.current.style.height = `${chessboardContainerWidth}px`;
+        setChessboardWidth();
     }, []);
 
     return (
@@ -316,18 +189,19 @@ const Chessboard = () => {
                         </div>
                     );
                 })}
+
                 {isCoordinates && (
                     <Coords files={files} ranks={ranks} color={color} />
                 )}
-                {/* Pieces */}
+
+                {/* Mapping out pieces through fen */}
                 {fen
                     .split(" ")[0]
                     .split("/")
                     .map((row, i) => {
                         let squareIndex = 0;
-                        return row.split("").map((piece) => {
+                        return row.split("").map((piece, j) => {
                             const isNumber = /^[0-9]+$/.test(piece);
-                            console.log(chessboardRef.current?.offsetWidth / 8);
                             if (!isNumber) {
                                 squareIndex += 1;
                                 return (
@@ -336,6 +210,7 @@ const Chessboard = () => {
                                         style={{
                                             transform: `translate(${(chessboardRef.current?.offsetWidth / 8) * (squareIndex - 1) || 0}px, ${(chessboardRef.current?.offsetHeight / 8) * i || 0}px)`,
                                         }}
+                                        key={j}
                                     >
                                         {displayCorrectPiece(piece)}
                                     </div>
