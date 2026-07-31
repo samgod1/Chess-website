@@ -1,25 +1,45 @@
 import { useState, useRef, useEffect, useContext } from "react";
 import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
 
 import "./Chessboard.css";
 import { VisionContext, ChessboardContext } from "../../contexts";
 import Coords from "./components/Coords.jsx/Coords";
 
 const Chessboard = () => {
-    const files = ["a", "b", "c", "d", "e", "f", "g", "h"];
-    const ranks = ["1", "2", "3", "4", "5", "6", "7", "8"];
-
+    const [files, setFiles] = useState([
+        "a",
+        "b",
+        "c",
+        "d",
+        "e",
+        "f",
+        "g",
+        "h",
+    ]);
+    const [ranks, setRanks] = useState([
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+    ]);
     const [countdown, setCountdown] = useState(3);
     const [fen, setFen] = useState(
         "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
     );
+    ``;
 
     const countdownInterval = useRef(null);
     const correctAudioRef = useRef(null);
     const incorrectAudioRef = useRef(null);
     const countdownAudioRef = useRef(null);
     const startAudioRef = useRef(null);
-    const squareRef = useRef(null);
+    const chessboardRef = useRef(null);
+    const chessboardContainerRef = useRef(null);
 
     const {
         hasStarted,
@@ -228,15 +248,27 @@ const Chessboard = () => {
         if (hasCountdownCompleted) hideSquareDisplay();
     }, [hasCountdownCompleted]);
 
+    useEffect(() => {
+        let chessboardContainerWidth =
+            chessboardContainerRef.current.offsetWidth;
+
+        while (chessboardContainerWidth % 4 != 0) {
+            chessboardContainerWidth -= 1;
+        }
+
+        chessboardRef.current.style.width = `${chessboardContainerWidth}px`;
+        chessboardRef.current.style.height = `${chessboardContainerWidth}px`;
+    }, []);
+
     return (
-        <div className="chessboard-container">
+        <div className="chessboard-container" ref={chessboardContainerRef}>
             {hasStarted && !hasCountdownCompleted && (
                 <div className="display">{countdown}</div>
             )}
             {hasStarted && hasCountdownCompleted && (
                 <div className="display">{randomSquare}</div>
             )}
-            <div className={`chessboard ${color}`}>
+            <div className={`chessboard ${color}`} ref={chessboardRef}>
                 {/* Ranks and Files */}
                 {ranks.map((rank, i) => {
                     //Alternating ranks
@@ -250,7 +282,6 @@ const Chessboard = () => {
                                         id={file + rank}
                                         onClick={checkUserInput}
                                         key={i}
-                                        ref={squareRef}
                                     ></div>
                                 ) : (
                                     <div
@@ -296,13 +327,14 @@ const Chessboard = () => {
                         let squareIndex = 0;
                         return row.split("").map((piece) => {
                             const isNumber = /^[0-9]+$/.test(piece);
+                            console.log(chessboardRef.current?.offsetWidth / 8);
                             if (!isNumber) {
                                 squareIndex += 1;
                                 return (
                                     <div
                                         className="piece"
                                         style={{
-                                            transform: `translate(${squareRef.current?.offsetWidth * (squareIndex - 1) || 0}px, ${squareRef.current?.offsetWidth * i || 0}px)`,
+                                            transform: `translate(${(chessboardRef.current?.offsetWidth / 8) * (squareIndex - 1) || 0}px, ${(chessboardRef.current?.offsetHeight / 8) * i || 0}px)`,
                                         }}
                                     >
                                         {displayCorrectPiece(piece)}
@@ -314,13 +346,6 @@ const Chessboard = () => {
                             }
                         });
                     })}
-                {/* <img
-                    src="/images/chess-piece-set/black-knight.png"
-                    alt="black-white"
-                    className="piece"
-                    id="black-knight"
-                    style={`transform: translate(${squareRef?.current?.clientWidth}), 0`}
-                /> */}
             </div>
             <audio src="/sounds/success.mp3" ref={correctAudioRef} />
             <audio src="/sounds/error.mp3" ref={incorrectAudioRef} />

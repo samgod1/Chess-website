@@ -15,8 +15,6 @@
     }
 
     .chessboard {
-        height: 100%;
-        width: 100%;
         display: flex;
         flex-direction: column-reverse;
         border-radius: 1.25rem;
@@ -44,6 +42,7 @@
             top: 0;
             width: 12.5%;
             height: 12.5%;
+            background-color: blue;
 
             img {
                 width: 100%;
