@@ -36,7 +36,10 @@ const Chessboard = () => {
         chessboardContainerRef,
         calculateChessboardWidth,
         chessboardWidth,
+        squareWidth,
         displayCorrectPiece,
+        handleClick,
+        destinationSquares,
     } = useContext(ChessboardContext);
 
     function generateRandomChessSquare() {
@@ -132,6 +135,11 @@ const Chessboard = () => {
 
     useEffect(() => {
         calculateChessboardWidth();
+        document.addEventListener("click", handleClick);
+
+        () => {
+            document.removeEventListener("click", handleClick);
+        };
     }, []);
 
     return (
@@ -200,28 +208,60 @@ const Chessboard = () => {
                     .split(" ")[0]
                     .split("/")
                     .map((row, i) => {
+                        // Looping through the rows
                         let squareIndex = 0;
                         return row.split("").map((piece, j) => {
+                            // Mapping the pieces in the row
+
+                            //Testing if the fen character is a number with regex
                             const isNumber = /^[0-9]+$/.test(piece);
+
                             if (!isNumber) {
+                                // squareIndex for skipping squares where there are no pieces
                                 squareIndex += 1;
                                 return (
                                     <div
                                         className="piece"
                                         style={{
-                                            transform: `translate(${(chessboardWidth / 8) * (squareIndex - 1) || 0}px, ${(chessboardWidth / 8) * i || 0}px)`,
+                                            transform: `translate(${squareWidth * (squareIndex - 1)}px, ${squareWidth * i}px)`,
                                         }}
+                                        // Finding which square the piece (Right works now only for white pieces) Fix this later
+                                        squareid={
+                                            files[squareIndex - 1] +
+                                            ranks[7 - i]
+                                        }
                                         key={j}
                                     >
                                         {displayCorrectPiece(piece)}
                                     </div>
                                 );
                             } else {
-                                squareIndex += piece;
+                                squareIndex += Number(piece);
                                 return;
                             }
                         });
                     })}
+
+                {/* Mapping out destination squares */}
+                {destinationSquares.map((square, i) => {
+                    const fileNumber = files.indexOf(square.split("")[0]);
+                    const rankNumber = 7 - Number(square.split("")[1] - 1);
+
+                    console.log(fileNumber * squareWidth);
+                    // console.log(rankNumber * squareWidth);
+
+                    return (
+                        <div
+                            className="destSquare"
+                            style={{
+                                transform: `translate(${fileNumber * squareWidth}px, ${rankNumber * squareWidth}px)`,
+                            }}
+                            key={i}
+                        >
+                            .
+                        </div>
+                    );
+                })}
             </div>
             <audio src="/sounds/success.mp3" ref={correctAudioRef} />
             <audio src="/sounds/error.mp3" ref={incorrectAudioRef} />
