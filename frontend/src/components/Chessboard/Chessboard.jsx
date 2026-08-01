@@ -258,7 +258,7 @@ const Chessboard = () => {
                             }}
                             key={i}
                         >
-                            .
+                            <img src="/images/dot.png" alt="dot" />
                         </div>
                     );
                 })}
