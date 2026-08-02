@@ -1,7 +1,10 @@
 import { useEffect, useRef, useState, useContext } from "react";
 
 import "./Progress.css";
-import { VisionContext } from "../../../../../../../../contexts";
+import {
+    ChessboardContext,
+    VisionContext,
+} from "../../../../../../../../contexts";
 import updateBestScore from "../../../../../../../../../apis/user/updateBestScore";
 
 const Progress = () => {
@@ -14,6 +17,8 @@ const Progress = () => {
         setHasCountdownCompleted,
         checkForNewBest,
     } = useContext(VisionContext);
+
+    const { mode } = useContext(ChessboardContext);
     const [seconds, setSeconds] = useState(time);
 
     const startTime = useRef(null);
@@ -50,6 +55,12 @@ const Progress = () => {
     useEffect(() => {
         scoreRef.current = score;
     }, [score]);
+
+    useEffect(() => {
+        return () => {
+            endTimer();
+        };
+    }, []);
 
     return (
         <div className="progress">

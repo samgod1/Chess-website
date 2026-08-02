@@ -3,6 +3,7 @@ import { useState, useRef, createContext, useEffect } from "react";
 export const ChessboardContext = createContext();
 
 const ChessboardContextProvider = ({ children }) => {
+    const [mode, setMode] = useState("puzzles");
     const [color, setColor] = useState("white");
     const [files, setFiles] = useState([
         "a",
@@ -151,28 +152,6 @@ const ChessboardContextProvider = ({ children }) => {
         }
     }
 
-    // function handleClick(e) {
-    //     const hasClickedOnDestSquare =
-    //         e.target.getAttribute("class").split(" ")[0] == "destSquare";
-
-    //     // hasClickedOnSquare is false if a square has a piece on top of it
-    //     const hasClickedOnSquare =
-    //         e.target.getAttribute("class").split(" ")[0] == "square";
-
-    //     // Nothing happens when user clicks outside the chessboard
-    //     if (!pieceSquare && !hasClickedOnSquare && !hasClickedOnDestSquare)
-    //         return;
-
-    //     // If user clicks on a square element
-    //     if (hasClickedOnSquare) {
-    //         setSelectedSquare(null);
-    //         setDestinationSquares([]);
-    //     }
-
-    //     if (hasClickedOnDestSquare) {
-    //     }
-    // }
-
     function handlePieceClick(e) {
         const pieceSquare = e.target.getAttribute("squareid");
         selectedPieceRef.current = e.target;
@@ -182,6 +161,7 @@ const ChessboardContextProvider = ({ children }) => {
             return;
         }
 
+        e.target.style.backgroundColor = "var(--c-light-yellow)";
         setSelectedSquare(pieceSquare);
     }
 
@@ -190,10 +170,14 @@ const ChessboardContextProvider = ({ children }) => {
     }
 
     function movePiece(e) {
+        //Removes the background color
+        selectedPieceRef.current.style.backgroundColor = "";
+
         //Moves the piece
         const destination = e.target.style.transform;
         selectedPieceRef.current.style.transform = destination;
 
+        //Changes the selected piece squareid attribute
         const square = e.target.getAttribute("squareid");
         selectedPieceRef.current.setAttribute("squareid", square);
 
@@ -203,6 +187,7 @@ const ChessboardContextProvider = ({ children }) => {
     function resetSquares() {
         setDestinationSquares([]);
         setSelectedSquare(null);
+        selectedPieceRef.current.style.backgroundColor = "";
         selectedPieceRef.current = null;
     }
 
@@ -240,6 +225,8 @@ const ChessboardContextProvider = ({ children }) => {
     return (
         <ChessboardContext.Provider
             value={{
+                mode,
+                setMode,
                 color,
                 setColor,
                 files,
