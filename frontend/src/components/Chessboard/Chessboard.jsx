@@ -38,8 +38,10 @@ const Chessboard = () => {
         chessboardWidth,
         squareWidth,
         displayCorrectPiece,
-        handleClick,
         destinationSquares,
+        movePiece,
+        handlePieceClick,
+        handleSquareClick,
     } = useContext(ChessboardContext);
 
     function generateRandomChessSquare() {
@@ -135,11 +137,6 @@ const Chessboard = () => {
 
     useEffect(() => {
         calculateChessboardWidth();
-        document.addEventListener("click", handleClick);
-
-        () => {
-            document.removeEventListener("click", handleClick);
-        };
     }, []);
 
     return (
@@ -162,14 +159,20 @@ const Chessboard = () => {
                                     <div
                                         className="square dark"
                                         id={file + rank}
-                                        onClick={checkUserInput}
+                                        onClick={() => {
+                                            checkUserInput();
+                                            handleSquareClick();
+                                        }}
                                         key={i}
                                     ></div>
                                 ) : (
                                     <div
                                         className="square light"
                                         id={file + rank}
-                                        onClick={checkUserInput}
+                                        onClick={() => {
+                                            checkUserInput();
+                                            handleSquareClick();
+                                        }}
                                         key={i}
                                     ></div>
                                 );
@@ -183,14 +186,20 @@ const Chessboard = () => {
                                     <div
                                         className="square dark"
                                         id={file + rank}
-                                        onClick={checkUserInput}
+                                        onClick={() => {
+                                            checkUserInput();
+                                            handleSquareClick();
+                                        }}
                                         key={i}
                                     ></div>
                                 ) : (
                                     <div
                                         className="square light"
                                         id={file + rank}
-                                        onClick={checkUserInput}
+                                        onClick={() => {
+                                            checkUserInput();
+                                            handleSquareClick();
+                                        }}
                                         key={i}
                                     ></div>
                                 );
@@ -231,6 +240,7 @@ const Chessboard = () => {
                                             ranks[7 - i]
                                         }
                                         key={j}
+                                        onClick={handlePieceClick}
                                     >
                                         {displayCorrectPiece(piece)}
                                     </div>
@@ -247,9 +257,6 @@ const Chessboard = () => {
                     const fileNumber = files.indexOf(square.split("")[0]);
                     const rankNumber = 7 - Number(square.split("")[1] - 1);
 
-                    console.log(fileNumber * squareWidth);
-                    // console.log(rankNumber * squareWidth);
-
                     return (
                         <div
                             className="destSquare"
@@ -257,6 +264,8 @@ const Chessboard = () => {
                                 transform: `translate(${fileNumber * squareWidth}px, ${rankNumber * squareWidth}px)`,
                             }}
                             key={i}
+                            squareid={square}
+                            onClick={movePiece}
                         >
                             <img src="/images/dot.png" alt="dot" />
                         </div>

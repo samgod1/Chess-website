@@ -26,13 +26,13 @@ const ChessboardContextProvider = ({ children }) => {
     ]);
     const [fen, setFen] = useState("8/8/8/8/2R5/8/8/8 w - - 0 1");
     const [selectedSquare, setSelectedSquare] = useState(null);
-    const [selectedPiece, setSelectedPiece] = useState(null);
     const [chessboardWidth, setChessboardWidth] = useState(0);
     const [squareWidth, setSquareWidth] = useState(0);
     const [destinationSquares, setDestinationSquares] = useState([]);
 
     const chessboardRef = useRef(null);
     const chessboardContainerRef = useRef(null);
+    const selectedPieceRef = useRef(null);
 
     function calculateChessboardWidth() {
         let chessboardContainerWidth =
@@ -151,23 +151,59 @@ const ChessboardContextProvider = ({ children }) => {
         }
     }
 
-    function handleClick(e) {
+    // function handleClick(e) {
+    //     const hasClickedOnDestSquare =
+    //         e.target.getAttribute("class").split(" ")[0] == "destSquare";
+
+    //     // hasClickedOnSquare is false if a square has a piece on top of it
+    //     const hasClickedOnSquare =
+    //         e.target.getAttribute("class").split(" ")[0] == "square";
+
+    //     // Nothing happens when user clicks outside the chessboard
+    //     if (!pieceSquare && !hasClickedOnSquare && !hasClickedOnDestSquare)
+    //         return;
+
+    //     // If user clicks on a square element
+    //     if (hasClickedOnSquare) {
+    //         setSelectedSquare(null);
+    //         setDestinationSquares([]);
+    //     }
+
+    //     if (hasClickedOnDestSquare) {
+    //     }
+    // }
+
+    function handlePieceClick(e) {
         const pieceSquare = e.target.getAttribute("squareid");
-        // hasClickedOnSquare is false if a square has a piece on top of it
-        const hasClickedOnSquare =
-            e.target.getAttribute("class").split(" ")[0] == "square";
+        selectedPieceRef.current = e.target;
 
-        // Nothing happens when user clicks outside the chessboard
-        if (!pieceSquare && !hasClickedOnSquare) return;
-
-        // If user has selected a square and then clicks on a square i think it means that user has tried to move the piece
-        if (selectedSquare && hasClickedOnSquare) {
-            setSelectedSquare(null);
-            setDestinationSquares(null);
-            console.log("hello");
+        if (selectedSquare == pieceSquare) {
+            resetSquares();
+            return;
         }
 
         setSelectedSquare(pieceSquare);
+    }
+
+    function handleSquareClick(e) {
+        resetSquares();
+    }
+
+    function movePiece(e) {
+        //Moves the piece
+        const destination = e.target.style.transform;
+        selectedPieceRef.current.style.transform = destination;
+
+        const square = e.target.getAttribute("squareid");
+        selectedPieceRef.current.setAttribute("squareid", square);
+
+        resetSquares();
+    }
+
+    function resetSquares() {
+        setDestinationSquares([]);
+        setSelectedSquare(null);
+        selectedPieceRef.current = null;
     }
 
     function createDestSquares() {
@@ -215,8 +251,10 @@ const ChessboardContextProvider = ({ children }) => {
                 chessboardWidth,
                 squareWidth,
                 displayCorrectPiece,
-                handleClick,
                 destinationSquares,
+                movePiece,
+                handlePieceClick,
+                handleSquareClick,
             }}
         >
             {children}
