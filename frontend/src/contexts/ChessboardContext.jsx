@@ -25,7 +25,7 @@ const ChessboardContextProvider = ({ children }) => {
         "7",
         "8",
     ]);
-    const [fen, setFen] = useState("8/8/8/8/8/8/4B3/8 w - - 0 1");
+    const [fen, setFen] = useState("8/8/8/8/8/8/4Q3/8 w - - 0 1");
     const [selectedSquare, setSelectedSquare] = useState(null);
     const [chessboardWidth, setChessboardWidth] = useState(0);
     const [squareWidth, setSquareWidth] = useState(0);
@@ -202,78 +202,94 @@ const ChessboardContextProvider = ({ children }) => {
         switch (piece) {
             case "R" || "r":
                 // For rook
-                for (let i = 0; i <= 7; i++) {
-                    if (i != files.indexOf(file)) {
-                        updatedDestinationSquares.push(`${files[i]}${rank}`);
-                    }
-                }
-
-                for (let i = 1; i <= 8; i++) {
-                    if (i != rank) {
-                        updatedDestinationSquares.push(`${file}${i}`);
-                    }
-                }
+                createRookDestSquares(file, rank, updatedDestinationSquares);
                 break;
 
             case "B" || "b":
                 // For bishop
-                let coordOfFile = files.indexOf(file);
-                let coordOfRank = ranks.indexOf(rank);
-
-                // First diagonal
-                while (coordOfFile < 7 && coordOfRank < 7) {
-                    coordOfFile += 1;
-                    coordOfRank += 1;
-
-                    updatedDestinationSquares.push(
-                        `${files[coordOfFile]}${ranks[coordOfRank]}`,
-                    );
-                }
-
-                coordOfFile = files.indexOf(file);
-                coordOfRank = ranks.indexOf(rank);
-
-                while (coordOfFile > 0 && coordOfRank > 0) {
-                    coordOfFile -= 1;
-                    coordOfRank -= 1;
-
-                    updatedDestinationSquares.push(
-                        files[coordOfFile] + ranks[coordOfRank],
-                    );
-                }
-
-                coordOfFile = files.indexOf(file);
-                coordOfRank = ranks.indexOf(rank);
-
-                // Second diagonal
-
-                while (coordOfFile > 0 && coordOfRank < 7) {
-                    coordOfFile -= 1;
-                    coordOfRank += 1;
-
-                    updatedDestinationSquares.push(
-                        `${files[coordOfFile]}${ranks[coordOfRank]}`,
-                    );
-                }
-
-                coordOfFile = files.indexOf(file);
-                coordOfRank = ranks.indexOf(rank);
-
-                while (coordOfFile < 7 && coordOfRank > 0) {
-                    coordOfFile += 1;
-                    coordOfRank -= 1;
-
-                    updatedDestinationSquares.push(
-                        files[coordOfFile] + ranks[coordOfRank],
-                    );
-                }
+                createBishopDestSquares(file, rank, updatedDestinationSquares);
                 break;
+            case "Q" || "q":
+                // For queen
+                createQueenDestSquare(file, rank, updatedDestinationSquares);
         }
 
         setDestinationSquares([
             ...destinationSquares,
             ...updatedDestinationSquares,
         ]);
+    }
+
+    function createRookDestSquares(file, rank, updatedDestinationSquares) {
+        for (let i = 0; i <= 7; i++) {
+            if (i != files.indexOf(file)) {
+                updatedDestinationSquares.push(`${files[i]}${rank}`);
+            }
+        }
+
+        for (let i = 1; i <= 8; i++) {
+            if (i != rank) {
+                updatedDestinationSquares.push(`${file}${i}`);
+            }
+        }
+    }
+
+    function createBishopDestSquares(file, rank, updatedDestinationSquares) {
+        let coordOfFile = files.indexOf(file);
+        let coordOfRank = ranks.indexOf(rank);
+
+        // First diagonal
+        while (coordOfFile < 7 && coordOfRank < 7) {
+            coordOfFile += 1;
+            coordOfRank += 1;
+
+            updatedDestinationSquares.push(
+                `${files[coordOfFile]}${ranks[coordOfRank]}`,
+            );
+        }
+
+        coordOfFile = files.indexOf(file);
+        coordOfRank = ranks.indexOf(rank);
+
+        while (coordOfFile > 0 && coordOfRank > 0) {
+            coordOfFile -= 1;
+            coordOfRank -= 1;
+
+            updatedDestinationSquares.push(
+                files[coordOfFile] + ranks[coordOfRank],
+            );
+        }
+
+        coordOfFile = files.indexOf(file);
+        coordOfRank = ranks.indexOf(rank);
+
+        // Second diagonal
+
+        while (coordOfFile > 0 && coordOfRank < 7) {
+            coordOfFile -= 1;
+            coordOfRank += 1;
+
+            updatedDestinationSquares.push(
+                `${files[coordOfFile]}${ranks[coordOfRank]}`,
+            );
+        }
+
+        coordOfFile = files.indexOf(file);
+        coordOfRank = ranks.indexOf(rank);
+
+        while (coordOfFile < 7 && coordOfRank > 0) {
+            coordOfFile += 1;
+            coordOfRank -= 1;
+
+            updatedDestinationSquares.push(
+                files[coordOfFile] + ranks[coordOfRank],
+            );
+        }
+    }
+
+    function createQueenDestSquare(file, rank, updatedDestinationSquares) {
+        createRookDestSquares(file, rank, updatedDestinationSquares);
+        createBishopDestSquares(file, rank, updatedDestinationSquares);
     }
 
     useEffect(() => {
