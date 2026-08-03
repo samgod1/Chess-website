@@ -116,6 +116,8 @@ const VisionContextProvider = ({ children }) => {
             startCountdown();
             countdownAudioRef.current.play();
         }
+
+        if (hasStarted && selectedColor == "random") selectRandomColor();
     }, [hasStarted]);
 
     useEffect(() => {
@@ -135,10 +137,6 @@ const VisionContextProvider = ({ children }) => {
     useEffect(() => {
         if (hasCountdownCompleted) hideSquareDisplay();
     }, [hasCountdownCompleted]);
-
-    useEffect(() => {
-        if (hasStarted && selectedColor == "random") selectRandomColor();
-    }, [hasStarted]);
 
     useEffect(() => {
         if (!loading && user) setBestScore(user?.bestScore || 0);
@@ -167,6 +165,7 @@ const VisionContextProvider = ({ children }) => {
                 setIsCoordinates,
                 countdown,
                 setCountdown,
+                countdownInterval,
                 correctAudioRef,
                 incorrectAudioRef,
                 countdownAudioRef,

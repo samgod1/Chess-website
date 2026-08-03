@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect, useContext } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
+import { useLocation } from "react-router";
 
 import "./Chessboard.css";
 import { VisionContext, ChessboardContext } from "../../contexts";
@@ -19,6 +20,8 @@ const Chessboard = () => {
         setRandomSquare,
         isCoordinates,
         countdown,
+        setCountdown,
+        countdownInterval,
         correctAudioRef,
         incorrectAudioRef,
         countdownAudioRef,
@@ -44,17 +47,22 @@ const Chessboard = () => {
         handleSquareClick,
     } = useContext(ChessboardContext);
 
+    const { pathname } = useLocation();
+
     function handleSuddenPageChange() {
         setHasStarted(false);
         setAttempts([]);
         setScore(0);
+        clearInterval(countdownInterval.current);
+        setHasCountdownCompleted(false);
     }
 
     useEffect(() => {
-        if (mode == "puzzles") {
+        // To prevent any bugs if user decides to visit other page during vision practice
+        if (pathname != "/vision" && hasStarted) {
             handleSuddenPageChange();
         }
-    }, [mode]);
+    }, [pathname]);
 
     useEffect(() => {
         calculateChessboardWidth();
