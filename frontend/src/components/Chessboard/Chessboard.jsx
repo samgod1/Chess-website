@@ -173,6 +173,7 @@ const Chessboard = () => {
                                                 files[squareIndex - 1] +
                                                 ranks[7 - i]
                                             }
+                                            piece={piece}
                                             key={j}
                                             onClick={handlePieceClick}
                                         >
