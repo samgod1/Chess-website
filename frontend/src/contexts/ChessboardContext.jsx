@@ -25,7 +25,7 @@ const ChessboardContextProvider = ({ children }) => {
         "7",
         "8",
     ]);
-    const [fen, setFen] = useState("8/8/8/8/8/8/4Q3/8 w - - 0 1");
+    const [fen, setFen] = useState("4K3/8/8/8/8/8/8/8 w - - 0 1");
     const [selectedSquare, setSelectedSquare] = useState(null);
     const [chessboardWidth, setChessboardWidth] = useState(0);
     const [squareWidth, setSquareWidth] = useState(0);
@@ -212,6 +212,11 @@ const ChessboardContextProvider = ({ children }) => {
             case "Q" || "q":
                 // For queen
                 createQueenDestSquare(file, rank, updatedDestinationSquares);
+                break;
+            case "K" || "k":
+                // For queen
+                createKingDestSquare(file, rank, updatedDestinationSquares);
+                break;
         }
 
         setDestinationSquares([
@@ -290,6 +295,39 @@ const ChessboardContextProvider = ({ children }) => {
     function createQueenDestSquare(file, rank, updatedDestinationSquares) {
         createRookDestSquares(file, rank, updatedDestinationSquares);
         createBishopDestSquares(file, rank, updatedDestinationSquares);
+    }
+
+    function createKingDestSquare(file, rank, updatedDestinationSquare) {
+        const indexOfFile = files.indexOf(file);
+        const indexOfRank = ranks.indexOf(rank);
+
+        for (let i = -1; i < 2; i++) {
+            for (let j = -1; j < 2; j++) {
+                let coordOfFile = files.indexOf(file);
+                let coordOfRank = ranks.indexOf(rank);
+
+                coordOfFile += j;
+                coordOfRank += i;
+
+                // To prevent unnecessary destination squares when the king is at the edges of the board
+                if (
+                    coordOfFile >= 0 &&
+                    coordOfRank >= 0 &&
+                    coordOfFile <= 7 &&
+                    coordOfRank <= 7
+                ) {
+                    // To remove the central destination square
+                    if (
+                        `${coordOfFile} + ${coordOfRank}` !=
+                        `${indexOfFile} + ${indexOfRank}`
+                    ) {
+                        updatedDestinationSquare.push(
+                            `${files[coordOfFile]}${ranks[coordOfRank]}`,
+                        );
+                    }
+                }
+            }
+        }
     }
 
     useEffect(() => {
