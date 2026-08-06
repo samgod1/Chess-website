@@ -25,7 +25,7 @@ const ChessboardContextProvider = ({ children }) => {
         "7",
         "8",
     ]);
-    const [fen, setFen] = useState("4K3/8/8/8/8/8/8/8 w - - 0 1");
+    const [fen, setFen] = useState("8/8/8/8/8/8/4p3/8 w - - 0 1");
     const [selectedSquare, setSelectedSquare] = useState(null);
     const [chessboardWidth, setChessboardWidth] = useState(0);
     const [squareWidth, setSquareWidth] = useState(0);
@@ -187,7 +187,8 @@ const ChessboardContextProvider = ({ children }) => {
     function resetSquares() {
         setDestinationSquares([]);
         setSelectedSquare(null);
-        selectedPieceRef.current.style.backgroundColor = "";
+        if (selectedPieceRef.current)
+            selectedPieceRef.current.style.backgroundColor = "";
         selectedPieceRef.current = null;
     }
 
@@ -200,22 +201,36 @@ const ChessboardContextProvider = ({ children }) => {
         const piece = selectedPieceRef.current.getAttribute("piece");
 
         switch (piece) {
-            case "R" || "r":
+            case "R":
+            case "r":
                 // For rook
                 createRookDestSquares(file, rank, updatedDestinationSquares);
                 break;
 
-            case "B" || "b":
+            case "B":
+            case "b":
                 // For bishop
                 createBishopDestSquares(file, rank, updatedDestinationSquares);
                 break;
-            case "Q" || "q":
+            case "Q":
+            case "q":
                 // For queen
-                createQueenDestSquare(file, rank, updatedDestinationSquares);
+                createQueenDestSquares(file, rank, updatedDestinationSquares);
                 break;
-            case "K" || "k":
-                // For queen
-                createKingDestSquare(file, rank, updatedDestinationSquares);
+            case "K":
+            case "k":
+                // For king
+                createKingDestSquares(file, rank, updatedDestinationSquares);
+                break;
+            case "P":
+            case "p":
+                // For pawn
+                createPawnDestSquares(
+                    file,
+                    rank,
+                    updatedDestinationSquares,
+                    piece,
+                );
                 break;
         }
 
@@ -292,12 +307,17 @@ const ChessboardContextProvider = ({ children }) => {
         }
     }
 
-    function createQueenDestSquare(file, rank, updatedDestinationSquares) {
+    function createQueenDestSquars(file, rank, updatedDestinationSquares) {
         createRookDestSquares(file, rank, updatedDestinationSquares);
         createBishopDestSquares(file, rank, updatedDestinationSquares);
     }
 
-    function createKingDestSquare(file, rank, updatedDestinationSquare) {
+    function createKingDestSquares(
+        file,
+        rank,
+        updatedDestinationSquare,
+        piece,
+    ) {
         const indexOfFile = files.indexOf(file);
         const indexOfRank = ranks.indexOf(rank);
 
@@ -326,6 +346,48 @@ const ChessboardContextProvider = ({ children }) => {
                         );
                     }
                 }
+            }
+        }
+    }
+
+    function createPawnDestSquares(
+        file,
+        rank,
+        updatedDestinationSquare,
+        piece,
+    ) {
+        let coordOfFile = files.indexOf(file);
+        let coordOfRank = ranks.indexOf(rank);
+        let pawnStartingSquares = [];
+
+        if (piece == "P") {
+            for (let i = 0; i < 7; i++) {
+                pawnStartingSquares.push(files[i] + ranks[1]);
+            }
+        } else {
+            for (let i = 0; i < 7; i++) {
+                pawnStartingSquares.push(files[i] + ranks[6]);
+            }
+        }
+
+        if (pawnStartingSquares.includes(selectedSquare)) {
+            for (let i = 1; i <= 2; i++) {
+                updatedDestinationSquare.push(
+                    piece == "P"
+                        ? `${files[coordOfFile]}${ranks[coordOfRank + i]}`
+                        : `${files[coordOfFile]}${ranks[coordOfRank - i]}`,
+                );
+            }
+        } else {
+            if (
+                (coordOfRank != 7 && piece == "P") ||
+                (coordOfRank != 0 && piece == "p")
+            ) {
+                updatedDestinationSquare.push(
+                    piece == "P"
+                        ? `${files[coordOfFile]}${ranks[coordOfRank + 1]}`
+                        : `${files[coordOfFile]}${ranks[coordOfRank - 1]}`,
+                );
             }
         }
     }
