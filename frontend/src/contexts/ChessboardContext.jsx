@@ -25,7 +25,7 @@ const ChessboardContextProvider = ({ children }) => {
         "7",
         "8",
     ]);
-    const [fen, setFen] = useState("8/8/8/8/8/8/4p3/8 w - - 0 1");
+    const [fen, setFen] = useState("8/8/8/8/4N3/8/8/8 w - - 0 1");
     const [selectedSquare, setSelectedSquare] = useState(null);
     const [chessboardWidth, setChessboardWidth] = useState(0);
     const [squareWidth, setSquareWidth] = useState(0);
@@ -196,7 +196,7 @@ const ChessboardContextProvider = ({ children }) => {
         const file = selectedSquare.split("")[0];
         const rank = selectedSquare.split("")[1];
 
-        const updatedDestinationSquares = [];
+        let updatedDestinationSquares = [];
 
         const piece = selectedPieceRef.current.getAttribute("piece");
 
@@ -230,6 +230,14 @@ const ChessboardContextProvider = ({ children }) => {
                     rank,
                     updatedDestinationSquares,
                     piece,
+                );
+                break;
+            case "N":
+            case "n":
+                updatedDestinationSquares = createKnightDestSquares(
+                    file,
+                    rank,
+                    updatedDestinationSquares,
                 );
                 break;
         }
@@ -390,6 +398,73 @@ const ChessboardContextProvider = ({ children }) => {
                 );
             }
         }
+    }
+
+    function createKnightDestSquares(file, rank) {
+        let coordOfFile = files.indexOf(file);
+        let coordOfRank = ranks.indexOf(rank);
+
+        let tempDestinationSquares = [];
+
+        for (let i = 0; i < 2; i++) {
+            // For left and right directions of knight
+            for (let j = 0; j < 2; j++) {
+                if (i == 0) {
+                    if (j == 0) {
+                        tempDestinationSquares.push(
+                            files[coordOfFile + 2] + ranks[coordOfRank + 1],
+                        );
+                    }
+                    if (j == 1) {
+                        tempDestinationSquares.push(
+                            files[coordOfFile + 2] + ranks[coordOfRank - 1],
+                        );
+                    }
+                }
+                if (i == 1) {
+                    if (j == 0) {
+                        tempDestinationSquares.push(
+                            files[coordOfFile - 2] + ranks[coordOfRank + 1],
+                        );
+                    }
+                    if (j == 1) {
+                        tempDestinationSquares.push(
+                            files[coordOfFile - 2] + ranks[coordOfRank - 1],
+                        );
+                    }
+                }
+            }
+
+            // For top and bottom directions of knight
+            for (let j = 0; j < 2; j++) {
+                if (i == 0) {
+                    if (j == 0) {
+                        tempDestinationSquares.push(
+                            files[coordOfFile + 1] + ranks[coordOfRank + 2],
+                        );
+                    }
+                    if (j == 1) {
+                        tempDestinationSquares.push(
+                            files[coordOfFile - 1] + ranks[coordOfRank + 2],
+                        );
+                    }
+                }
+                if (i == 1) {
+                    if (j == 0) {
+                        tempDestinationSquares.push(
+                            files[coordOfFile + 1] + ranks[coordOfRank - 2],
+                        );
+                    }
+                    if (j == 1) {
+                        tempDestinationSquares.push(
+                            files[coordOfFile - 1] + ranks[coordOfRank - 2],
+                        );
+                    }
+                }
+            }
+        }
+
+        return tempDestinationSquares.filter((square) => square.length == 2);
     }
 
     useEffect(() => {
