@@ -25,9 +25,7 @@ const ChessboardContextProvider = ({ children }) => {
         "7",
         "8",
     ]);
-    const [fen, setFen] = useState(
-        "q3k1nr/1pp1nQpp/3p4/1P2p3/4P3/B1PP1b2/B5PP/5K2 w - - 0 1",
-    );
+    const [fen, setFen] = useState("8/8/8/8/4RP2/8/8/8 w - - 0 1");
     const [selectedSquare, setSelectedSquare] = useState(null);
     const [chessboardWidth, setChessboardWidth] = useState(0);
     const [squareWidth, setSquareWidth] = useState(0);
@@ -236,12 +234,7 @@ const ChessboardContextProvider = ({ children }) => {
                 break;
             case "N":
             case "n":
-                // Probably will make this code cleaner
-                updatedDestinationSquares = createKnightDestSquares(
-                    file,
-                    rank,
-                    updatedDestinationSquares,
-                );
+                createKnightDestSquares(file, rank, updatedDestinationSquares);
                 break;
         }
 
@@ -252,16 +245,76 @@ const ChessboardContextProvider = ({ children }) => {
     }
 
     function createRookDestSquares(file, rank, updatedDestinationSquares) {
-        for (let i = 0; i <= 7; i++) {
-            if (i != files.indexOf(file)) {
-                updatedDestinationSquares.push(`${files[i]}${rank}`);
+        let coordOfFile = files.indexOf(file);
+        let coordOfRank = ranks.indexOf(rank);
+
+        // RIGHT
+        while (coordOfFile < 7) {
+            coordOfFile += 1;
+
+            // For not generating destination square on top of other pieces
+            const pieceOnDestinationSquare =
+                chessboardRef.current.querySelector(
+                    `[squareid = "${files[coordOfFile]}${rank}"]`,
+                );
+
+            // For not generating destination square if another piece comes in between
+            if (pieceOnDestinationSquare) {
+                break;
             }
+            updatedDestinationSquares.push(`${files[coordOfFile]}${rank}`);
         }
 
-        for (let i = 1; i <= 8; i++) {
-            if (i != rank) {
-                updatedDestinationSquares.push(`${file}${i}`);
+        coordOfFile = files.indexOf(file);
+
+        // LEFT
+        while (coordOfFile > 0) {
+            coordOfFile -= 1;
+
+            // For not generating destination square on top of other pieces
+            const pieceOnDestinationSquare =
+                chessboardRef.current.querySelector(
+                    `[squareid = "${files[coordOfFile]}${rank}"]`,
+                );
+            if (pieceOnDestinationSquare) {
+                break;
             }
+
+            updatedDestinationSquares.push(`${files[coordOfFile]}${rank}`);
+        }
+
+        // BOTTOM
+        while (coordOfRank > 0) {
+            coordOfRank -= 1;
+
+            // For not generating destination square on top of other pieces
+            const pieceOnDestinationSquare =
+                chessboardRef.current.querySelector(
+                    `[squareid = "${file}${ranks[coordOfRank]}"]`,
+                );
+            if (pieceOnDestinationSquare) {
+                break;
+            }
+
+            updatedDestinationSquares.push(`${file}${ranks[coordOfRank]}`);
+        }
+
+        coordOfRank = ranks.indexOf(rank);
+
+        // TOP
+        while (coordOfRank < 7) {
+            coordOfRank += 1;
+
+            // For not generating destination square on top of other pieces
+            const pieceOnDestinationSquare =
+                chessboardRef.current.querySelector(
+                    `[squareid = "${file}${ranks[coordOfRank]}"]`,
+                );
+            if (pieceOnDestinationSquare) {
+                break;
+            }
+
+            updatedDestinationSquares.push(`${file}${ranks[coordOfRank]}`);
         }
     }
 
@@ -403,7 +456,7 @@ const ChessboardContextProvider = ({ children }) => {
         }
     }
 
-    function createKnightDestSquares(file, rank) {
+    function createKnightDestSquares(file, rank, updatedDestinationSquare) {
         let coordOfFile = files.indexOf(file);
         let coordOfRank = ranks.indexOf(rank);
 
@@ -467,7 +520,11 @@ const ChessboardContextProvider = ({ children }) => {
             }
         }
 
-        return tempDestinationSquares.filter((square) => square.length == 2);
+        tempDestinationSquares = tempDestinationSquares.filter(
+            (square) => square.length == 2,
+        );
+
+        updatedDestinationSquare.push(...tempDestinationSquares);
     }
 
     useEffect(() => {
