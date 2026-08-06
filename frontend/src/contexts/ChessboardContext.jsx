@@ -25,7 +25,9 @@ const ChessboardContextProvider = ({ children }) => {
         "7",
         "8",
     ]);
-    const [fen, setFen] = useState("8/8/8/8/4N3/8/8/8 w - - 0 1");
+    const [fen, setFen] = useState(
+        "q3k1nr/1pp1nQpp/3p4/1P2p3/4P3/B1PP1b2/B5PP/5K2 w - - 0 1",
+    );
     const [selectedSquare, setSelectedSquare] = useState(null);
     const [chessboardWidth, setChessboardWidth] = useState(0);
     const [squareWidth, setSquareWidth] = useState(0);
@@ -161,7 +163,7 @@ const ChessboardContextProvider = ({ children }) => {
             return;
         }
 
-        e.target.style.backgroundColor = "var(--c-light-yellow)";
+        e.target.style.backgroundColor = "var(--c-highlight)";
         setSelectedSquare(pieceSquare);
     }
 
@@ -234,6 +236,7 @@ const ChessboardContextProvider = ({ children }) => {
                 break;
             case "N":
             case "n":
+                // Probably will make this code cleaner
                 updatedDestinationSquares = createKnightDestSquares(
                     file,
                     rank,
@@ -315,7 +318,7 @@ const ChessboardContextProvider = ({ children }) => {
         }
     }
 
-    function createQueenDestSquars(file, rank, updatedDestinationSquares) {
+    function createQueenDestSquares(file, rank, updatedDestinationSquares) {
         createRookDestSquares(file, rank, updatedDestinationSquares);
         createBishopDestSquares(file, rank, updatedDestinationSquares);
     }

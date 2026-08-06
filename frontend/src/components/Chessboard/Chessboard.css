@@ -29,11 +29,11 @@
             }
 
             .light {
-                background-color: white;
+                background-color: var(--c-light-square);
             }
 
             .dark {
-                background-color: black;
+                background-color: var(--c-dark-square);
             }
         }
 
