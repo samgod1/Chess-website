@@ -25,7 +25,7 @@ const ChessboardContextProvider = ({ children }) => {
         "7",
         "8",
     ]);
-    const [fen, setFen] = useState("8/8/8/8/3N1P2/8/8/8 w - - 0 1");
+    const [fen, setFen] = useState("p7/8/8/8/N7/8/P7/8 w - - 0 1");
     const [selectedSquare, setSelectedSquare] = useState(null);
     const [chessboardWidth, setChessboardWidth] = useState(0);
     const [squareWidth, setSquareWidth] = useState(0);
@@ -378,39 +378,45 @@ const ChessboardContextProvider = ({ children }) => {
         updatedDestinationSquare,
         piece,
     ) {
-        let coordOfFile = files.indexOf(file);
-        let coordOfRank = ranks.indexOf(rank);
         let pawnStartingSquares = [];
 
-        if (piece == "P") {
-            for (let i = 0; i < 7; i++) {
-                pawnStartingSquares.push(files[i] + ranks[1]);
-            }
-        } else {
-            for (let i = 0; i < 7; i++) {
-                pawnStartingSquares.push(files[i] + ranks[6]);
-            }
+        const directions = [
+            [0, 1],
+            [0, 2],
+        ];
+
+        for (let i = 0; i < 7; i++) {
+            piece == "P"
+                ? pawnStartingSquares.push(files[i] + ranks[1])
+                : pawnStartingSquares.push(files[i] + ranks[6]);
         }
 
-        if (pawnStartingSquares.includes(selectedSquare)) {
-            for (let i = 1; i <= 2; i++) {
-                updatedDestinationSquare.push(
-                    piece == "P"
-                        ? `${files[coordOfFile]}${ranks[coordOfRank + i]}`
-                        : `${files[coordOfFile]}${ranks[coordOfRank - i]}`,
+        let noOfDestSquares = pawnStartingSquares.includes(selectedSquare)
+            ? 2
+            : 1;
+
+        for (let i = 0; i < noOfDestSquares; i++) {
+            let coordOfFile = files.indexOf(file);
+            let coordOfRank = ranks.indexOf(rank);
+
+            piece == "P"
+                ? (coordOfRank += directions[i][1])
+                : (coordOfRank -= directions[i][1]);
+
+            if (coordOfRank < 0 || coordOfRank > 7) break;
+
+            const pieceOnDestinationSquare =
+                chessboardRef.current.querySelector(
+                    `[squareid = "${files[coordOfFile]}${ranks[coordOfRank]}"]`,
                 );
-            }
-        } else {
-            if (
-                (coordOfRank != 7 && piece == "P") ||
-                (coordOfRank != 0 && piece == "p")
-            ) {
-                updatedDestinationSquare.push(
-                    piece == "P"
-                        ? `${files[coordOfFile]}${ranks[coordOfRank + 1]}`
-                        : `${files[coordOfFile]}${ranks[coordOfRank - 1]}`,
-                );
-            }
+
+            if (pieceOnDestinationSquare) break;
+
+            updatedDestinationSquare.push(
+                piece == "P"
+                    ? `${files[coordOfFile]}${ranks[coordOfRank]}`
+                    : `${files[coordOfFile]}${ranks[coordOfRank]}`,
+            );
         }
     }
 
