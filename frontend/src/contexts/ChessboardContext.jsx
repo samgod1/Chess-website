@@ -256,22 +256,26 @@ const ChessboardContextProvider = ({ children }) => {
             let coordOfFile = files.indexOf(file);
             let coordOfRank = ranks.indexOf(rank);
 
-            while (
-                coordOfFile > 0 &&
-                coordOfFile < 7 &&
-                coordOfRank > 0 &&
-                coordOfRank < 7
-            ) {
+            while (true) {
                 coordOfFile += directions[i][0];
                 coordOfRank += directions[i][1];
 
-                // For not generating destination square on top of other pieces
+                // Stopping the loop if destination square reaches to the edge
+                if (
+                    coordOfFile < 0 ||
+                    coordOfFile < 7 ||
+                    coordOfRank > 0 ||
+                    coordOfRank < 7
+                ) {
+                    break;
+                }
+
                 const pieceOnDestinationSquare =
                     chessboardRef.current.querySelector(
                         `[squareid = "${files[coordOfFile]}${ranks[coordOfRank]}"]`,
                     );
 
-                // For not generating destination square if another piece comes in between
+                // Stopping the loop if destination square reaches on top of other piece
                 if (pieceOnDestinationSquare) {
                     break;
                 }
@@ -294,21 +298,26 @@ const ChessboardContextProvider = ({ children }) => {
             let coordOfFile = files.indexOf(file);
             let coordOfRank = ranks.indexOf(rank);
 
-            while (
-                coordOfFile > 0 &&
-                coordOfFile < 7 &&
-                coordOfRank > 0 &&
-                coordOfRank < 7
-            ) {
+            while (true) {
                 coordOfFile += directions[i][0];
                 coordOfRank += directions[i][1];
 
-                // For not generating destination square on top of other pieces
+                // Stopping the loop if destination square reaches to the edge
+                if (
+                    coordOfFile < 0 ||
+                    coordOfFile > 7 ||
+                    coordOfRank < 0 ||
+                    coordOfRank > 7
+                ) {
+                    break;
+                }
+
                 const pieceOnDestinationSquare =
                     chessboardRef.current.querySelector(
                         `[squareid = "${files[coordOfFile]}${ranks[coordOfRank]}"]`,
                     );
 
+                // Stopping the loop if destination square reaches on top of other piece
                 if (pieceOnDestinationSquare) {
                     break;
                 }
