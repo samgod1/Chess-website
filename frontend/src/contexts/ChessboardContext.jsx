@@ -25,7 +25,7 @@ const ChessboardContextProvider = ({ children }) => {
         "7",
         "8",
     ]);
-    const [fen, setFen] = useState("8/8/8/8/4RP2/8/8/8 w - - 0 1");
+    const [fen, setFen] = useState("8/8/8/8/3B1P2/8/8/8 w - - 0 1");
     const [selectedSquare, setSelectedSquare] = useState(null);
     const [chessboardWidth, setChessboardWidth] = useState(0);
     const [squareWidth, setSquareWidth] = useState(0);
@@ -327,6 +327,16 @@ const ChessboardContextProvider = ({ children }) => {
             coordOfFile += 1;
             coordOfRank += 1;
 
+            // For not generating destination square on top of other pieces
+            const pieceOnDestinationSquare =
+                chessboardRef.current.querySelector(
+                    `[squareid = "${files[coordOfFile]}${ranks[coordOfRank]}"]`,
+                );
+
+            if (pieceOnDestinationSquare) {
+                break;
+            }
+
             updatedDestinationSquares.push(
                 `${files[coordOfFile]}${ranks[coordOfRank]}`,
             );
@@ -338,6 +348,16 @@ const ChessboardContextProvider = ({ children }) => {
         while (coordOfFile > 0 && coordOfRank > 0) {
             coordOfFile -= 1;
             coordOfRank -= 1;
+
+            // For not generating destination square on top of other pieces
+            const pieceOnDestinationSquare =
+                chessboardRef.current.querySelector(
+                    `[squareid = "${files[coordOfFile]}${ranks[coordOfRank]}"]`,
+                );
+
+            if (pieceOnDestinationSquare) {
+                break;
+            }
 
             updatedDestinationSquares.push(
                 files[coordOfFile] + ranks[coordOfRank],
@@ -353,6 +373,16 @@ const ChessboardContextProvider = ({ children }) => {
             coordOfFile -= 1;
             coordOfRank += 1;
 
+            // For not generating destination square on top of other pieces
+            const pieceOnDestinationSquare =
+                chessboardRef.current.querySelector(
+                    `[squareid = "${files[coordOfFile]}${ranks[coordOfRank]}"]`,
+                );
+
+            if (pieceOnDestinationSquare) {
+                break;
+            }
+
             updatedDestinationSquares.push(
                 `${files[coordOfFile]}${ranks[coordOfRank]}`,
             );
@@ -364,6 +394,16 @@ const ChessboardContextProvider = ({ children }) => {
         while (coordOfFile < 7 && coordOfRank > 0) {
             coordOfFile += 1;
             coordOfRank -= 1;
+
+            // For not generating destination square on top of other pieces
+            const pieceOnDestinationSquare =
+                chessboardRef.current.querySelector(
+                    `[squareid = "${files[coordOfFile]}${ranks[coordOfRank]}"]`,
+                );
+
+            if (pieceOnDestinationSquare) {
+                break;
+            }
 
             updatedDestinationSquares.push(
                 files[coordOfFile] + ranks[coordOfRank],
