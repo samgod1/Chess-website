@@ -25,7 +25,7 @@ const ChessboardContextProvider = ({ children }) => {
         "7",
         "8",
     ]);
-    const [fen, setFen] = useState("8/8/8/8/3B1P2/8/8/8 w - - 0 1");
+    const [fen, setFen] = useState("8/8/8/8/3N1P2/8/8/8 w - - 0 1");
     const [selectedSquare, setSelectedSquare] = useState(null);
     const [chessboardWidth, setChessboardWidth] = useState(0);
     const [squareWidth, setSquareWidth] = useState(0);
@@ -263,9 +263,9 @@ const ChessboardContextProvider = ({ children }) => {
                 // Stopping the loop if destination square reaches to the edge
                 if (
                     coordOfFile < 0 ||
-                    coordOfFile < 7 ||
-                    coordOfRank > 0 ||
-                    coordOfRank < 7
+                    coordOfFile > 7 ||
+                    coordOfRank < 0 ||
+                    coordOfRank > 7
                 ) {
                     break;
                 }
@@ -415,74 +415,46 @@ const ChessboardContextProvider = ({ children }) => {
     }
 
     function createKnightDestSquares(file, rank, updatedDestinationSquare) {
-        let coordOfFile = files.indexOf(file);
-        let coordOfRank = ranks.indexOf(rank);
+        const directions = [
+            [2, 1],
+            [2, -1],
+            [-2, 1],
+            [-2, -1],
+            [1, 2],
+            [-1, 2],
+            [1, -2],
+            [-1, -2],
+        ];
 
-        let tempDestinationSquares = [];
+        for (let i = 0; i < 8; i++) {
+            let coordOfFile = files.indexOf(file);
+            let coordOfRank = ranks.indexOf(rank);
 
-        for (let i = 0; i < 2; i++) {
-            // For left and right directions of knight
-            for (let j = 0; j < 2; j++) {
-                if (i == 0) {
-                    if (j == 0) {
-                        tempDestinationSquares.push(
-                            files[coordOfFile + 2] + ranks[coordOfRank + 1],
-                        );
-                    }
-                    if (j == 1) {
-                        tempDestinationSquares.push(
-                            files[coordOfFile + 2] + ranks[coordOfRank - 1],
-                        );
-                    }
-                }
-                if (i == 1) {
-                    if (j == 0) {
-                        tempDestinationSquares.push(
-                            files[coordOfFile - 2] + ranks[coordOfRank + 1],
-                        );
-                    }
-                    if (j == 1) {
-                        tempDestinationSquares.push(
-                            files[coordOfFile - 2] + ranks[coordOfRank - 1],
-                        );
-                    }
-                }
+            coordOfFile += directions[i][0];
+            coordOfRank -= directions[i][1];
+
+            if (
+                coordOfFile < 0 ||
+                coordOfFile > 7 ||
+                coordOfRank < 0 ||
+                coordOfRank > 7
+            ) {
+                continue;
             }
 
-            // For top and bottom directions of knight
-            for (let j = 0; j < 2; j++) {
-                if (i == 0) {
-                    if (j == 0) {
-                        tempDestinationSquares.push(
-                            files[coordOfFile + 1] + ranks[coordOfRank + 2],
-                        );
-                    }
-                    if (j == 1) {
-                        tempDestinationSquares.push(
-                            files[coordOfFile - 1] + ranks[coordOfRank + 2],
-                        );
-                    }
-                }
-                if (i == 1) {
-                    if (j == 0) {
-                        tempDestinationSquares.push(
-                            files[coordOfFile + 1] + ranks[coordOfRank - 2],
-                        );
-                    }
-                    if (j == 1) {
-                        tempDestinationSquares.push(
-                            files[coordOfFile - 1] + ranks[coordOfRank - 2],
-                        );
-                    }
-                }
+            const pieceOnDestinationSquare =
+                chessboardRef.current.querySelector(
+                    `[squareid = "${files[coordOfFile]}${ranks[coordOfRank]}"]`,
+                );
+
+            if (pieceOnDestinationSquare) {
+                continue;
             }
+
+            updatedDestinationSquare.push(
+                `${files[coordOfFile]}${ranks[coordOfRank]}`,
+            );
         }
-
-        tempDestinationSquares = tempDestinationSquares.filter(
-            (square) => square.length == 2,
-        );
-
-        updatedDestinationSquare.push(...tempDestinationSquares);
     }
 
     useEffect(() => {
