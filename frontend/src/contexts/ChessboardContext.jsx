@@ -153,16 +153,25 @@ const ChessboardContextProvider = ({ children }) => {
     }
 
     function handlePieceClick(e) {
-        const pieceSquare = e.target.getAttribute("squareid");
+        let isSwitching = false;
+        const clickedSquare = e.target.getAttribute("squareid");
+
+        // For checking if user is switching to another piece was a piece is already selected
+        if (selectedSquare && selectedSquare != clickedSquare) {
+            isSwitching = true;
+            resetSquares(isSwitching);
+        }
+
+        // Only setting value of selectedPieceRef after checking for isSwitching
         selectedPieceRef.current = e.target;
 
-        if (selectedSquare == pieceSquare) {
-            resetSquares();
+        if (selectedSquare == clickedSquare) {
+            resetSquares(isSwitching);
             return;
         }
 
         e.target.style.backgroundColor = "var(--c-highlight)";
-        setSelectedSquare(pieceSquare);
+        setSelectedSquare(clickedSquare);
     }
 
     function handleSquareClick(e) {
@@ -184,12 +193,12 @@ const ChessboardContextProvider = ({ children }) => {
         resetSquares();
     }
 
-    function resetSquares() {
+    function resetSquares(isSwitching) {
         setDestinationSquares([]);
         setSelectedSquare(null);
         if (selectedPieceRef.current)
             selectedPieceRef.current.style.backgroundColor = "";
-        selectedPieceRef.current = null;
+        if (!isSwitching) selectedPieceRef.current = null;
     }
 
     function createDestSquares() {
