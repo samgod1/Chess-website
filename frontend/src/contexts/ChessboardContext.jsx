@@ -25,7 +25,7 @@ const ChessboardContextProvider = ({ children }) => {
         "7",
         "8",
     ]);
-    const [fen, setFen] = useState("8/8/8/8/3B1P2/8/8/8 w - - 0 1");
+    const [fen, setFen] = useState("8/8/8/8/3R1P2/8/8/8 w - - 0 1");
     const [selectedSquare, setSelectedSquare] = useState(null);
     const [chessboardWidth, setChessboardWidth] = useState(0);
     const [squareWidth, setSquareWidth] = useState(0);
@@ -248,73 +248,40 @@ const ChessboardContextProvider = ({ children }) => {
         let coordOfFile = files.indexOf(file);
         let coordOfRank = ranks.indexOf(rank);
 
-        // RIGHT
-        while (coordOfFile < 7) {
-            coordOfFile += 1;
+        const directions = [
+            [0, 1],
+            [0, -1],
+            [1, 0],
+            [-1, 0],
+        ];
 
-            // For not generating destination square on top of other pieces
-            const pieceOnDestinationSquare =
-                chessboardRef.current.querySelector(
-                    `[squareid = "${files[coordOfFile]}${rank}"]`,
+        for (let i = 0; i < 4; i++) {
+            coordOfFile = files.indexOf(file);
+            coordOfRank = ranks.indexOf(rank);
+
+            while (
+                coordOfFile > 0 &&
+                coordOfFile < 7 &&
+                coordOfRank > 0 &&
+                coordOfRank < 7
+            ) {
+                coordOfFile += directions[i][0];
+                coordOfRank += directions[i][1];
+
+                // For not generating destination square on top of other pieces
+                const pieceOnDestinationSquare =
+                    chessboardRef.current.querySelector(
+                        `[squareid = "${files[coordOfFile]}${ranks[coordOfRank]}"]`,
+                    );
+
+                // For not generating destination square if another piece comes in between
+                if (pieceOnDestinationSquare) {
+                    break;
+                }
+                updatedDestinationSquares.push(
+                    `${files[coordOfFile]}${ranks[coordOfRank]}`,
                 );
-
-            // For not generating destination square if another piece comes in between
-            if (pieceOnDestinationSquare) {
-                break;
             }
-            updatedDestinationSquares.push(`${files[coordOfFile]}${rank}`);
-        }
-
-        coordOfFile = files.indexOf(file);
-
-        // LEFT
-        while (coordOfFile > 0) {
-            coordOfFile -= 1;
-
-            // For not generating destination square on top of other pieces
-            const pieceOnDestinationSquare =
-                chessboardRef.current.querySelector(
-                    `[squareid = "${files[coordOfFile]}${rank}"]`,
-                );
-            if (pieceOnDestinationSquare) {
-                break;
-            }
-
-            updatedDestinationSquares.push(`${files[coordOfFile]}${rank}`);
-        }
-
-        // BOTTOM
-        while (coordOfRank > 0) {
-            coordOfRank -= 1;
-
-            // For not generating destination square on top of other pieces
-            const pieceOnDestinationSquare =
-                chessboardRef.current.querySelector(
-                    `[squareid = "${file}${ranks[coordOfRank]}"]`,
-                );
-            if (pieceOnDestinationSquare) {
-                break;
-            }
-
-            updatedDestinationSquares.push(`${file}${ranks[coordOfRank]}`);
-        }
-
-        coordOfRank = ranks.indexOf(rank);
-
-        // TOP
-        while (coordOfRank < 7) {
-            coordOfRank += 1;
-
-            // For not generating destination square on top of other pieces
-            const pieceOnDestinationSquare =
-                chessboardRef.current.querySelector(
-                    `[squareid = "${file}${ranks[coordOfRank]}"]`,
-                );
-            if (pieceOnDestinationSquare) {
-                break;
-            }
-
-            updatedDestinationSquares.push(`${file}${ranks[coordOfRank]}`);
         }
     }
 
