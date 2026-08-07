@@ -25,7 +25,7 @@ const ChessboardContextProvider = ({ children }) => {
         "7",
         "8",
     ]);
-    const [fen, setFen] = useState("8/8/8/8/3R1P2/8/8/8 w - - 0 1");
+    const [fen, setFen] = useState("8/8/8/8/3B1P2/8/8/8 w - - 0 1");
     const [selectedSquare, setSelectedSquare] = useState(null);
     const [chessboardWidth, setChessboardWidth] = useState(0);
     const [squareWidth, setSquareWidth] = useState(0);
@@ -245,9 +245,6 @@ const ChessboardContextProvider = ({ children }) => {
     }
 
     function createRookDestSquares(file, rank, updatedDestinationSquares) {
-        let coordOfFile = files.indexOf(file);
-        let coordOfRank = ranks.indexOf(rank);
-
         const directions = [
             [0, 1],
             [0, -1],
@@ -256,8 +253,8 @@ const ChessboardContextProvider = ({ children }) => {
         ];
 
         for (let i = 0; i < 4; i++) {
-            coordOfFile = files.indexOf(file);
-            coordOfRank = ranks.indexOf(rank);
+            let coordOfFile = files.indexOf(file);
+            let coordOfRank = ranks.indexOf(rank);
 
             while (
                 coordOfFile > 0 &&
@@ -286,95 +283,40 @@ const ChessboardContextProvider = ({ children }) => {
     }
 
     function createBishopDestSquares(file, rank, updatedDestinationSquares) {
-        let coordOfFile = files.indexOf(file);
-        let coordOfRank = ranks.indexOf(rank);
+        const directions = [
+            [1, 1],
+            [-1, -1],
+            [-1, 1],
+            [1, -1],
+        ];
 
-        // First diagonal
-        while (coordOfFile < 7 && coordOfRank < 7) {
-            coordOfFile += 1;
-            coordOfRank += 1;
+        for (let i = 0; i < 4; i++) {
+            let coordOfFile = files.indexOf(file);
+            let coordOfRank = ranks.indexOf(rank);
 
-            // For not generating destination square on top of other pieces
-            const pieceOnDestinationSquare =
-                chessboardRef.current.querySelector(
-                    `[squareid = "${files[coordOfFile]}${ranks[coordOfRank]}"]`,
+            while (
+                coordOfFile > 0 &&
+                coordOfFile < 7 &&
+                coordOfRank > 0 &&
+                coordOfRank < 7
+            ) {
+                coordOfFile += directions[i][0];
+                coordOfRank += directions[i][1];
+
+                // For not generating destination square on top of other pieces
+                const pieceOnDestinationSquare =
+                    chessboardRef.current.querySelector(
+                        `[squareid = "${files[coordOfFile]}${ranks[coordOfRank]}"]`,
+                    );
+
+                if (pieceOnDestinationSquare) {
+                    break;
+                }
+
+                updatedDestinationSquares.push(
+                    `${files[coordOfFile]}${ranks[coordOfRank]}`,
                 );
-
-            if (pieceOnDestinationSquare) {
-                break;
             }
-
-            updatedDestinationSquares.push(
-                `${files[coordOfFile]}${ranks[coordOfRank]}`,
-            );
-        }
-
-        coordOfFile = files.indexOf(file);
-        coordOfRank = ranks.indexOf(rank);
-
-        while (coordOfFile > 0 && coordOfRank > 0) {
-            coordOfFile -= 1;
-            coordOfRank -= 1;
-
-            // For not generating destination square on top of other pieces
-            const pieceOnDestinationSquare =
-                chessboardRef.current.querySelector(
-                    `[squareid = "${files[coordOfFile]}${ranks[coordOfRank]}"]`,
-                );
-
-            if (pieceOnDestinationSquare) {
-                break;
-            }
-
-            updatedDestinationSquares.push(
-                files[coordOfFile] + ranks[coordOfRank],
-            );
-        }
-
-        coordOfFile = files.indexOf(file);
-        coordOfRank = ranks.indexOf(rank);
-
-        // Second diagonal
-
-        while (coordOfFile > 0 && coordOfRank < 7) {
-            coordOfFile -= 1;
-            coordOfRank += 1;
-
-            // For not generating destination square on top of other pieces
-            const pieceOnDestinationSquare =
-                chessboardRef.current.querySelector(
-                    `[squareid = "${files[coordOfFile]}${ranks[coordOfRank]}"]`,
-                );
-
-            if (pieceOnDestinationSquare) {
-                break;
-            }
-
-            updatedDestinationSquares.push(
-                `${files[coordOfFile]}${ranks[coordOfRank]}`,
-            );
-        }
-
-        coordOfFile = files.indexOf(file);
-        coordOfRank = ranks.indexOf(rank);
-
-        while (coordOfFile < 7 && coordOfRank > 0) {
-            coordOfFile += 1;
-            coordOfRank -= 1;
-
-            // For not generating destination square on top of other pieces
-            const pieceOnDestinationSquare =
-                chessboardRef.current.querySelector(
-                    `[squareid = "${files[coordOfFile]}${ranks[coordOfRank]}"]`,
-                );
-
-            if (pieceOnDestinationSquare) {
-                break;
-            }
-
-            updatedDestinationSquares.push(
-                files[coordOfFile] + ranks[coordOfRank],
-            );
         }
     }
 
