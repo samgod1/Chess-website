@@ -25,7 +25,7 @@ const ChessboardContextProvider = ({ children }) => {
         "7",
         "8",
     ]);
-    const [fen, setFen] = useState("8/8/8/8/R3p3/8/8/8 w - - 0 1");
+    const [fen, setFen] = useState("8/3n3B/8/8/R3p3/8/8/8 b - - 0 1");
     const [selectedSquare, setSelectedSquare] = useState(null);
     const [chessboardWidth, setChessboardWidth] = useState(0);
     const [squareWidth, setSquareWidth] = useState(0);
@@ -351,14 +351,29 @@ const ChessboardContextProvider = ({ children }) => {
                     break;
                 }
 
-                const pieceOnDestinationSquare =
-                    chessboardRef.current.querySelector(
-                        `[squareid = "${files[coordOfFile]}${ranks[coordOfRank]}"]`,
-                    );
+                const pieceOnDestSquare = chessboardRef.current.querySelector(
+                    `[squareid = "${files[coordOfFile]}${ranks[coordOfRank]}"]`,
+                );
 
                 // Stopping the loop if destination square reaches on top of other piece
-                if (pieceOnDestinationSquare) {
-                    break;
+                if (pieceOnDestSquare) {
+                    const pieceNotation =
+                        pieceOnDestSquare.getAttribute("piece");
+                    const pieceColor =
+                        pieceNotation == pieceNotation.toUpperCase()
+                            ? "white"
+                            : "black";
+
+                    // Stopping the loop if destination square reaches on top of other piece
+                    if (pieceColor == color) {
+                        break;
+                    } else {
+                        setCaptureSquares([
+                            ...captureSquares,
+                            `${files[coordOfFile]}${ranks[coordOfRank]}`,
+                        ]);
+                        break;
+                    }
                 }
 
                 updatedDestinationSquares.push(
@@ -397,6 +412,31 @@ const ChessboardContextProvider = ({ children }) => {
                     coordOfFile <= 7 &&
                     coordOfRank <= 7
                 ) {
+                    const pieceOnDestSquare =
+                        chessboardRef.current.querySelector(
+                            `[squareid = "${files[coordOfFile]}${ranks[coordOfRank]}"]`,
+                        );
+
+                    if (pieceOnDestSquare) {
+                        const pieceNotation =
+                            pieceOnDestSquare.getAttribute("piece");
+                        const pieceColor =
+                            pieceNotation == pieceNotation.toUpperCase()
+                                ? "white"
+                                : "black";
+
+                        // Stopping the loop if destination square reaches on top of other piece
+                        if (pieceColor == color) {
+                            continue;
+                        } else {
+                            setCaptureSquares([
+                                ...captureSquares,
+                                `${files[coordOfFile]}${ranks[coordOfRank]}`,
+                            ]);
+                            continue;
+                        }
+                    }
+
                     // To remove the central destination square
                     if (
                         `${coordOfFile} + ${coordOfRank}` !=
@@ -487,13 +527,27 @@ const ChessboardContextProvider = ({ children }) => {
                 continue;
             }
 
-            const pieceOnDestinationSquare =
-                chessboardRef.current.querySelector(
-                    `[squareid = "${files[coordOfFile]}${ranks[coordOfRank]}"]`,
-                );
+            const pieceOnDestSquare = chessboardRef.current.querySelector(
+                `[squareid = "${files[coordOfFile]}${ranks[coordOfRank]}"]`,
+            );
 
-            if (pieceOnDestinationSquare) {
-                continue;
+            if (pieceOnDestSquare) {
+                const pieceNotation = pieceOnDestSquare.getAttribute("piece");
+                const pieceColor =
+                    pieceNotation == pieceNotation.toUpperCase()
+                        ? "white"
+                        : "black";
+
+                // Stopping the loop if destination square reaches on top of other piece
+                if (pieceColor == color) {
+                    continue;
+                } else {
+                    setCaptureSquares([
+                        ...captureSquares,
+                        `${files[coordOfFile]}${ranks[coordOfRank]}`,
+                    ]);
+                    continue;
+                }
             }
 
             updatedDestinationSquare.push(
