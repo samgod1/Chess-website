@@ -25,15 +25,17 @@ const ChessboardContextProvider = ({ children }) => {
         "7",
         "8",
     ]);
-    const [fen, setFen] = useState("p7/8/8/8/B7/8/P7/8 b - - 0 1");
+    const [fen, setFen] = useState("8/8/8/8/R3p3/8/8/8 w - - 0 1");
     const [selectedSquare, setSelectedSquare] = useState(null);
     const [chessboardWidth, setChessboardWidth] = useState(0);
     const [squareWidth, setSquareWidth] = useState(0);
     const [destinationSquares, setDestinationSquares] = useState([]);
+    const [captureSquares, setCaptureSquares] = useState([]);
 
     const chessboardRef = useRef(null);
     const chessboardContainerRef = useRef(null);
     const selectedPieceRef = useRef(null);
+    const capturedPieceRef = useRef(null);
 
     function calculateChessboardWidth() {
         let chessboardContainerWidth =
@@ -185,9 +187,6 @@ const ChessboardContextProvider = ({ children }) => {
     }
 
     function movePiece(e) {
-        //Removes the background color
-        selectedPieceRef.current.style.backgroundColor = "";
-
         //Moves the piece
         const destination = e.target.style.transform;
         selectedPieceRef.current.style.transform = destination;
@@ -199,12 +198,22 @@ const ChessboardContextProvider = ({ children }) => {
         resetSquares();
     }
 
+    function capturePiece(e) {
+        capturedPieceRef.current = chessboardRef.current.querySelector(
+            `[squareid = ${e.target.getAttribute("squareid")}`,
+        );
+
+        movePiece(e);
+        capturedPieceRef.current.remove();
+    }
+
     function resetSquares(isSwitching) {
         setDestinationSquares([]);
         setSelectedSquare(null);
         if (selectedPieceRef.current)
             selectedPieceRef.current.style.backgroundColor = "";
         if (!isSwitching) selectedPieceRef.current = null;
+        if (captureSquares.length != 0) setCaptureSquares([]);
     }
 
     function createDestSquares() {
@@ -285,15 +294,30 @@ const ChessboardContextProvider = ({ children }) => {
                     break;
                 }
 
-                const pieceOnDestinationSquare =
-                    chessboardRef.current.querySelector(
-                        `[squareid = "${files[coordOfFile]}${ranks[coordOfRank]}"]`,
-                    );
+                const pieceOnDestSquare = chessboardRef.current.querySelector(
+                    `[squareid = "${files[coordOfFile]}${ranks[coordOfRank]}"]`,
+                );
 
-                // Stopping the loop if destination square reaches on top of other piece
-                if (pieceOnDestinationSquare) {
-                    break;
+                if (pieceOnDestSquare) {
+                    const pieceNotation =
+                        pieceOnDestSquare.getAttribute("piece");
+                    const pieceColor =
+                        pieceNotation == pieceNotation.toUpperCase()
+                            ? "white"
+                            : "black";
+
+                    // Stopping the loop if destination square reaches on top of other piece
+                    if (pieceColor == color) {
+                        break;
+                    } else {
+                        setCaptureSquares([
+                            ...captureSquares,
+                            `${files[coordOfFile]}${ranks[coordOfRank]}`,
+                        ]);
+                        break;
+                    }
                 }
+
                 updatedDestinationSquares.push(
                     `${files[coordOfFile]}${ranks[coordOfRank]}`,
                 );
@@ -506,7 +530,9 @@ const ChessboardContextProvider = ({ children }) => {
                 squareWidth,
                 displayCorrectPiece,
                 destinationSquares,
+                captureSquares,
                 movePiece,
+                capturePiece,
                 handlePieceClick,
                 handleSquareClick,
             }}

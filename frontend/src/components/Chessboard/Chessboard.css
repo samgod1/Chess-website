@@ -52,7 +52,8 @@
             }
         }
 
-        .destSquare {
+        .destSquare,
+        .captureSquare {
             position: absolute;
             top: 0;
             width: 12.5%;
@@ -61,11 +62,40 @@
             justify-content: center;
             align-items: center;
             font-size: 5rem;
-
+            cursor: pointer;
+        }
+        .destSquare img {
+            width: 1.25rem;
+            height: 1.25rem;
+            pointer-events: none;
+        }
+        .captureSquare {
             img {
-                width: 50%;
-                height: 50%;
+                width: 1.5rem;
+                height: 1.5rem;
                 pointer-events: none;
+                position: absolute;
+            }
+
+            .top-left {
+                top: 0;
+                left: 0;
+                rotate: 90deg;
+            }
+            .top-right {
+                top: 0;
+                right: 0;
+                rotate: 180deg;
+            }
+            .bottom-left {
+                bottom: 0;
+                left: 0;
+                rotate: 0deg;
+            }
+            .bottom-right {
+                bottom: 0;
+                right: 0;
+                rotate: 270deg;
             }
         }
     }

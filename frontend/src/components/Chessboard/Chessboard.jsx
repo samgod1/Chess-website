@@ -42,7 +42,9 @@ const Chessboard = () => {
         squareWidth,
         displayCorrectPiece,
         destinationSquares,
+        captureSquares,
         movePiece,
+        capturePiece,
         handlePieceClick,
         handleSquareClick,
     } = useContext(ChessboardContext);
@@ -209,6 +211,41 @@ const Chessboard = () => {
                             </div>
                         );
                     })}
+
+                {/* Mapping out capture squares */}
+                {captureSquares.map((square, i) => {
+                    const fileNumber = files.indexOf(square.split("")[0]);
+                    const rankNumber = 7 - Number(square.split("")[1] - 1);
+
+                    return (
+                        <div
+                            className="captureSquare"
+                            style={{
+                                transform: `translate(${fileNumber * squareWidth}px, ${rankNumber * squareWidth}px)`,
+                            }}
+                            key={i}
+                            squareid={square}
+                            onClick={capturePiece}
+                        >
+                            <img
+                                className="top-left"
+                                src="/images/triangle.png"
+                            />
+                            <img
+                                className="top-right"
+                                src="/images/triangle.png"
+                            />
+                            <img
+                                className="bottom-left"
+                                src="/images/triangle.png"
+                            />
+                            <img
+                                className="bottom-right"
+                                src="/images/triangle.png"
+                            />
+                        </div>
+                    );
+                })}
             </div>
             <audio src="/sounds/success.mp3" ref={correctAudioRef} />
             <audio src="/sounds/error.mp3" ref={incorrectAudioRef} />
