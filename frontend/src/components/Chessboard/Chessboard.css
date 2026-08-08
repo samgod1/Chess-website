@@ -72,9 +72,21 @@
 
     .white {
         rotate: 0deg;
+
+        .piece {
+            img {
+                rotate: 0deg;
+            }
+        }
     }
 
     .black {
         rotate: 180deg;
+
+        .piece {
+            img {
+                rotate: 180deg;
+            }
+        }
     }
 }

@@ -162,17 +162,19 @@ const Chessboard = () => {
                                 if (!isNumber) {
                                     // squareIndex for skipping squares where there are no pieces
                                     squareIndex += 1;
+
+                                    let xCoord =
+                                        squareWidth * (squareIndex - 1);
+                                    let yCoord = squareWidth * i;
+
                                     return (
                                         <div
                                             className="piece"
                                             style={{
-                                                transform: `translate(${squareWidth * (squareIndex - 1)}px, ${squareWidth * i}px)`,
+                                                transform: `translate(${xCoord}px, ${yCoord}px)`,
                                             }}
                                             // Finding which square the piece (Right works now only for white pieces) Fix this later
-                                            squareid={
-                                                files[squareIndex - 1] +
-                                                ranks[7 - i]
-                                            }
+                                            squareid={`${files[squareIndex - 1]}${ranks[7 - i]}`}
                                             piece={piece}
                                             key={j}
                                             onClick={handlePieceClick}

@@ -25,7 +25,7 @@ const ChessboardContextProvider = ({ children }) => {
         "7",
         "8",
     ]);
-    const [fen, setFen] = useState("p7/8/8/8/N7/8/P7/8 w - - 0 1");
+    const [fen, setFen] = useState("p7/8/8/8/B7/8/P7/8 b - - 0 1");
     const [selectedSquare, setSelectedSquare] = useState(null);
     const [chessboardWidth, setChessboardWidth] = useState(0);
     const [squareWidth, setSquareWidth] = useState(0);
@@ -155,6 +155,12 @@ const ChessboardContextProvider = ({ children }) => {
     function handlePieceClick(e) {
         let isSwitching = false;
         const clickedSquare = e.target.getAttribute("squareid");
+        const piece = e.target.getAttribute("piece");
+        const selectedPieceColor =
+            piece == piece.toUpperCase() ? "white" : "black";
+
+        // Do nothing if user is trying to select opponent's piece
+        if (color != selectedPieceColor) return;
 
         // For checking if user is switching to another piece was a piece is already selected
         if (selectedSquare && selectedSquare != clickedSquare) {
@@ -477,6 +483,11 @@ const ChessboardContextProvider = ({ children }) => {
             createDestSquares();
         }
     }, [selectedSquare]);
+
+    useEffect(() => {
+        let startColor = fen.split(" ")[1];
+        startColor == "w" ? setColor("white") : setColor("black");
+    }, [fen]);
 
     return (
         <ChessboardContext.Provider
