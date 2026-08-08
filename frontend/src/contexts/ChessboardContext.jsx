@@ -25,7 +25,7 @@ const ChessboardContextProvider = ({ children }) => {
         "7",
         "8",
     ]);
-    const [fen, setFen] = useState("8/3n3B/8/8/R3p3/8/8/8 b - - 0 1");
+    const [fen, setFen] = useState("8/3n3B/PPPPPPPP/8/R3p3/8/8/8 w - - 0 1");
     const [selectedSquare, setSelectedSquare] = useState(null);
     const [chessboardWidth, setChessboardWidth] = useState(0);
     const [squareWidth, setSquareWidth] = useState(0);
@@ -463,6 +463,10 @@ const ChessboardContextProvider = ({ children }) => {
             [0, 1],
             [0, 2],
         ];
+        const captureDirections = [
+            [1, 1],
+            [-1, 1],
+        ];
 
         for (let i = 0; i < 7; i++) {
             piece == "P"
@@ -496,6 +500,36 @@ const ChessboardContextProvider = ({ children }) => {
                     ? `${files[coordOfFile]}${ranks[coordOfRank]}`
                     : `${files[coordOfFile]}${ranks[coordOfRank]}`,
             );
+        }
+
+        // For capture squares
+        for (let i = 0; i < 2; i++) {
+            let coordOfFile = files.indexOf(file);
+            let coordOfRank = ranks.indexOf(rank);
+
+            coordOfFile += captureDirections[i][0];
+            color == "white"
+                ? (coordOfRank += captureDirections[i][1])
+                : (coordOfRank -= captureDirections[i][1]);
+
+            let pieceOnCaptureSquare = chessboardRef.current.querySelector(
+                `[squareid = ${files[coordOfFile]}${ranks[coordOfRank]}]`,
+            );
+
+            if (pieceOnCaptureSquare) {
+                let pieceNotation = pieceOnCaptureSquare.getAttribute("piece");
+                let pieceColor =
+                    pieceNotation == pieceNotation.toUpperCase()
+                        ? "white"
+                        : "black";
+
+                if (pieceColor != color) {
+                    setCaptureSquares([
+                        ...captureSquares,
+                        `${files[coordOfFile]}${ranks[coordOfRank]}`,
+                    ]);
+                }
+            }
         }
     }
 
