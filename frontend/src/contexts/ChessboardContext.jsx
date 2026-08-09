@@ -27,9 +27,7 @@ const ChessboardContextProvider = ({ children }) => {
         "7",
         "8",
     ]);
-    const [fen, setFen] = useState(
-        "q3k1nr/1pp1nQpp/3p4/1P2p3/4P3/B1PP1b2/B5PP/5K2 b k - 0 17",
-    );
+    const [fen, setFen] = useState(null);
     const [selectedSquare, setSelectedSquare] = useState(null);
     const [chessboardWidth, setChessboardWidth] = useState(0);
     const [squareWidth, setSquareWidth] = useState(0);
@@ -640,8 +638,12 @@ const ChessboardContextProvider = ({ children }) => {
     }, [selectedSquare]);
 
     useEffect(() => {
-        let startColor = fen.split(" ")[1];
-        startColor == "w" ? setColor("white") : setColor("black");
+        if (fen) {
+            let startColor = fen.split(" ")[1];
+            startColor == "w" ? setColor("white") : setColor("black");
+        } else {
+            setFen(puzzles[puzzleLevel]);
+        }
     }, [fen]);
 
     return (
