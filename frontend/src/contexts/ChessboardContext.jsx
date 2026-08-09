@@ -1,4 +1,5 @@
 import { useState, useRef, createContext, useEffect } from "react";
+import gsap from "gsap";
 
 import { puzzles } from "../constants";
 
@@ -195,7 +196,12 @@ const ChessboardContextProvider = ({ children }) => {
     function movePiece(e) {
         //Moves the piece
         const destination = e.target.style.transform;
-        selectedPieceRef.current.style.transform = destination;
+
+        gsap.to(selectedPieceRef.current, {
+            transform: destination,
+            duration: 0.3,
+            ease: "power1.inOut",
+        });
 
         //Changes the selected piece squareid attribute
         const square = e.target.getAttribute("squareid");
@@ -209,34 +215,37 @@ const ChessboardContextProvider = ({ children }) => {
         let position = "e3";
         let destination = "g3";
 
-        opponentPieceRef.current = chessboardRef.current?.querySelector(
+        opponentPieceRef.current = chessboardRef.current.querySelector(
             `[squareid = "${position}"]`,
         );
 
-        if (opponentPieceRef.current) {
-            // Calculate the translate values
-            const file = destination.split("")[0];
-            const rank = destination.split("")[1];
-            const coordOfFile = files.indexOf(file);
-            const coordOfRank = ranks.indexOf(rank);
-            const translateX = coordOfFile * squareWidth;
-            const translateY = (7 - coordOfRank) * squareWidth;
+        // Calculate the translate values
+        const file = destination.split("")[0];
+        const rank = destination.split("")[1];
 
-            // Move the opponent's piece
-            opponentPieceRef.current.style.transform = `translate(${translateX}px, ${translateY}px)`;
+        const coordOfFile = files.indexOf(file);
+        const coordOfRank = ranks.indexOf(rank);
+        const translateX = coordOfFile * squareWidth;
+        const translateY = (7 - coordOfRank) * squareWidth;
 
-            // Change the square id
-            opponentPieceRef.current.setAttribute("squareid", destination);
+        // Move the opponent's piece
+        gsap.to(opponentPieceRef.current, {
+            transform: `translate(${translateX}px, ${translateY}px)`,
+            delay: 0.2,
+            duration: 0.3,
+        });
 
-            // Update the opponentMoveCount
-            setOpponentMoveCount((prev) => (prev += 1));
-        }
+        // Change the square id
+        opponentPieceRef.current.setAttribute("squareid", destination);
+
+        // Update the opponentMoveCount
+        setOpponentMoveCount((prev) => (prev += 1));
     }
 
-    function checkUserMove() {
-        // After check is complete move the opponent piece
-        moveOpponentPiece();
-    }
+    // function checkUserMove() {
+    //     // After check is complete move the opponent piece
+    //     moveOpponentPiece();
+    // }
 
     function capturePiece(e) {
         capturedPieceRef.current = chessboardRef.current.querySelector(
@@ -638,9 +647,10 @@ const ChessboardContextProvider = ({ children }) => {
     }, [selectedSquare]);
 
     useEffect(() => {
+        // Set color opposite to fen
         if (fen) {
             let startColor = fen.split(" ")[1];
-            startColor == "w" ? setColor("white") : setColor("black");
+            startColor == "b" ? setColor("white") : setColor("black");
         } else {
             setFen(puzzles[puzzleLevel]);
         }
@@ -668,6 +678,7 @@ const ChessboardContextProvider = ({ children }) => {
                 capturePiece,
                 handlePieceClick,
                 handleSquareClick,
+                moveOpponentPiece,
             }}
         >
             {children}

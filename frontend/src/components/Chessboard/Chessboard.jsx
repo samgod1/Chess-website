@@ -47,6 +47,7 @@ const Chessboard = () => {
         capturePiece,
         handlePieceClick,
         handleSquareClick,
+        moveOpponentPiece,
     } = useContext(ChessboardContext);
 
     const { pathname } = useLocation();
@@ -65,6 +66,12 @@ const Chessboard = () => {
             handleSuddenPageChange();
         }
     }, [pathname]);
+
+    useEffect(() => {
+        if (fen && mode == "puzzles" && squareWidth) {
+            moveOpponentPiece();
+        }
+    }, [fen, mode, squareWidth]);
 
     useEffect(() => {
         calculateChessboardWidth();
@@ -150,7 +157,7 @@ const Chessboard = () => {
                 {/* Mapping out pieces through fen */}
                 {mode == "puzzles" &&
                     fen
-                        .split(" ")[0]
+                        ?.split(" ")[0]
                         .split("/")
                         .map((row, i) => {
                             // Looping through the rows
