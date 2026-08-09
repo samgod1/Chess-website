@@ -175,7 +175,7 @@ const Chessboard = () => {
                                             style={{
                                                 transform: `translate(${xCoord}px, ${yCoord}px)`,
                                             }}
-                                            // Finding which square the piece (Right works now only for white pieces) Fix this later
+                                            // Finding which square the piece
                                             squareid={`${files[squareIndex - 1]}${ranks[7 - i]}`}
                                             piece={piece}
                                             key={j}

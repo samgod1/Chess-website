@@ -1,5 +1,7 @@
 import { useState, useRef, createContext, useEffect } from "react";
 
+import { puzzles } from "../constants";
+
 export const ChessboardContext = createContext();
 
 const ChessboardContextProvider = ({ children }) => {
@@ -26,17 +28,21 @@ const ChessboardContextProvider = ({ children }) => {
         "8",
     ]);
     const [fen, setFen] = useState(
-        "r3r1k1/p4ppp/2p2n2/1p6/3P1qb1/2NQR3/PPB2PP1/R1B3K1 b - - 0 1",
+        "q3k1nr/1pp1nQpp/3p4/1P2p3/4P3/B1PP1b2/B5PP/5K2 b k - 0 17",
     );
     const [selectedSquare, setSelectedSquare] = useState(null);
     const [chessboardWidth, setChessboardWidth] = useState(0);
     const [squareWidth, setSquareWidth] = useState(0);
     const [destinationSquares, setDestinationSquares] = useState([]);
     const [captureSquares, setCaptureSquares] = useState([]);
+    const [hasPuzzleStarted, setHasPuzzleStarted] = useState(true);
+    const [opponentMoveCount, setOpponentMoveCount] = useState(0);
+    const [puzzleLevel, setPuzzleLevel] = useState(0);
 
     const chessboardRef = useRef(null);
     const chessboardContainerRef = useRef(null);
     const selectedPieceRef = useRef(null);
+    const opponentPieceRef = useRef(null);
     const capturedPieceRef = useRef(null);
 
     function calculateChessboardWidth() {
@@ -198,6 +204,40 @@ const ChessboardContextProvider = ({ children }) => {
         selectedPieceRef.current.setAttribute("squareid", square);
 
         resetSquares();
+        checkUserMove();
+    }
+
+    function moveOpponentPiece() {
+        let position = "e3";
+        let destination = "g3";
+
+        opponentPieceRef.current = chessboardRef.current?.querySelector(
+            `[squareid = "${position}"]`,
+        );
+
+        if (opponentPieceRef.current) {
+            // Calculate the translate values
+            const file = destination.split("")[0];
+            const rank = destination.split("")[1];
+            const coordOfFile = files.indexOf(file);
+            const coordOfRank = ranks.indexOf(rank);
+            const translateX = coordOfFile * squareWidth;
+            const translateY = (7 - coordOfRank) * squareWidth;
+
+            // Move the opponent's piece
+            opponentPieceRef.current.style.transform = `translate(${translateX}px, ${translateY}px)`;
+
+            // Change the square id
+            opponentPieceRef.current.setAttribute("squareid", destination);
+
+            // Update the opponentMoveCount
+            setOpponentMoveCount((prev) => (prev += 1));
+        }
+    }
+
+    function checkUserMove() {
+        // After check is complete move the opponent piece
+        moveOpponentPiece();
     }
 
     function capturePiece(e) {
