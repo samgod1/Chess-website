@@ -25,7 +25,9 @@ const ChessboardContextProvider = ({ children }) => {
         "7",
         "8",
     ]);
-    const [fen, setFen] = useState("8/3n3B/PPPPPPPP/8/R3p3/8/8/8 w - - 0 1");
+    const [fen, setFen] = useState(
+        "r3r1k1/p4ppp/2p2n2/1p6/3P1qb1/2NQR3/PPB2PP1/R1B3K1 b - - 0 1",
+    );
     const [selectedSquare, setSelectedSquare] = useState(null);
     const [chessboardWidth, setChessboardWidth] = useState(0);
     const [squareWidth, setSquareWidth] = useState(0);
@@ -458,6 +460,7 @@ const ChessboardContextProvider = ({ children }) => {
         piece,
     ) {
         let pawnStartingSquares = [];
+        let updatedCaptureSquare = [];
 
         const directions = [
             [0, 1],
@@ -524,13 +527,13 @@ const ChessboardContextProvider = ({ children }) => {
                         : "black";
 
                 if (pieceColor != color) {
-                    setCaptureSquares([
-                        ...captureSquares,
+                    updatedCaptureSquare.push(
                         `${files[coordOfFile]}${ranks[coordOfRank]}`,
-                    ]);
+                    );
                 }
             }
         }
+        setCaptureSquares(updatedCaptureSquare);
     }
 
     function createKnightDestSquares(file, rank, updatedDestinationSquare) {
