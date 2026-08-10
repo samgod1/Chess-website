@@ -208,7 +208,7 @@ const ChessboardContextProvider = ({ children }) => {
         selectedPieceRef.current.setAttribute("squareid", square);
 
         resetSquares();
-        checkUserMove();
+        // checkUserMove();
     }
 
     function moveOpponentPiece() {
@@ -270,6 +270,7 @@ const ChessboardContextProvider = ({ children }) => {
         const rank = selectedSquare.split("")[1];
 
         let updatedDestinationSquares = [];
+        let updatedCaptureSquares = [];
 
         const piece = selectedPieceRef.current.getAttribute("piece");
 
@@ -277,23 +278,43 @@ const ChessboardContextProvider = ({ children }) => {
             case "R":
             case "r":
                 // For rook
-                createRookDestSquares(file, rank, updatedDestinationSquares);
+                createRookDestSquares(
+                    file,
+                    rank,
+                    updatedDestinationSquares,
+                    updatedCaptureSquares,
+                );
                 break;
 
             case "B":
             case "b":
                 // For bishop
-                createBishopDestSquares(file, rank, updatedDestinationSquares);
+                createBishopDestSquares(
+                    file,
+                    rank,
+                    updatedDestinationSquares,
+                    updatedCaptureSquares,
+                );
                 break;
             case "Q":
             case "q":
                 // For queen
-                createQueenDestSquares(file, rank, updatedDestinationSquares);
+                createQueenDestSquares(
+                    file,
+                    rank,
+                    updatedDestinationSquares,
+                    updatedCaptureSquares,
+                );
                 break;
             case "K":
             case "k":
                 // For king
-                createKingDestSquares(file, rank, updatedDestinationSquares);
+                createKingDestSquares(
+                    file,
+                    rank,
+                    updatedDestinationSquares,
+                    updatedCaptureSquares,
+                );
                 break;
             case "P":
             case "p":
@@ -302,22 +323,31 @@ const ChessboardContextProvider = ({ children }) => {
                     file,
                     rank,
                     updatedDestinationSquares,
+                    updatedCaptureSquares,
                     piece,
                 );
                 break;
             case "N":
             case "n":
-                createKnightDestSquares(file, rank, updatedDestinationSquares);
+                createKnightDestSquares(
+                    file,
+                    rank,
+                    updatedDestinationSquares,
+                    updatedCaptureSquares,
+                );
                 break;
         }
 
-        setDestinationSquares([
-            ...destinationSquares,
-            ...updatedDestinationSquares,
-        ]);
+        setDestinationSquares([...updatedDestinationSquares]);
+        setCaptureSquares([...updatedCaptureSquares]);
     }
 
-    function createRookDestSquares(file, rank, updatedDestinationSquares) {
+    function createRookDestSquares(
+        file,
+        rank,
+        updatedDestinationSquares,
+        updatedCaptureSquares,
+    ) {
         const directions = [
             [0, 1],
             [0, -1],
@@ -359,10 +389,10 @@ const ChessboardContextProvider = ({ children }) => {
                     if (pieceColor == color) {
                         break;
                     } else {
-                        setCaptureSquares([
-                            ...captureSquares,
+                        updatedCaptureSquares.push(
                             `${files[coordOfFile]}${ranks[coordOfRank]}`,
-                        ]);
+                        );
+                        console.log(updatedCaptureSquares);
                         break;
                     }
                 }
@@ -374,7 +404,12 @@ const ChessboardContextProvider = ({ children }) => {
         }
     }
 
-    function createBishopDestSquares(file, rank, updatedDestinationSquares) {
+    function createBishopDestSquares(
+        file,
+        rank,
+        updatedDestinationSquares,
+        updatedCaptureSquares,
+    ) {
         const directions = [
             [1, 1],
             [-1, -1],
@@ -417,10 +452,9 @@ const ChessboardContextProvider = ({ children }) => {
                     if (pieceColor == color) {
                         break;
                     } else {
-                        setCaptureSquares([
-                            ...captureSquares,
+                        updatedCaptureSquares.push(
                             `${files[coordOfFile]}${ranks[coordOfRank]}`,
-                        ]);
+                        );
                         break;
                     }
                 }
@@ -432,16 +466,31 @@ const ChessboardContextProvider = ({ children }) => {
         }
     }
 
-    function createQueenDestSquares(file, rank, updatedDestinationSquares) {
-        createRookDestSquares(file, rank, updatedDestinationSquares);
-        createBishopDestSquares(file, rank, updatedDestinationSquares);
+    function createQueenDestSquares(
+        file,
+        rank,
+        updatedDestinationSquares,
+        updatedCaptureSquares,
+    ) {
+        createRookDestSquares(
+            file,
+            rank,
+            updatedDestinationSquares,
+            updatedCaptureSquares,
+        );
+        createBishopDestSquares(
+            file,
+            rank,
+            updatedDestinationSquares,
+            updatedCaptureSquares,
+        );
     }
 
     function createKingDestSquares(
         file,
         rank,
         updatedDestinationSquare,
-        piece,
+        updatedCaptureSquares,
     ) {
         const indexOfFile = files.indexOf(file);
         const indexOfRank = ranks.indexOf(rank);
@@ -478,10 +527,9 @@ const ChessboardContextProvider = ({ children }) => {
                         if (pieceColor == color) {
                             continue;
                         } else {
-                            setCaptureSquares([
-                                ...captureSquares,
+                            updatedCaptureSquares.push(
                                 `${files[coordOfFile]}${ranks[coordOfRank]}`,
-                            ]);
+                            );
                             continue;
                         }
                     }
@@ -504,10 +552,10 @@ const ChessboardContextProvider = ({ children }) => {
         file,
         rank,
         updatedDestinationSquare,
+        updatedCaptureSquares,
         piece,
     ) {
         let pawnStartingSquares = [];
-        let updatedCaptureSquare = [];
 
         const directions = [
             [0, 1],
@@ -546,9 +594,7 @@ const ChessboardContextProvider = ({ children }) => {
             if (pieceOnDestinationSquare) break;
 
             updatedDestinationSquare.push(
-                piece == "P"
-                    ? `${files[coordOfFile]}${ranks[coordOfRank]}`
-                    : `${files[coordOfFile]}${ranks[coordOfRank]}`,
+                `${files[coordOfFile]}${ranks[coordOfRank]}`,
             );
         }
 
@@ -574,16 +620,20 @@ const ChessboardContextProvider = ({ children }) => {
                         : "black";
 
                 if (pieceColor != color) {
-                    updatedCaptureSquare.push(
+                    updatedCaptureSquares.push(
                         `${files[coordOfFile]}${ranks[coordOfRank]}`,
                     );
                 }
             }
         }
-        setCaptureSquares(updatedCaptureSquare);
     }
 
-    function createKnightDestSquares(file, rank, updatedDestinationSquare) {
+    function createKnightDestSquares(
+        file,
+        rank,
+        updatedDestinationSquare,
+        updatedCaptureSquares,
+    ) {
         const directions = [
             [2, 1],
             [2, -1],
@@ -626,10 +676,9 @@ const ChessboardContextProvider = ({ children }) => {
                 if (pieceColor == color) {
                     continue;
                 } else {
-                    setCaptureSquares([
-                        ...captureSquares,
+                    updatedCaptureSquares.push(
                         `${files[coordOfFile]}${ranks[coordOfRank]}`,
-                    ]);
+                    );
                     continue;
                 }
             }
