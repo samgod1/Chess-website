@@ -36,8 +36,10 @@ const ChessboardContextProvider = ({ children }) => {
     const [captureSquares, setCaptureSquares] = useState([]);
     const [hasPuzzleStarted, setHasPuzzleStarted] = useState(true);
     const [isOpponentPieceMoving, setIsOpponentPieceMoving] = useState(false);
-    const [opponentMoveCount, setOpponentMoveCount] = useState(0);
+    const [userMoveIndex, setUserMoveIndex] = useState(1);
+    const [opponentMoveIndex, setOpponentMoveIndex] = useState(0);
     const [puzzleLevel, setPuzzleLevel] = useState(0);
+    const [boardKey, setBoardKey] = useState(0);
 
     const chessboardRef = useRef(null);
     const chessboardContainerRef = useRef(null);
@@ -200,25 +202,37 @@ const ChessboardContextProvider = ({ children }) => {
     function movePiece(e) {
         //Moves the piece
         const destination = e.target.style.transform;
+        const selectedPiece = selectedPieceRef.current;
+
+        selectedPieceRef.current.style.backgroundColor = "";
+        setDestinationSquares([]);
+        setCaptureSquares([]);
 
         gsap.to(selectedPieceRef.current, {
             transform: destination,
             duration: 0.3,
             ease: "power1.inOut",
+            onComplete: () => {
+                checkUserMove(e);
+                //Changes the selected piece squareid attribute
+                const square = e.target.getAttribute("squareid");
+                selectedPiece.setAttribute("squareid", square);
+                resetSquares();
+            },
         });
-
-        //Changes the selected piece squareid attribute
-        const square = e.target.getAttribute("squareid");
-        selectedPieceRef.current.setAttribute("squareid", square);
-
-        resetSquares();
-        // checkUserMove();
     }
 
     function moveOpponentPiece() {
         setIsOpponentPieceMoving(true);
-        let position = "e3";
-        let destination = "g3";
+
+        let position = puzzles[puzzleLevel]
+            .split(",")[1]
+            .split(" ")
+            [opponentMoveIndex].slice(0, 2);
+        let destination = puzzles[puzzleLevel]
+            .split(",")[1]
+            .split(" ")
+            [opponentMoveIndex].slice(2, 4);
 
         opponentPieceRef.current = chessboardRef.current.querySelector(
             `[squareid = "${position}"]`,
@@ -247,25 +261,57 @@ const ChessboardContextProvider = ({ children }) => {
         opponentPieceRef.current.setAttribute("squareid", destination);
 
         // Update the opponentMoveCount
-        setOpponentMoveCount((prev) => (prev += 1));
+        setOpponentMoveIndex((prev) => (prev += 2));
     }
 
-    // function checkUserMove() {
-    //     // After check is complete move the opponent piece
-    //     moveOpponentPiece();
-    // }
+    function checkUserMove(e) {
+        const position = selectedPieceRef.current.getAttribute("squareid");
+        const destination = e.target.getAttribute("squareid");
+
+        const correctPosition = puzzles[puzzleLevel]
+            .split(",")[1]
+            .split(" ")
+            [userMoveIndex].slice(0, 2);
+        const correctDestination = puzzles[puzzleLevel]
+            .split(",")[1]
+            .split(" ")
+            [userMoveIndex].slice(2, 4);
+
+        const isMoveCorrect =
+            position == correctPosition && destination == correctDestination;
+
+        if (isMoveCorrect) {
+            // After check is complete move the opponent piece
+            moveOpponentPiece();
+        } else {
+            // Reset the board if move is incorrect
+            resetBoard();
+        }
+    }
+
+    function resetBoard() {
+        setOpponentMoveIndex(0);
+        setUserMoveIndex(1);
+
+        selectedPieceRef.current = null;
+        opponentPieceRef.current = null;
+        capturedPieceRef.current = null;
+
+        setBoardKey((prev) => prev + 1);
+    }
 
     function capturePiece(e) {
         capturedPieceRef.current = chessboardRef.current.querySelector(
             `[squareid = ${e.target.getAttribute("squareid")}`,
         );
 
+        console.log("capturePiece");
         movePiece(e);
-        capturedPieceRef.current.remove();
     }
 
     function resetSquares(isSwitching) {
         setDestinationSquares([]);
+        setCaptureSquares([]);
         setSelectedSquare(null);
         if (selectedPieceRef.current)
             selectedPieceRef.current.style.backgroundColor = "";
@@ -400,7 +446,6 @@ const ChessboardContextProvider = ({ children }) => {
                         updatedCaptureSquares.push(
                             `${files[coordOfFile]}${ranks[coordOfRank]}`,
                         );
-                        console.log(updatedCaptureSquares);
                         break;
                     }
                 }
@@ -736,6 +781,7 @@ const ChessboardContextProvider = ({ children }) => {
                 handlePieceClick,
                 handleSquareClick,
                 moveOpponentPiece,
+                boardKey,
             }}
         >
             {children}
