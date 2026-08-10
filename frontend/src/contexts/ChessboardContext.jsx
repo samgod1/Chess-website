@@ -35,6 +35,7 @@ const ChessboardContextProvider = ({ children }) => {
     const [destinationSquares, setDestinationSquares] = useState([]);
     const [captureSquares, setCaptureSquares] = useState([]);
     const [hasPuzzleStarted, setHasPuzzleStarted] = useState(true);
+    const [isOpponentPieceMoving, setIsOpponentPieceMoving] = useState(false);
     const [opponentMoveCount, setOpponentMoveCount] = useState(0);
     const [puzzleLevel, setPuzzleLevel] = useState(0);
 
@@ -171,6 +172,9 @@ const ChessboardContextProvider = ({ children }) => {
         // Do nothing if user is trying to select opponent's piece
         if (color != selectedPieceColor) return;
 
+        // Do nothing if opponent's piece is moving
+        if (isOpponentPieceMoving) return;
+
         // For checking if user is switching to another piece was a piece is already selected
         if (selectedSquare && selectedSquare != clickedSquare) {
             isSwitching = true;
@@ -212,6 +216,7 @@ const ChessboardContextProvider = ({ children }) => {
     }
 
     function moveOpponentPiece() {
+        setIsOpponentPieceMoving(true);
         let position = "e3";
         let destination = "g3";
 
@@ -233,6 +238,9 @@ const ChessboardContextProvider = ({ children }) => {
             transform: `translate(${translateX}px, ${translateY}px)`,
             delay: 0.2,
             duration: 0.3,
+            onComplete: () => {
+                setIsOpponentPieceMoving(false);
+            },
         });
 
         // Change the square id
