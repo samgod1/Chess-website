@@ -29,6 +29,7 @@ const ChessboardContextProvider = ({ children }) => {
         "8",
     ]);
     const [fen, setFen] = useState(null);
+    const [pieces, setPieces] = useState(null);
     const [selectedSquare, setSelectedSquare] = useState(null);
     const [chessboardWidth, setChessboardWidth] = useState(0);
     const [squareWidth, setSquareWidth] = useState(0);
@@ -222,47 +223,47 @@ const ChessboardContextProvider = ({ children }) => {
         });
     }
 
-    function moveOpponentPiece() {
-        setIsOpponentPieceMoving(true);
+    // function moveOpponentPiece() {
+    //     setIsOpponentPieceMoving(true);
 
-        let position = puzzles[puzzleLevel]
-            .split(",")[1]
-            .split(" ")
-            [opponentMoveIndex].slice(0, 2);
-        let destination = puzzles[puzzleLevel]
-            .split(",")[1]
-            .split(" ")
-            [opponentMoveIndex].slice(2, 4);
+    //     let position = puzzles[puzzleLevel]
+    //         .split(",")[1]
+    //         .split(" ")
+    //         [opponentMoveIndex].slice(0, 2);
+    //     let destination = puzzles[puzzleLevel]
+    //         .split(",")[1]
+    //         .split(" ")
+    //         [opponentMoveIndex].slice(2, 4);
 
-        opponentPieceRef.current = chessboardRef.current.querySelector(
-            `[squareid = "${position}"]`,
-        );
+    //     opponentPieceRef.current = chessboardRef.current.querySelector(
+    //         `[squareid = "${position}"]`,
+    //     );
 
-        // Calculate the translate values
-        const file = destination.split("")[0];
-        const rank = destination.split("")[1];
+    //     // Calculate the translate values
+    //     const file = destination.split("")[0];
+    //     const rank = destination.split("")[1];
 
-        const coordOfFile = files.indexOf(file);
-        const coordOfRank = ranks.indexOf(rank);
-        const translateX = coordOfFile * squareWidth;
-        const translateY = (7 - coordOfRank) * squareWidth;
+    //     const coordOfFile = files.indexOf(file);
+    //     const coordOfRank = ranks.indexOf(rank);
+    //     const translateX = coordOfFile * squareWidth;
+    //     const translateY = (7 - coordOfRank) * squareWidth;
 
-        // Move the opponent's piece
-        gsap.to(opponentPieceRef.current, {
-            transform: `translate(${translateX}px, ${translateY}px)`,
-            delay: 0.2,
-            duration: 0.3,
-            onComplete: () => {
-                setIsOpponentPieceMoving(false);
-            },
-        });
+    //     // Move the opponent's piece
+    //     gsap.to(opponentPieceRef.current, {
+    //         transform: `translate(${translateX}px, ${translateY}px)`,
+    //         delay: 0.2,
+    //         duration: 0.3,
+    //         onComplete: () => {
+    //             setIsOpponentPieceMoving(false);
+    //         },
+    //     });
 
-        // Change the square id
-        opponentPieceRef.current.setAttribute("squareid", destination);
+    //     // Change the square id
+    //     opponentPieceRef.current.setAttribute("squareid", destination);
 
-        // Update the opponentMoveCount
-        setOpponentMoveIndex((prev) => (prev += 2));
-    }
+    //     // Update the opponentMoveCount
+    //     setOpponentMoveIndex((prev) => (prev += 2));
+    // }
 
     function checkUserMove(e) {
         const position = selectedPieceRef.current.getAttribute("squareid");
@@ -742,6 +743,37 @@ const ChessboardContextProvider = ({ children }) => {
         }
     }
 
+    function convertFenToPiecesArray() {
+        let updatedPieces = [];
+
+        for (let i = 0; i < 8; i++) {
+            let row = fen.split(",")[0].split(" ")[0].split("/")[i];
+            let coordOfFile = 0;
+
+            for (let j = 0; j < row.length; j++) {
+                let pieceNotation = row.split("")[j];
+                let isNumber = /^[0-9]+$/.test(pieceNotation);
+
+                if (!isNumber) {
+                    let square = `${files[coordOfFile]}${ranks[7 - i]}`;
+                    let piece = {
+                        id: `${pieceNotation}-${square}`,
+                        piece: pieceNotation,
+                        square: square,
+                        coordOfFile: coordOfFile,
+                        coordOfRank: i,
+                    };
+                    updatedPieces.push(piece);
+                    coordOfFile += 1;
+                } else {
+                    coordOfFile += Number(pieceNotation);
+                }
+            }
+        }
+
+        setPieces(updatedPieces);
+    }
+
     useEffect(() => {
         if (selectedSquare) {
             createDestSquares();
@@ -749,10 +781,12 @@ const ChessboardContextProvider = ({ children }) => {
     }, [selectedSquare]);
 
     useEffect(() => {
-        // Set color opposite to fen
         if (fen) {
+            // Set color opposite to fen
             let startColor = fen.split(" ")[1];
             startColor == "b" ? setColor("white") : setColor("black");
+
+            convertFenToPiecesArray();
         } else {
             setFen(puzzles[puzzleLevel]);
         }
@@ -768,6 +802,7 @@ const ChessboardContextProvider = ({ children }) => {
                 files,
                 ranks,
                 fen,
+                pieces,
                 chessboardRef,
                 chessboardContainerRef,
                 calculateChessboardWidth,
@@ -780,7 +815,6 @@ const ChessboardContextProvider = ({ children }) => {
                 capturePiece,
                 handlePieceClick,
                 handleSquareClick,
-                moveOpponentPiece,
                 boardKey,
             }}
         >

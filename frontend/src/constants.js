@@ -125,6 +125,21 @@ const puzzles = [
     "1k1r4/pp3pp1/2p1p3/4b3/P3n1P1/8/KPP2PN1/3rBR1R b - - 2,b8c7 e1a5 b7b6 f1d1",
 ];
 
+const pieceImages = {
+    r: "black-rook.png",
+    b: "black-bishop.png",
+    q: "black-queen.png",
+    n: "black-knight.png",
+    k: "black-king.png",
+    p: "black-pawn.png",
+    R: "white-rook.png",
+    B: "white-bishop.png",
+    Q: "white-queen.png",
+    N: "white-knight.png",
+    K: "white-king.png",
+    P: "white-pawn.png",
+};
+
 export {
     coursesTextArray,
     visualizedMoves,
@@ -132,4 +147,5 @@ export {
     intermediateCourse,
     professionalCourse,
     puzzles,
+    pieceImages,
 };

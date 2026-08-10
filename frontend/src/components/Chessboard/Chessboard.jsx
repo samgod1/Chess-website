@@ -6,6 +6,7 @@ import { useLocation } from "react-router";
 import "./Chessboard.css";
 import { VisionContext, ChessboardContext } from "../../contexts";
 import Coords from "./components/Coords.jsx/Coords";
+import { pieceImages } from "../../constants";
 
 const Chessboard = () => {
     const {
@@ -35,6 +36,7 @@ const Chessboard = () => {
         files,
         ranks,
         fen,
+        pieces,
         chessboardRef,
         chessboardContainerRef,
         calculateChessboardWidth,
@@ -47,7 +49,6 @@ const Chessboard = () => {
         capturePiece,
         handlePieceClick,
         handleSquareClick,
-        moveOpponentPiece,
         boardKey,
     } = useContext(ChessboardContext);
 
@@ -67,12 +68,6 @@ const Chessboard = () => {
             handleSuddenPageChange();
         }
     }, [pathname]);
-
-    useEffect(() => {
-        if (fen && mode == "puzzles" && squareWidth) {
-            moveOpponentPiece();
-        }
-    }, [fen, mode, squareWidth, boardKey]);
 
     useEffect(() => {
         calculateChessboardWidth();
@@ -155,47 +150,28 @@ const Chessboard = () => {
                     <Coords files={files} ranks={ranks} color={color} />
                 )}
 
-                {/* Mapping out pieces through fen */}
-                <Fragment key={boardKey}>
-                    {mode == "puzzles" &&
-                        fen
-                            ?.split(" ")[0]
-                            .split("/")
-                            .map((row, i) => {
-                                // Looping through the rows
-                                let squareIndex = 0;
-                                return row.split("").map((piece, j) => {
-                                    // Mapping the pieces in the row
-                                    //Testing if the fen character is a number with regex
-                                    const isNumber = /^[0-9]+$/.test(piece);
-                                    if (!isNumber) {
-                                        // squareIndex for skipping squares where there are no pieces
-                                        squareIndex += 1;
-                                        let xCoord =
-                                            squareWidth * (squareIndex - 1);
-                                        let yCoord = squareWidth * i;
-                                        return (
-                                            <div
-                                                className="piece"
-                                                style={{
-                                                    transform: `translate(${xCoord}px, ${yCoord}px)`,
-                                                }}
-                                                // Finding which square the piece
-                                                squareid={`${files[squareIndex - 1]}${ranks[7 - i]}`}
-                                                piece={piece}
-                                                key={j}
-                                                onClick={handlePieceClick}
-                                            >
-                                                {displayCorrectPiece(piece)}
-                                            </div>
-                                        );
-                                    } else {
-                                        squareIndex += Number(piece);
-                                        return;
-                                    }
-                                });
-                            })}
-                </Fragment>
+                {/* Mapping out pieces*/}
+                {mode == "puzzles" &&
+                    pieces.length > 0 &&
+                    pieces.map((pieceInfo) => {
+                        let x = pieceInfo.coordOfFile * squareWidth;
+                        let y = pieceInfo.coordOfRank * squareWidth;
+
+                        return (
+                            <div
+                                key={pieceInfo.id}
+                                className="piece"
+                                style={{
+                                    transform: `translate(${x}px, ${y}px)`,
+                                }}
+                            >
+                                <img
+                                    src={`/images/chess-piece-set/${pieceImages[pieceInfo.piece]}`}
+                                    alt="piece"
+                                />
+                            </div>
+                        );
+                    })}
 
                 {/* Mapping out destination squares */}
                 {mode == "puzzles" &&
