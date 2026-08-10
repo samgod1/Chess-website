@@ -305,8 +305,8 @@ const ChessboardContextProvider = ({ children }) => {
             `[squareid = ${e.target.getAttribute("squareid")}`,
         );
 
-        console.log("capturePiece");
         movePiece(e);
+        capturedPieceRef.current.remove();
     }
 
     function resetSquares(isSwitching) {
