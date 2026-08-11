@@ -45,6 +45,7 @@ const Chessboard = () => {
         displayCorrectPiece,
         destinationSquares,
         captureSquares,
+        selectedPiece,
         movePiece,
         capturePiece,
         handlePieceClick,
@@ -153,20 +154,33 @@ const Chessboard = () => {
                 {/* Mapping out pieces*/}
                 {mode == "puzzles" &&
                     pieces.length > 0 &&
-                    pieces.map((pieceInfo) => {
-                        let x = pieceInfo.coordOfFile * squareWidth;
-                        let y = pieceInfo.coordOfRank * squareWidth;
+                    pieces.map((piece) => {
+                        let coordOfFile = files.indexOf(
+                            piece.square.split("")[0],
+                        );
+                        let coordOfRank =
+                            7 - ranks.indexOf(piece.square.split("")[1]);
+
+                        let x = coordOfFile * squareWidth;
+                        let y = coordOfRank * squareWidth;
 
                         return (
                             <div
-                                key={pieceInfo.id}
-                                className="piece"
+                                key={piece.id}
+                                className={
+                                    selectedPiece?.id == piece.id
+                                        ? "piece selected"
+                                        : "piece"
+                                }
                                 style={{
                                     transform: `translate(${x}px, ${y}px)`,
                                 }}
+                                onClick={() => {
+                                    handlePieceClick(piece);
+                                }}
                             >
                                 <img
-                                    src={`/images/chess-piece-set/${pieceImages[pieceInfo.piece]}`}
+                                    src={`/images/chess-piece-set/${pieceImages[piece.pieceNotation]}`}
                                     alt="piece"
                                 />
                             </div>
@@ -187,7 +201,9 @@ const Chessboard = () => {
                                 }}
                                 key={i}
                                 squareid={square}
-                                onClick={movePiece}
+                                onClick={() => {
+                                    movePiece(square);
+                                }}
                             >
                                 <img src="/images/dot.png" alt="dot" />
                             </div>
@@ -207,7 +223,9 @@ const Chessboard = () => {
                             }}
                             key={i}
                             squareid={square}
-                            onClick={capturePiece}
+                            onClick={() => {
+                                capturePiece(square);
+                            }}
                         >
                             <img
                                 className="top-left"

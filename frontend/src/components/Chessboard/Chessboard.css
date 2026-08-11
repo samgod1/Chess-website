@@ -52,6 +52,10 @@
             }
         }
 
+        .selected {
+            background-color: var(--c-highlight);
+        }
+
         .destSquare,
         .captureSquare {
             position: absolute;
