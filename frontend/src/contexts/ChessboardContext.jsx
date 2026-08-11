@@ -181,11 +181,7 @@ const ChessboardContextProvider = ({ children }) => {
             }
         }
 
-        // Find the piece from pieces array
-        let clickedPiece = pieces.find(({ id }) => id == piece.id);
-
         setSelectedPiece(piece);
-        createDestSquares(clickedPiece);
     }
 
     function handleSquareClick() {
@@ -297,17 +293,6 @@ const ChessboardContextProvider = ({ children }) => {
         }
     }
 
-    function resetBoard() {
-        setOpponentMoveIndex(0);
-        setUserMoveIndex(1);
-
-        selectedPieceRef.current = null;
-        opponentPieceRef.current = null;
-        capturedPieceRef.current = null;
-
-        setBoardKey((prev) => prev + 1);
-    }
-
     function createDestSquares({ pieceNotation, square }) {
         let file = square.split("")[0];
         let rank = square.split("")[1];
@@ -365,7 +350,6 @@ const ChessboardContextProvider = ({ children }) => {
                     rank,
                     updatedDestinationSquares,
                     updatedCaptureSquares,
-                    piece,
                 );
                 break;
             case "N":
@@ -479,23 +463,26 @@ const ChessboardContextProvider = ({ children }) => {
                     break;
                 }
 
-                const pieceOnDestSquare = chessboardRef.current.querySelector(
-                    `[squareid = "${files[coordOfFile]}${ranks[coordOfRank]}"]`,
+                let pieceOnDestSquare = pieces.find(
+                    (piece) =>
+                        `${files[coordOfFile]}${ranks[coordOfRank]}` ===
+                        piece.square,
                 );
 
-                // Stopping the loop if destination square reaches on top of other piece
                 if (pieceOnDestSquare) {
-                    const pieceNotation =
-                        pieceOnDestSquare.getAttribute("piece");
+                    //Determining if the piece in the way destination squares is white or black
                     const pieceColor =
-                        pieceNotation == pieceNotation.toUpperCase()
+                        pieceOnDestSquare.pieceNotation ==
+                        pieceOnDestSquare.pieceNotation.toUpperCase()
                             ? "white"
                             : "black";
 
-                    // Stopping the loop if destination square reaches on top of other piece
+                    // Stopping the loop if it's our piece
                     if (pieceColor == color) {
                         break;
-                    } else {
+                    }
+                    // Stopping the loop and creating capture square if it's opponent's piece
+                    else {
                         updatedCaptureSquares.push(
                             `${files[coordOfFile]}${ranks[coordOfRank]}`,
                         );
@@ -530,147 +517,146 @@ const ChessboardContextProvider = ({ children }) => {
         );
     }
 
-    // function createKingDestSquares(
-    //     file,
-    //     rank,
-    //     updatedDestinationSquare,
-    //     updatedCaptureSquares,
-    // ) {
-    //     const indexOfFile = files.indexOf(file);
-    //     const indexOfRank = ranks.indexOf(rank);
+    function createKingDestSquares(
+        file,
+        rank,
+        updatedDestinationSquare,
+        updatedCaptureSquares,
+    ) {
+        for (let i = -1; i < 2; i++) {
+            for (let j = -1; j < 2; j++) {
+                let coordOfFile = files.indexOf(file);
+                let coordOfRank = ranks.indexOf(rank);
 
-    //     for (let i = -1; i < 2; i++) {
-    //         for (let j = -1; j < 2; j++) {
-    //             let coordOfFile = files.indexOf(file);
-    //             let coordOfRank = ranks.indexOf(rank);
+                coordOfFile += j;
+                coordOfRank += i;
 
-    //             coordOfFile += j;
-    //             coordOfRank += i;
+                // To prevent unnecessary destination squares when the king is at the edges of the board
+                if (
+                    coordOfFile >= 0 &&
+                    coordOfRank >= 0 &&
+                    coordOfFile <= 7 &&
+                    coordOfRank <= 7
+                ) {
+                    const pieceOnDestSquare = pieces.find(
+                        (piece) =>
+                            piece.square ===
+                            `${files[coordOfFile]}${ranks[coordOfRank]}`,
+                    );
 
-    //             // To prevent unnecessary destination squares when the king is at the edges of the board
-    //             if (
-    //                 coordOfFile >= 0 &&
-    //                 coordOfRank >= 0 &&
-    //                 coordOfFile <= 7 &&
-    //                 coordOfRank <= 7
-    //             ) {
-    //                 const pieceOnDestSquare =
-    //                     chessboardRef.current.querySelector(
-    //                         `[squareid = "${files[coordOfFile]}${ranks[coordOfRank]}"]`,
-    //                     );
+                    if (pieceOnDestSquare) {
+                        //Determining if the piece in the way destination squares is white or black
+                        const pieceColor =
+                            pieceOnDestSquare.pieceNotation ==
+                            pieceOnDestSquare.pieceNotation.toUpperCase()
+                                ? "white"
+                                : "black";
 
-    //                 if (pieceOnDestSquare) {
-    //                     const pieceNotation =
-    //                         pieceOnDestSquare.getAttribute("piece");
-    //                     const pieceColor =
-    //                         pieceNotation == pieceNotation.toUpperCase()
-    //                             ? "white"
-    //                             : "black";
+                        // Skipping the loop if it's our piece
+                        if (pieceColor == color) {
+                            continue;
+                        }
+                        // Skipping the loop and creating capture square if it's opponent's piece
+                        else {
+                            updatedCaptureSquares.push(
+                                `${files[coordOfFile]}${ranks[coordOfRank]}`,
+                            );
+                            continue;
+                        }
+                    }
 
-    //                     // Stopping the loop if destination square reaches on top of other piece
-    //                     if (pieceColor == color) {
-    //                         continue;
-    //                     } else {
-    //                         updatedCaptureSquares.push(
-    //                             `${files[coordOfFile]}${ranks[coordOfRank]}`,
-    //                         );
-    //                         continue;
-    //                     }
-    //                 }
+                    updatedDestinationSquare.push(
+                        `${files[coordOfFile]}${ranks[coordOfRank]}`,
+                    );
+                }
+            }
+        }
+    }
 
-    //                 // To remove the central destination square
-    //                 if (
-    //                     `${coordOfFile} + ${coordOfRank}` !=
-    //                     `${indexOfFile} + ${indexOfRank}`
-    //                 ) {
-    //                     updatedDestinationSquare.push(
-    //                         `${files[coordOfFile]}${ranks[coordOfRank]}`,
-    //                     );
-    //                 }
-    //             }
-    //         }
-    //     }
-    // }
+    function createPawnDestSquares(
+        file,
+        rank,
+        updatedDestinationSquare,
+        updatedCaptureSquares,
+    ) {
+        let pawnStartingSquares = [];
+        let pieceColor =
+            selectedPiece.pieceNotation ==
+            selectedPiece.pieceNotation.toUpperCase()
+                ? "white"
+                : "black";
 
-    // function createPawnDestSquares(
-    //     file,
-    //     rank,
-    //     updatedDestinationSquare,
-    //     updatedCaptureSquares,
-    //     piece,
-    // ) {
-    //     let pawnStartingSquares = [];
+        const directions = [
+            [0, 1],
+            [0, 2],
+        ];
+        const captureDirections = [
+            [1, 1],
+            [-1, 1],
+        ];
 
-    //     const directions = [
-    //         [0, 1],
-    //         [0, 2],
-    //     ];
-    //     const captureDirections = [
-    //         [1, 1],
-    //         [-1, 1],
-    //     ];
+        for (let i = 0; i < 7; i++) {
+            pieceColor == "white"
+                ? pawnStartingSquares.push(files[i] + ranks[1])
+                : pawnStartingSquares.push(files[i] + ranks[6]);
+        }
 
-    //     for (let i = 0; i < 7; i++) {
-    //         piece == "P"
-    //             ? pawnStartingSquares.push(files[i] + ranks[1])
-    //             : pawnStartingSquares.push(files[i] + ranks[6]);
-    //     }
+        let noOfDestSquares = pawnStartingSquares.includes(selectedPiece.square)
+            ? 2
+            : 1;
 
-    //     let noOfDestSquares = pawnStartingSquares.includes(selectedSquare)
-    //         ? 2
-    //         : 1;
+        for (let i = 0; i < noOfDestSquares; i++) {
+            let coordOfFile = files.indexOf(file);
+            let coordOfRank = ranks.indexOf(rank);
 
-    //     for (let i = 0; i < noOfDestSquares; i++) {
-    //         let coordOfFile = files.indexOf(file);
-    //         let coordOfRank = ranks.indexOf(rank);
+            pieceColor == "white"
+                ? (coordOfRank += directions[i][1])
+                : (coordOfRank -= directions[i][1]);
 
-    //         piece == "P"
-    //             ? (coordOfRank += directions[i][1])
-    //             : (coordOfRank -= directions[i][1]);
+            if (coordOfRank < 0 || coordOfRank > 7) break;
 
-    //         if (coordOfRank < 0 || coordOfRank > 7) break;
+            const pieceOnDestinationSquare = pieces.find(
+                (piece) =>
+                    piece.square ===
+                    `${files[coordOfFile]}${ranks[coordOfRank]}`,
+            );
 
-    //         const pieceOnDestinationSquare =
-    //             chessboardRef.current.querySelector(
-    //                 `[squareid = "${files[coordOfFile]}${ranks[coordOfRank]}"]`,
-    //             );
+            if (pieceOnDestinationSquare) break;
 
-    //         if (pieceOnDestinationSquare) break;
+            updatedDestinationSquare.push(
+                `${files[coordOfFile]}${ranks[coordOfRank]}`,
+            );
+        }
 
-    //         updatedDestinationSquare.push(
-    //             `${files[coordOfFile]}${ranks[coordOfRank]}`,
-    //         );
-    //     }
+        // For capture squares
+        for (let i = 0; i < 2; i++) {
+            let coordOfFile = files.indexOf(file);
+            let coordOfRank = ranks.indexOf(rank);
 
-    //     // For capture squares
-    //     for (let i = 0; i < 2; i++) {
-    //         let coordOfFile = files.indexOf(file);
-    //         let coordOfRank = ranks.indexOf(rank);
+            coordOfFile += captureDirections[i][0];
+            pieceColor == "white"
+                ? (coordOfRank += captureDirections[i][1])
+                : (coordOfRank -= captureDirections[i][1]);
 
-    //         coordOfFile += captureDirections[i][0];
-    //         color == "white"
-    //             ? (coordOfRank += captureDirections[i][1])
-    //             : (coordOfRank -= captureDirections[i][1]);
+            let pieceOnCaptureSquare = pieces.find(
+                (piece) =>
+                    piece.square ===
+                    `${files[coordOfFile]}${ranks[coordOfRank]}`,
+            );
 
-    //         let pieceOnCaptureSquare = chessboardRef.current.querySelector(
-    //             `[squareid = ${files[coordOfFile]}${ranks[coordOfRank]}]`,
-    //         );
+            if (pieceOnCaptureSquare) {
+                let pieceOnCaptureSquareColor =
+                    pieceOnCaptureSquare.pieceNotation ===
+                    pieceOnCaptureSquare.pieceNotation.toUpperCase();
 
-    //         if (pieceOnCaptureSquare) {
-    //             let pieceNotation = pieceOnCaptureSquare.getAttribute("piece");
-    //             let pieceColor =
-    //                 pieceNotation == pieceNotation.toUpperCase()
-    //                     ? "white"
-    //                     : "black";
-
-    //             if (pieceColor != color) {
-    //                 updatedCaptureSquares.push(
-    //                     `${files[coordOfFile]}${ranks[coordOfRank]}`,
-    //                 );
-    //             }
-    //         }
-    //     }
-    // }
+                if (pieceOnCaptureSquareColor != color) {
+                    updatedCaptureSquares.push(
+                        `${files[coordOfFile]}${ranks[coordOfRank]}`,
+                    );
+                }
+            }
+        }
+    }
 
     function createKnightDestSquares(
         file,
@@ -705,21 +691,26 @@ const ChessboardContextProvider = ({ children }) => {
                 continue;
             }
 
-            const pieceOnDestSquare = chessboardRef.current.querySelector(
-                `[squareid = "${files[coordOfFile]}${ranks[coordOfRank]}"]`,
+            const pieceOnDestSquare = pieces.find(
+                (piece) =>
+                    piece.square ===
+                    `${files[coordOfFile]}${ranks[coordOfRank]}`,
             );
 
             if (pieceOnDestSquare) {
-                const pieceNotation = pieceOnDestSquare.getAttribute("piece");
+                //Determining if the piece in the way destination squares is white or black
                 const pieceColor =
-                    pieceNotation == pieceNotation.toUpperCase()
+                    pieceOnDestSquare.pieceNotation ==
+                    pieceOnDestSquare.pieceNotation.toUpperCase()
                         ? "white"
                         : "black";
 
-                // Stopping the loop if destination square reaches on top of other piece
+                // Skipping the loop if it's our piece
                 if (pieceColor == color) {
                     continue;
-                } else {
+                }
+                // Skipping the loop and creating capture square if it's opponent's piece
+                else {
                     updatedCaptureSquares.push(
                         `${files[coordOfFile]}${ranks[coordOfRank]}`,
                     );
@@ -773,6 +764,10 @@ const ChessboardContextProvider = ({ children }) => {
             setFen(puzzles[puzzleLevel]);
         }
     }, [fen]);
+
+    useEffect(() => {
+        if (selectedPiece) createDestSquares(selectedPiece);
+    }, [selectedPiece]);
 
     return (
         <ChessboardContext.Provider
