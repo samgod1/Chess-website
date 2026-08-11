@@ -165,23 +165,34 @@ const ChessboardContextProvider = ({ children }) => {
     }
 
     function handlePieceClick(piece) {
+        let pieceColor =
+            piece.pieceNotation === piece.pieceNotation.toUpperCase()
+                ? "white"
+                : "black";
+
         // If piece is already selected
         if (selectedPiece) {
             let selectedPieceColor =
-                piece.pieceNotation === piece.pieceNotation.toUpperCase()
+                selectedPiece.pieceNotation ===
+                selectedPiece.pieceNotation.toUpperCase()
                     ? "white"
                     : "black";
 
+            console.log(selectedPieceColor, color);
             // If the new selected piece is user's piece the switch the selectedPiece to next piece
-            if (selectedPieceColor === color) {
-                resetSquares();
-            } else {
+            if (selectedPieceColor === color && selectedPiece.id === piece.id) {
                 resetSquares();
                 return;
             }
+            if (selectedPieceColor === color && selectedPiece.id !== piece.id) {
+                resetSquares();
+            }
         }
 
-        setSelectedPiece(piece);
+        // Don't allow user to select opponent's piece
+        if (pieceColor === color) {
+            setSelectedPiece(piece);
+        }
     }
 
     function handleSquareClick() {
@@ -226,72 +237,55 @@ const ChessboardContextProvider = ({ children }) => {
         resetSquares();
     }
 
-    // function moveOpponentPiece() {
-    //     setIsOpponentPieceMoving(true);
-
-    //     let position = puzzles[puzzleLevel]
-    //         .split(",")[1]
-    //         .split(" ")
-    //         [opponentMoveIndex].slice(0, 2);
-    //     let destination = puzzles[puzzleLevel]
-    //         .split(",")[1]
-    //         .split(" ")
-    //         [opponentMoveIndex].slice(2, 4);
-
-    //     opponentPieceRef.current = chessboardRef.current.querySelector(
-    //         `[squareid = "${position}"]`,
-    //     );
-
-    //     // Calculate the translate values
-    //     const file = destination.split("")[0];
-    //     const rank = destination.split("")[1];
-
-    //     const coordOfFile = files.indexOf(file);
-    //     const coordOfRank = ranks.indexOf(rank);
-    //     const translateX = coordOfFile * squareWidth;
-    //     const translateY = (7 - coordOfRank) * squareWidth;
-
-    //     // Move the opponent's piece
-    //     gsap.to(opponentPieceRef.current, {
-    //         transform: `translate(${translateX}px, ${translateY}px)`,
-    //         delay: 0.2,
-    //         duration: 0.3,
-    //         onComplete: () => {
-    //             setIsOpponentPieceMoving(false);
-    //         },
-    //     });
-
-    //     // Change the square id
-    //     opponentPieceRef.current.setAttribute("squareid", destination);
-
-    //     // Update the opponentMoveCount
-    //     setOpponentMoveIndex((prev) => (prev += 2));
-    // }
-
-    function checkUserMove(e) {
-        const position = selectedPieceRef.current.getAttribute("squareid");
-        const destination = e.target.getAttribute("squareid");
-
-        const correctPosition = puzzles[puzzleLevel]
+    function moveOpponentPiece() {
+        // Getting the moves from puzzles data
+        let position = puzzles[puzzleLevel]
             .split(",")[1]
             .split(" ")
-            [userMoveIndex].slice(0, 2);
-        const correctDestination = puzzles[puzzleLevel]
+            [opponentMoveIndex].slice(0, 2);
+        let destination = puzzles[puzzleLevel]
             .split(",")[1]
             .split(" ")
-            [userMoveIndex].slice(2, 4);
+            [opponentMoveIndex].slice(2, 4);
 
-        const isMoveCorrect =
-            position == correctPosition && destination == correctDestination;
+        // Moving the opponent piece
+        let updatedPieces = pieces.map((piece) => {
+            if (piece.square === position) {
+                return { ...piece, square: destination };
+            }
+            return piece;
+        });
 
-        if (isMoveCorrect) {
-            // After check is complete move the opponent piece
-            moveOpponentPiece();
-        } else {
-            // Reset the board if move is incorrect
-            resetBoard();
-        }
+        setPieces(updatedPieces);
+
+        // Update the opponentMoveCount
+        setOpponentMoveIndex((prev) => (prev += 2));
     }
+
+    // function checkUserMove(e) {
+    //     const position = selectedPieceRef.current.getAttribute("squareid");
+    //     const destination = e.target.getAttribute("squareid");
+
+    //     const correctPosition = puzzles[puzzleLevel]
+    //         .split(",")[1]
+    //         .split(" ")
+    //         [userMoveIndex].slice(0, 2);
+    //     const correctDestination = puzzles[puzzleLevel]
+    //         .split(",")[1]
+    //         .split(" ")
+    //         [userMoveIndex].slice(2, 4);
+
+    //     const isMoveCorrect =
+    //         position == correctPosition && destination == correctDestination;
+
+    //     if (isMoveCorrect) {
+    //         // After check is complete move the opponent piece
+    //         moveOpponentPiece();
+    //     } else {
+    //         // Reset the board if move is incorrect
+    //         resetBoard();
+    //     }
+    // }
 
     function createDestSquares({ pieceNotation, square }) {
         let file = square.split("")[0];
@@ -793,7 +787,7 @@ const ChessboardContextProvider = ({ children }) => {
                 capturePiece,
                 handlePieceClick,
                 handleSquareClick,
-                boardKey,
+                moveOpponentPiece,
             }}
         >
             {children}

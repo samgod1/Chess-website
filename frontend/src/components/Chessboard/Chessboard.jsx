@@ -50,7 +50,7 @@ const Chessboard = () => {
         capturePiece,
         handlePieceClick,
         handleSquareClick,
-        boardKey,
+        moveOpponentPiece,
     } = useContext(ChessboardContext);
 
     const { pathname } = useLocation();
@@ -72,6 +72,9 @@ const Chessboard = () => {
 
     useEffect(() => {
         calculateChessboardWidth();
+        setTimeout(() => {
+            moveOpponentPiece();
+        }, 500);
     }, []);
 
     return (
