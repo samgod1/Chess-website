@@ -178,13 +178,14 @@ const ChessboardContextProvider = ({ children }) => {
                     ? "white"
                     : "black";
 
-            console.log(selectedPieceColor, color);
-            // If the new selected piece is user's piece the switch the selectedPiece to next piece
-            if (selectedPieceColor === color && selectedPiece.id === piece.id) {
+            // If same piece is clicked then run resetSquares and do nothing
+            if (selectedPiece.id === piece.id) {
                 resetSquares();
                 return;
             }
-            if (selectedPieceColor === color && selectedPiece.id !== piece.id) {
+
+            // If user clicks on another user's piece while a piece is already selected then firstly reset the squares before the new piece is selected
+            if (selectedPiece.id !== piece.id) {
                 resetSquares();
             }
         }
@@ -589,7 +590,7 @@ const ChessboardContextProvider = ({ children }) => {
             [-1, 1],
         ];
 
-        for (let i = 0; i < 7; i++) {
+        for (let i = 0; i < 8; i++) {
             pieceColor == "white"
                 ? pawnStartingSquares.push(files[i] + ranks[1])
                 : pawnStartingSquares.push(files[i] + ranks[6]);
@@ -641,7 +642,9 @@ const ChessboardContextProvider = ({ children }) => {
             if (pieceOnCaptureSquare) {
                 let pieceOnCaptureSquareColor =
                     pieceOnCaptureSquare.pieceNotation ===
-                    pieceOnCaptureSquare.pieceNotation.toUpperCase();
+                    pieceOnCaptureSquare.pieceNotation.toUpperCase()
+                        ? "white"
+                        : "black";
 
                 if (pieceOnCaptureSquareColor != color) {
                     updatedCaptureSquares.push(
