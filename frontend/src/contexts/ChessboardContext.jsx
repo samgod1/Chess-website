@@ -36,7 +36,7 @@ const ChessboardContextProvider = ({ children }) => {
     const [destinationSquares, setDestinationSquares] = useState([]);
     const [captureSquares, setCaptureSquares] = useState([]);
     const [hasPuzzleStarted, setHasPuzzleStarted] = useState(true);
-    const [isOpponentPieceMoving, setIsOpponentPieceMoving] = useState(false);
+    const [turn, setTurn] = useState("opponent");
     const [userMoveIndex, setUserMoveIndex] = useState(1);
     const [opponentMoveIndex, setOpponentMoveIndex] = useState(0);
     const [puzzleLevel, setPuzzleLevel] = useState(0);
@@ -166,6 +166,8 @@ const ChessboardContextProvider = ({ children }) => {
     }
 
     function handlePieceClick(piece) {
+        if (turn !== "player") return;
+
         let pieceColor =
             piece.pieceNotation === piece.pieceNotation.toUpperCase()
                 ? "white"
@@ -280,7 +282,8 @@ const ChessboardContextProvider = ({ children }) => {
             }),
         );
 
-        // Update the opponentMoveCount
+        // Change the turn and update the opponentMoveCount
+        setTurn("player");
         setOpponentMoveIndex((prev) => (prev += 2));
     }
 
@@ -301,8 +304,11 @@ const ChessboardContextProvider = ({ children }) => {
 
         if (isMoveCorrect) {
             // After check is complete move the opponent piece
-            moveOpponentPiece();
-            setUserMoveIndex((prev) => prev + 2);
+            setTurn("opponent");
+            setTimeout(() => {
+                moveOpponentPiece();
+                setUserMoveIndex((prev) => prev + 2);
+            }, 500);
         } else {
             // Reset the board if move is incorrect
             resetBoard();
