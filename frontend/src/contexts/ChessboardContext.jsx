@@ -29,7 +29,7 @@ const ChessboardContextProvider = ({ children }) => {
         "8",
     ]);
     const [fen, setFen] = useState(null);
-    const [pieces, setPieces] = useState(null);
+    const [pieces, setPieces] = useState([]);
     const [selectedPiece, setSelectedPiece] = useState(null);
     const [chessboardWidth, setChessboardWidth] = useState(0);
     const [squareWidth, setSquareWidth] = useState(0);
@@ -41,6 +41,7 @@ const ChessboardContextProvider = ({ children }) => {
     const [opponentMoveIndex, setOpponentMoveIndex] = useState(0);
     const [puzzleLevel, setPuzzleLevel] = useState(0);
     const [boardKey, setBoardKey] = useState(0);
+    const [hasPlacedPieces, setHasPlacedPieces] = useState(false);
 
     const chessboardRef = useRef(null);
     const chessboardContainerRef = useRef(null);
@@ -309,6 +310,7 @@ const ChessboardContextProvider = ({ children }) => {
     }
 
     function resetBoard() {
+        setHasPlacedPieces(false);
         convertFenToPiecesArray();
         setOpponentMoveIndex(0);
         setUserMoveIndex(1);
@@ -793,12 +795,13 @@ const ChessboardContextProvider = ({ children }) => {
     }, [selectedPiece]);
 
     useEffect(() => {
-        if (opponentMoveIndex === 0) {
+        // Make the first opponent move
+        if (opponentMoveIndex === 0 && pieces.length != 0) {
             setTimeout(() => {
                 moveOpponentPiece();
             }, 500);
         }
-    }, [opponentMoveIndex]);
+    }, [opponentMoveIndex, pieces]);
 
     return (
         <ChessboardContext.Provider
@@ -825,6 +828,8 @@ const ChessboardContextProvider = ({ children }) => {
                 handlePieceClick,
                 handleSquareClick,
                 moveOpponentPiece,
+                hasPlacedPieces,
+                setHasPlacedPieces,
             }}
         >
             {children}

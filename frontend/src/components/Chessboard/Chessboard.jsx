@@ -51,6 +51,8 @@ const Chessboard = () => {
         handlePieceClick,
         handleSquareClick,
         moveOpponentPiece,
+        hasPlacedPieces,
+        setHasPlacedPieces,
     } = useContext(ChessboardContext);
 
     const { pathname } = useLocation();
@@ -73,6 +75,12 @@ const Chessboard = () => {
     useEffect(() => {
         calculateChessboardWidth();
     }, []);
+
+    useEffect(() => {
+        if (pieces.length > 0) {
+            setHasPlacedPieces(true);
+        }
+    }, [pieces]);
 
     return (
         <div className="chessboard-container" ref={chessboardContainerRef}>
@@ -154,6 +162,7 @@ const Chessboard = () => {
                 {/* Mapping out pieces*/}
                 {mode == "puzzles" &&
                     pieces.length > 0 &&
+                    squareWidth > 0 &&
                     pieces.map((piece) => {
                         let coordOfFile = files.indexOf(
                             piece.square.split("")[0],
@@ -163,7 +172,6 @@ const Chessboard = () => {
 
                         let x = coordOfFile * squareWidth;
                         let y = coordOfRank * squareWidth;
-
                         return (
                             <div
                                 key={piece.id}
@@ -174,6 +182,9 @@ const Chessboard = () => {
                                 }
                                 style={{
                                     transform: `translate(${x}px, ${y}px)`,
+                                    transition: hasPlacedPieces
+                                        ? "transform 0.1s ease-in-out"
+                                        : "none",
                                 }}
                                 onClick={() => {
                                     handlePieceClick(piece);
