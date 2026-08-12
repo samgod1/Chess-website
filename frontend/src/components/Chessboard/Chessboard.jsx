@@ -72,9 +72,6 @@ const Chessboard = () => {
 
     useEffect(() => {
         calculateChessboardWidth();
-        setTimeout(() => {
-            moveOpponentPiece();
-        }, 500);
     }, []);
 
     return (

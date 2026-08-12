@@ -7,7 +7,7 @@ export const ChessboardContext = createContext();
 
 const ChessboardContextProvider = ({ children }) => {
     const [mode, setMode] = useState("puzzles");
-    const [color, setColor] = useState("white");
+    const [color, setColor] = useState(null);
     const [files, setFiles] = useState([
         "a",
         "b",
@@ -300,14 +300,18 @@ const ChessboardContextProvider = ({ children }) => {
 
         if (isMoveCorrect) {
             // After check is complete move the opponent piece
-            console.log("correct");
             moveOpponentPiece();
             setUserMoveIndex((prev) => prev + 2);
         } else {
-            console.log("incorrect");
             // Reset the board if move is incorrect
-            // resetBoard();
+            resetBoard();
         }
+    }
+
+    function resetBoard() {
+        convertFenToPiecesArray();
+        setOpponentMoveIndex(0);
+        setUserMoveIndex(1);
     }
 
     function createDestSquares({ pieceNotation, square }) {
@@ -787,6 +791,14 @@ const ChessboardContextProvider = ({ children }) => {
     useEffect(() => {
         if (selectedPiece) createDestSquares(selectedPiece);
     }, [selectedPiece]);
+
+    useEffect(() => {
+        if (opponentMoveIndex === 0) {
+            setTimeout(() => {
+                moveOpponentPiece();
+            }, 500);
+        }
+    }, [opponentMoveIndex]);
 
     return (
         <ChessboardContext.Provider
