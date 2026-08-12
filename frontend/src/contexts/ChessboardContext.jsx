@@ -207,35 +207,39 @@ const ChessboardContextProvider = ({ children }) => {
         if (captureSquares.length != 0) setCaptureSquares([]);
     }
 
-    function movePiece(square) {
+    function movePiece(destination) {
         //Moves the piece
-        let updatedPieces = [];
+        setPieces((prevPieces) =>
+            prevPieces.map((piece) => {
+                if (piece.id == selectedPiece.id) {
+                    return { ...piece, square: destination };
+                }
+                return piece;
+            }),
+        );
 
-        updatedPieces = pieces.map((piece) => {
-            if (piece.id == selectedPiece.id) {
-                return { ...piece, square: square };
-            }
-            return piece;
-        });
-
-        setPieces(updatedPieces);
         resetSquares();
+        checkUserMove(destination);
     }
 
-    function capturePiece(square) {
+    function capturePiece(destination) {
         // Removes the captured piece from pieces
-        let updatedPieces = pieces.filter((piece) => piece.square !== square);
+        setPieces((prevPieces) =>
+            prevPieces.filter((piece) => piece.square !== destination),
+        );
 
         // Moves the piece by changing the piece square
-        updatedPieces = updatedPieces.map((piece) => {
-            if (piece.id == selectedPiece.id) {
-                return { ...piece, square: square };
-            }
-            return piece;
-        });
+        setPieces((prevPieces) =>
+            prevPieces.map((piece) => {
+                if (piece.id == selectedPiece.id) {
+                    return { ...piece, square: destination };
+                }
+                return piece;
+            }),
+        );
 
-        setPieces(updatedPieces);
         resetSquares();
+        checkUserMove(destination);
     }
 
     function moveOpponentPiece() {
@@ -250,43 +254,61 @@ const ChessboardContextProvider = ({ children }) => {
             [opponentMoveIndex].slice(2, 4);
 
         // Moving the opponent piece
-        let updatedPieces = pieces.map((piece) => {
-            if (piece.square === position) {
-                return { ...piece, square: destination };
-            }
-            return piece;
-        });
+        setPieces((prevPieces) =>
+            prevPieces.map((piece) => {
+                if (piece.square === position) {
+                    return { ...piece, square: destination };
+                }
+                return piece;
+            }),
+        );
 
-        setPieces(updatedPieces);
+        // Capture piece of player if there's any
+        setPieces((prevPieces) =>
+            prevPieces.filter((piece) => {
+                let pieceColor =
+                    piece.pieceNotation === piece.pieceNotation.toUpperCase()
+                        ? "white"
+                        : "black";
+
+                if (piece.square === destination && pieceColor === color) {
+                    return;
+                }
+
+                return piece;
+            }),
+        );
 
         // Update the opponentMoveCount
         setOpponentMoveIndex((prev) => (prev += 2));
     }
 
-    // function checkUserMove(e) {
-    //     const position = selectedPieceRef.current.getAttribute("squareid");
-    //     const destination = e.target.getAttribute("squareid");
+    function checkUserMove(destination) {
+        const position = selectedPiece.square;
 
-    //     const correctPosition = puzzles[puzzleLevel]
-    //         .split(",")[1]
-    //         .split(" ")
-    //         [userMoveIndex].slice(0, 2);
-    //     const correctDestination = puzzles[puzzleLevel]
-    //         .split(",")[1]
-    //         .split(" ")
-    //         [userMoveIndex].slice(2, 4);
+        const correctPosition = puzzles[puzzleLevel]
+            .split(",")[1]
+            .split(" ")
+            [userMoveIndex].slice(0, 2);
+        const correctDestination = puzzles[puzzleLevel]
+            .split(",")[1]
+            .split(" ")
+            [userMoveIndex].slice(2, 4);
 
-    //     const isMoveCorrect =
-    //         position == correctPosition && destination == correctDestination;
+        const isMoveCorrect =
+            position == correctPosition && destination == correctDestination;
 
-    //     if (isMoveCorrect) {
-    //         // After check is complete move the opponent piece
-    //         moveOpponentPiece();
-    //     } else {
-    //         // Reset the board if move is incorrect
-    //         resetBoard();
-    //     }
-    // }
+        if (isMoveCorrect) {
+            // After check is complete move the opponent piece
+            console.log("correct");
+            moveOpponentPiece();
+            setUserMoveIndex((prev) => prev + 2);
+        } else {
+            console.log("incorrect");
+            // Reset the board if move is incorrect
+            // resetBoard();
+        }
+    }
 
     function createDestSquares({ pieceNotation, square }) {
         let file = square.split("")[0];
