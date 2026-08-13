@@ -218,10 +218,11 @@ const ChessboardContextProvider = ({ children }) => {
         setSelectedPiece(null);
         setCaptureSquares([]);
         // Change the background color of selected piece
-        gsap.to(pieceRefs.current[selectedPiece.id], {
-            backgroundColor: "",
-            duration: 0,
-        });
+        if (selectedPiece)
+            gsap.to(pieceRefs.current[selectedPiece.id], {
+                backgroundColor: "",
+                duration: 0,
+            });
     }
 
     function movePiece(destination) {
@@ -256,6 +257,7 @@ const ChessboardContextProvider = ({ children }) => {
             }),
         );
 
+        setTurn("opponent");
         resetSquares();
         checkUserMove(destination);
     }
@@ -265,11 +267,17 @@ const ChessboardContextProvider = ({ children }) => {
         let position = puzzles[puzzleLevel]
             .split(",")[1]
             .split(" ")
-            [opponentMoveIndex].slice(0, 2);
+            [opponentMoveIndex]?.slice(0, 2);
         let destination = puzzles[puzzleLevel]
             .split(",")[1]
             .split(" ")
-            [opponentMoveIndex].slice(2, 4);
+            [opponentMoveIndex]?.slice(2, 4);
+
+        // If user has completed the puzzle
+        if (!position && !destination) {
+            moveToNextLevel();
+            return;
+        }
 
         // Moving the opponent piece
         setPieces((prevPieces) =>
@@ -333,14 +341,14 @@ const ChessboardContextProvider = ({ children }) => {
     function playCorrectAnimation() {
         gsap.to(pieceRefs.current[selectedPiece.id], {
             backgroundColor: "var(--c-green)",
-            duration: 0.3,
+            duration: 0.2,
             yoyo: true,
             repeat: 1,
             onComplete: () => {
+                setUserMoveIndex((prev) => prev + 2);
                 setTimeout(() => {
                     moveOpponentPiece();
-                    setUserMoveIndex((prev) => prev + 2);
-                }, 500);
+                }, 200);
             },
         });
     }
@@ -357,12 +365,12 @@ const ChessboardContextProvider = ({ children }) => {
         });
     }
 
-    function resetBoard() {
+    function resetBoard(puzzle) {
         setHasPlacedPieces(false);
-        convertFenToPiecesArray();
-        setTurn("opponent");
         setOpponentMoveIndex(0);
         setUserMoveIndex(1);
+        setTurn("opponent");
+        setFen(puzzle);
     }
 
     function createDestSquares({ pieceNotation, square }) {
@@ -827,15 +835,13 @@ const ChessboardContextProvider = ({ children }) => {
         setPieces(updatedPieces);
     }
 
+    function moveToNextLevel() {
+        setPuzzleLevel((prev) => prev + 1);
+    }
+
     useEffect(() => {
         if (fen) {
-            // Set color opposite to fen
-            let startColor = fen.split(" ")[1];
-            startColor == "b" ? setColor("white") : setColor("black");
-
             convertFenToPiecesArray();
-        } else {
-            setFen(puzzles[puzzleLevel]);
         }
     }, [fen]);
 
@@ -845,12 +851,19 @@ const ChessboardContextProvider = ({ children }) => {
 
     useEffect(() => {
         // Make the first opponent move
-        if (opponentMoveIndex === 0 && pieces.length !== 0) {
-            setTimeout(() => {
-                moveOpponentPiece();
-            }, 500);
+        if (opponentMoveIndex === 0 && userMoveIndex == 1) {
+            setTimeout(() => moveOpponentPiece(), 500);
         }
-    }, [opponentMoveIndex, pieces]);
+    }, [opponentMoveIndex, userMoveIndex]);
+
+    useEffect(() => {
+        let puzzle = puzzles[puzzleLevel];
+        setFen(puzzles[puzzleLevel]);
+        resetBoard(puzzle);
+        // Set color opposite to fen
+        let startColor = puzzle.split(" ")[1];
+        startColor == "b" ? setColor("white") : setColor("black");
+    }, [puzzleLevel]);
 
     return (
         <ChessboardContext.Provider
