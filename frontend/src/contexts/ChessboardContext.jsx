@@ -198,18 +198,10 @@ const ChessboardContextProvider = ({ children }) => {
         // Don't allow user to select opponent's piece
         if (pieceColor === color) {
             // Change the background color of selected piece
-            setPieces((prevPieces) =>
-                prevPieces.map((piece) => {
-                    if (piece.id === clickedPiece.id) {
-                        return {
-                            ...piece,
-                            backgroundColor: "var(--c-highlight)",
-                        };
-                    }
-
-                    return piece;
-                }),
-            );
+            gsap.to(pieceRefs.current[clickedPiece.id], {
+                backgroundColor: "var(--c-highlight)",
+                duration: 0,
+            });
 
             // Update selectedPiece state
             setSelectedPiece(clickedPiece);
@@ -225,14 +217,11 @@ const ChessboardContextProvider = ({ children }) => {
         setCaptureSquares([]);
         setSelectedPiece(null);
         setCaptureSquares([]);
-        setPieces((prevPieces) =>
-            prevPieces.map((piece) => {
-                if (selectedPiece.id === piece.id) {
-                    return { ...piece, backgroundColor: "" };
-                }
-                return piece;
-            }),
-        );
+        // Change the background color of selected piece
+        gsap.to(pieceRefs.current[selectedPiece.id], {
+            backgroundColor: "",
+            duration: 0,
+        });
     }
 
     function movePiece(destination) {
@@ -246,6 +235,7 @@ const ChessboardContextProvider = ({ children }) => {
             }),
         );
 
+        setTurn("opponent");
         resetSquares();
         checkUserMove(destination);
     }
@@ -328,9 +318,6 @@ const ChessboardContextProvider = ({ children }) => {
             position == correctPosition && destination == correctDestination;
 
         if (isMoveCorrect) {
-            // After check is complete move the opponent piece
-            setTurn("opponent");
-
             // The 100 ms delay for the transition piece move transition to end
             setTimeout(() => {
                 playCorrectAnimation();
@@ -828,7 +815,6 @@ const ChessboardContextProvider = ({ children }) => {
                         id: `${pieceNotation}-${square}`,
                         pieceNotation: pieceNotation,
                         square: square,
-                        backgroundColor: "",
                     };
                     updatedPieces.push(piece);
                     coordOfFile += 1;

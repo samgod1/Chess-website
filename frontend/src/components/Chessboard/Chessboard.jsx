@@ -183,12 +183,6 @@ const Chessboard = () => {
                                     transition: hasPlacedPieces
                                         ? "transform 0.1s ease-in-out"
                                         : "none",
-                                    backgroundColor: piece.backgroundColor,
-                                }}
-                                ref={(element) => {
-                                    if (element)
-                                        pieceRefs.current[piece.id] = element;
-                                    else delete pieceRefs.current[piece.id];
                                 }}
                                 onClick={() => {
                                     handlePieceClick(piece);
@@ -197,6 +191,12 @@ const Chessboard = () => {
                                 <img
                                     src={`/images/chess-piece-set/${pieceImages[piece.pieceNotation]}`}
                                     alt="piece"
+                                    ref={(element) => {
+                                        if (element)
+                                            pieceRefs.current[piece.id] =
+                                                element;
+                                        else delete pieceRefs.current[piece.id];
+                                    }}
                                 />
                             </div>
                         );
