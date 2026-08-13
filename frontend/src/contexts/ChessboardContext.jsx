@@ -45,6 +45,7 @@ const ChessboardContextProvider = ({ children }) => {
 
     const chessboardRef = useRef(null);
     const chessboardContainerRef = useRef(null);
+    const pieceRefs = useRef({});
     const opponentPieceRef = useRef(null);
     const capturedPieceRef = useRef(null);
 
@@ -165,11 +166,12 @@ const ChessboardContextProvider = ({ children }) => {
         }
     }
 
-    function handlePieceClick(piece) {
+    function handlePieceClick(clickedPiece) {
         if (turn !== "player") return;
 
         let pieceColor =
-            piece.pieceNotation === piece.pieceNotation.toUpperCase()
+            clickedPiece.pieceNotation ===
+            clickedPiece.pieceNotation.toUpperCase()
                 ? "white"
                 : "black";
 
@@ -182,20 +184,35 @@ const ChessboardContextProvider = ({ children }) => {
                     : "black";
 
             // If same piece is clicked then run resetSquares and do nothing
-            if (selectedPiece.id === piece.id) {
+            if (selectedPiece.id === clickedPiece.id) {
                 resetSquares();
                 return;
             }
 
             // If user clicks on another user's piece while a piece is already selected then firstly reset the squares before the new piece is selected
-            if (selectedPiece.id !== piece.id) {
+            if (selectedPiece.id !== clickedPiece.id) {
                 resetSquares();
             }
         }
 
         // Don't allow user to select opponent's piece
         if (pieceColor === color) {
-            setSelectedPiece(piece);
+            // Change the background color of selected piece
+            setPieces((prevPieces) =>
+                prevPieces.map((piece) => {
+                    if (piece.id === clickedPiece.id) {
+                        return {
+                            ...piece,
+                            backgroundColor: "var(--c-highlight)",
+                        };
+                    }
+
+                    return piece;
+                }),
+            );
+
+            // Update selectedPiece state
+            setSelectedPiece(clickedPiece);
         }
     }
 
@@ -207,7 +224,15 @@ const ChessboardContextProvider = ({ children }) => {
         setDestinationSquares([]);
         setCaptureSquares([]);
         setSelectedPiece(null);
-        if (captureSquares.length != 0) setCaptureSquares([]);
+        setCaptureSquares([]);
+        setPieces((prevPieces) =>
+            prevPieces.map((piece) => {
+                if (selectedPiece.id === piece.id) {
+                    return { ...piece, backgroundColor: "" };
+                }
+                return piece;
+            }),
+        );
     }
 
     function movePiece(destination) {
@@ -305,19 +330,50 @@ const ChessboardContextProvider = ({ children }) => {
         if (isMoveCorrect) {
             // After check is complete move the opponent piece
             setTurn("opponent");
+
+            // The 100 ms delay for the transition piece move transition to end
             setTimeout(() => {
-                moveOpponentPiece();
-                setUserMoveIndex((prev) => prev + 2);
-            }, 500);
+                playCorrectAnimation();
+            }, 100);
         } else {
-            // Reset the board if move is incorrect
-            resetBoard();
+            // The 100 ms delay for the transition piece move transition to end
+            setTimeout(() => {
+                playIncorrectAnimation(destination);
+            }, 100);
         }
+    }
+
+    function playCorrectAnimation() {
+        gsap.to(pieceRefs.current[selectedPiece.id], {
+            backgroundColor: "var(--c-green)",
+            duration: 0.3,
+            yoyo: true,
+            repeat: 1,
+            onComplete: () => {
+                setTimeout(() => {
+                    moveOpponentPiece();
+                    setUserMoveIndex((prev) => prev + 2);
+                }, 500);
+            },
+        });
+    }
+
+    function playIncorrectAnimation() {
+        gsap.to(pieceRefs.current[selectedPiece.id], {
+            backgroundColor: "var(--c-red)",
+            duration: 0.3,
+            yoyo: true,
+            repeat: 1,
+            onComplete: () => {
+                resetBoard();
+            },
+        });
     }
 
     function resetBoard() {
         setHasPlacedPieces(false);
         convertFenToPiecesArray();
+        setTurn("opponent");
         setOpponentMoveIndex(0);
         setUserMoveIndex(1);
     }
@@ -772,6 +828,7 @@ const ChessboardContextProvider = ({ children }) => {
                         id: `${pieceNotation}-${square}`,
                         pieceNotation: pieceNotation,
                         square: square,
+                        backgroundColor: "",
                     };
                     updatedPieces.push(piece);
                     coordOfFile += 1;
@@ -802,7 +859,7 @@ const ChessboardContextProvider = ({ children }) => {
 
     useEffect(() => {
         // Make the first opponent move
-        if (opponentMoveIndex === 0 && pieces.length != 0) {
+        if (opponentMoveIndex === 0 && pieces.length !== 0) {
             setTimeout(() => {
                 moveOpponentPiece();
             }, 500);
@@ -836,6 +893,7 @@ const ChessboardContextProvider = ({ children }) => {
                 moveOpponentPiece,
                 hasPlacedPieces,
                 setHasPlacedPieces,
+                pieceRefs,
             }}
         >
             {children}

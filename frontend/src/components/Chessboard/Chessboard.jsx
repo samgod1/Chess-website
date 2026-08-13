@@ -53,6 +53,7 @@ const Chessboard = () => {
         moveOpponentPiece,
         hasPlacedPieces,
         setHasPlacedPieces,
+        pieceRefs,
     } = useContext(ChessboardContext);
 
     const { pathname } = useLocation();
@@ -172,19 +173,22 @@ const Chessboard = () => {
 
                         let x = coordOfFile * squareWidth;
                         let y = coordOfRank * squareWidth;
+
                         return (
                             <div
                                 key={piece.id}
-                                className={
-                                    selectedPiece?.id == piece.id
-                                        ? "piece selected"
-                                        : "piece"
-                                }
+                                className={"piece"}
                                 style={{
                                     transform: `translate(${x}px, ${y}px)`,
                                     transition: hasPlacedPieces
                                         ? "transform 0.1s ease-in-out"
                                         : "none",
+                                    backgroundColor: piece.backgroundColor,
+                                }}
+                                ref={(element) => {
+                                    if (element)
+                                        pieceRefs.current[piece.id] = element;
+                                    else delete pieceRefs.current[piece.id];
                                 }}
                                 onClick={() => {
                                     handlePieceClick(piece);
