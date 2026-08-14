@@ -4,6 +4,7 @@ import gsap from "gsap";
 import { puzzles } from "../constants";
 import updatePuzzleLevel from "../../apis/user/updatePuzzleLevel";
 import { UserContext } from "./UserContext";
+import { PuzzlesContext } from "./PuzzlesContext";
 
 export const ChessboardContext = createContext();
 
@@ -31,13 +32,15 @@ const ChessboardContextProvider = ({ children }) => {
         "8",
     ]);
     const [fen, setFen] = useState(null);
+    const [defaultFen, setDefaultFen] = useState(
+        "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+    );
     const [pieces, setPieces] = useState([]);
     const [selectedPiece, setSelectedPiece] = useState(null);
     const [chessboardWidth, setChessboardWidth] = useState(0);
     const [squareWidth, setSquareWidth] = useState(0);
     const [destinationSquares, setDestinationSquares] = useState([]);
     const [captureSquares, setCaptureSquares] = useState([]);
-    const [hasPuzzleStarted, setHasPuzzleStarted] = useState(true);
     const [turn, setTurn] = useState("opponent");
     const [userMoveIndex, setUserMoveIndex] = useState(1);
     const [opponentMoveIndex, setOpponentMoveIndex] = useState(0);
@@ -53,6 +56,7 @@ const ChessboardContextProvider = ({ children }) => {
     const firstRender = useRef(true);
 
     const { user, loading } = useContext(UserContext);
+    const { hasPuzzleStarted } = useContext(PuzzlesContext);
 
     function calculateChessboardWidth() {
         let chessboardContainerWidth =
@@ -862,18 +866,25 @@ const ChessboardContextProvider = ({ children }) => {
     }, [opponentMoveIndex, userMoveIndex]);
 
     useEffect(() => {
-        let puzzle = puzzles[puzzleLevel];
-        setFen(puzzles[puzzleLevel]);
-        resetBoard(puzzle);
-        // Set color opposite to fen
-        let startColor = puzzle.split(" ")[1];
-        startColor == "b" ? setColor("white") : setColor("black");
-
         //Update the backend puzzle level
         if (!firstRender.current) updatePuzzleLevel(puzzleLevel);
 
         firstRender.current = false;
     }, [puzzleLevel]);
+
+    useEffect(() => {
+        if (hasPuzzleStarted) {
+            let puzzle = puzzles[puzzleLevel];
+            setFen(puzzles[puzzleLevel]);
+            resetBoard(puzzle);
+
+            // Set color opposite to fen
+            let startColor = puzzle.split(" ")[1];
+            startColor == "b" ? setColor("white") : setColor("black");
+        } else {
+            setFen(defaultFen);
+        }
+    }, [hasPuzzleStarted]);
 
     useEffect(() => {
         if (!loading && user) {

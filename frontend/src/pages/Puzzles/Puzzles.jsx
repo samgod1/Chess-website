@@ -5,13 +5,19 @@ import toast from "react-hot-toast";
 import "./Puzzles.css";
 import { Chessboard } from "../../components";
 import PuzzlesSidebar from "./components/PuzzlesSidebar/PuzzlesSidebar";
-import { UserContext, ChessboardContext } from "../../contexts";
+import {
+    UserContext,
+    ChessboardContext,
+    VisionContext,
+    PuzzlesContext,
+} from "../../contexts";
 
 const Puzzles = () => {
     const navigate = useNavigate();
 
     const { user, loading } = useContext(UserContext);
     const { setMode } = useContext(ChessboardContext);
+    const { color } = useContext(PuzzlesContext);
 
     useEffect(() => {
         if (!loading && !user) {
@@ -25,7 +31,7 @@ const Puzzles = () => {
     }, []);
     return (
         <div className="puzzles-page">
-            <Chessboard />
+            <Chessboard color={color} />
             <PuzzlesSidebar />
         </div>
     );

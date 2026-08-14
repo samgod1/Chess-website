@@ -6,6 +6,8 @@ import { VisionContext } from "./VisionContext";
 import VisionContextProvider from "./VisionContext";
 import { ChessboardContext } from "./ChessboardContext";
 import ChessboardContextProvider from "./ChessboardContext";
+import { PuzzlesContext } from "./PuzzlesContext";
+import PuzzlesContextProvider from "./PuzzlesContext";
 
 export {
     CourseContext,
@@ -16,4 +18,6 @@ export {
     VisionContextProvider,
     ChessboardContext,
     ChessboardContextProvider,
+    PuzzlesContext,
+    PuzzlesContextProvider,
 };

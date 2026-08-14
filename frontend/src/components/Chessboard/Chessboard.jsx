@@ -8,7 +8,7 @@ import { VisionContext, ChessboardContext } from "../../contexts";
 import Coords from "./components/Coords.jsx/Coords";
 import { pieceImages } from "../../constants";
 
-const Chessboard = () => {
+const Chessboard = ({ color }) => {
     const {
         hasStarted,
         setHasStarted,
@@ -32,7 +32,6 @@ const Chessboard = () => {
 
     const {
         mode,
-        color,
         files,
         ranks,
         fen,
@@ -70,6 +69,9 @@ const Chessboard = () => {
         // To prevent any bugs if user decides to visit other page during vision practice
         if (pathname != "/vision" && hasStarted) {
             handleSuddenPageChange();
+        }
+
+        if (pathname === "/puzzles") {
         }
     }, [pathname]);
 

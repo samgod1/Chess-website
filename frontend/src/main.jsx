@@ -8,16 +8,19 @@ import {
     CourseContextProvider,
     ChessboardContextProvider,
     VisionContextProvider,
+    PuzzlesContextProvider,
 } from "./contexts/index.js";
 
 createRoot(document.getElementById("root")).render(
     <UserContextProvider>
-        <ChessboardContextProvider>
+        <PuzzlesContextProvider>
             <VisionContextProvider>
-                <CourseContextProvider>
-                    <App />
-                </CourseContextProvider>
+                <ChessboardContextProvider>
+                    <CourseContextProvider>
+                        <App />
+                    </CourseContextProvider>
+                </ChessboardContextProvider>
             </VisionContextProvider>
-        </ChessboardContextProvider>
+        </PuzzlesContextProvider>
     </UserContextProvider>,
 );

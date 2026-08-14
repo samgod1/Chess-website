@@ -5,13 +5,14 @@ import toast from "react-hot-toast";
 import "./Vision.css";
 import { Chessboard } from "../../components/index.js";
 import VisionSidebar from "./components/VisionSidebar/VisionSidebar.jsx";
-import { UserContext, ChessboardContext } from "../../contexts/";
+import { UserContext, ChessboardContext, VisionContext } from "../../contexts/";
 
 const Vision = () => {
     const navigate = useNavigate();
 
     const { user, loading } = useContext(UserContext);
     const { setMode } = useContext(ChessboardContext);
+    const { color } = useContext(VisionContext);
 
     useEffect(() => {
         if (!loading && !user) {
@@ -25,7 +26,7 @@ const Vision = () => {
     }, []);
     return (
         <div className="vision-page">
-            <Chessboard />
+            <Chessboard color={color} />
             <VisionSidebar />
         </div>
     );

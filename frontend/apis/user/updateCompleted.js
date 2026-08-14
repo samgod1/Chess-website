@@ -1,3 +1,5 @@
+import toast from "react-hot-toast";
+
 const updateCompleted = async (completed) => {
     try {
         const token = localStorage.getItem("token");
@@ -15,6 +17,7 @@ const updateCompleted = async (completed) => {
         );
     } catch (error) {
         console.log(error?.message);
+        toast.error(error?.message);
     }
 };
 

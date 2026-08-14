@@ -1,6 +1,7 @@
 import "./Coords.css";
 
 const Coords = ({ files, ranks, color }) => {
+    console.log(files, ranks, color);
     return (
         <div className={`coords ${color}`}>
             <div className="files">

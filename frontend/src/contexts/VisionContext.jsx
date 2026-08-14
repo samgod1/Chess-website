@@ -8,6 +8,26 @@ import { ChessboardContext } from "./ChessboardContext";
 export const VisionContext = createContext();
 
 const VisionContextProvider = ({ children }) => {
+    const [files, setFiles] = useState([
+        "a",
+        "b",
+        "c",
+        "d",
+        "e",
+        "f",
+        "g",
+        "h",
+    ]);
+    const [ranks, setRanks] = useState([
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+    ]);
     const [hasStarted, setHasStarted] = useState(false); //Vision practice
     const [attempts, setAttempts] = useState([]);
     const [score, setScore] = useState(0);
@@ -17,6 +37,7 @@ const VisionContextProvider = ({ children }) => {
     const [randomSquare, setRandomSquare] = useState(null);
     const [bestScore, setBestScore] = useState(0);
     const [countdown, setCountdown] = useState(3);
+    const [color, setColor] = useState("white");
 
     //Don't want this to update chessboard as a whole, so that's why this isn't place in ChessboardContext
     const [isCoordinates, setIsCoordinates] = useState(true);
@@ -28,7 +49,6 @@ const VisionContextProvider = ({ children }) => {
     const startAudioRef = useRef(null);
 
     const { user, loading } = useContext(UserContext);
-    const { setColor, files, ranks } = useContext(ChessboardContext);
 
     function selectRandomColor() {
         const colors = ["white", "black"];
@@ -145,6 +165,7 @@ const VisionContextProvider = ({ children }) => {
     return (
         <VisionContext.Provider
             value={{
+                color,
                 attempts,
                 setAttempts,
                 hasStarted,
