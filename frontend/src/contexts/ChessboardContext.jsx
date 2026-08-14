@@ -1,7 +1,9 @@
-import { useState, useRef, createContext, useEffect } from "react";
+import { useState, useRef, createContext, useEffect, useContext } from "react";
 import gsap from "gsap";
 
 import { puzzles } from "../constants";
+import updatePuzzleLevel from "../../apis/user/updatePuzzleLevel";
+import { UserContext } from "./UserContext";
 
 export const ChessboardContext = createContext();
 
@@ -48,6 +50,9 @@ const ChessboardContextProvider = ({ children }) => {
     const pieceRefs = useRef({});
     const opponentPieceRef = useRef(null);
     const capturedPieceRef = useRef(null);
+    const firstRender = useRef(true);
+
+    const { user, loading } = useContext(UserContext);
 
     function calculateChessboardWidth() {
         let chessboardContainerWidth =
@@ -863,7 +868,18 @@ const ChessboardContextProvider = ({ children }) => {
         // Set color opposite to fen
         let startColor = puzzle.split(" ")[1];
         startColor == "b" ? setColor("white") : setColor("black");
+
+        //Update the backend puzzle level
+        if (!firstRender.current) updatePuzzleLevel(puzzleLevel);
+
+        firstRender.current = false;
     }, [puzzleLevel]);
+
+    useEffect(() => {
+        if (!loading && user) {
+            setPuzzleLevel(user.puzzleLevel);
+        }
+    }, [loading]);
 
     return (
         <ChessboardContext.Provider
@@ -893,6 +909,7 @@ const ChessboardContextProvider = ({ children }) => {
                 hasPlacedPieces,
                 setHasPlacedPieces,
                 pieceRefs,
+                puzzleLevel,
             }}
         >
             {children}

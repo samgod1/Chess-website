@@ -51,4 +51,20 @@ const updateBestScore = async (req, res) => {
     }
 };
 
-export { getUser, updateCompleted, updateBestScore };
+const updatePuzzleLevel = async (req, res) => {
+    try {
+        const userId = req.userId;
+        const { puzzleLevel } = req.body;
+
+        const user = await User.findByIdAndUpdate(userId, {
+            puzzleLevel: puzzleLevel,
+        });
+
+        return res.status(200).json({ message: "Success" });
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json("Error during updating best score");
+    }
+};
+
+export { getUser, updateCompleted, updateBestScore, updatePuzzleLevel };

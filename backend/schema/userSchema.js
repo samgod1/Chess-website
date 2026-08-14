@@ -30,6 +30,10 @@ const userSchema = new mongoose.Schema(
             default: 0,
             type: "Number",
         },
+        puzzleLevel: {
+            default: 0,
+            type: "Number",
+        },
     },
     { timestamps: true },
 );

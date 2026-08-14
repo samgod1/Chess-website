@@ -1,0 +1,9 @@
+.puzzles-sidebar-header {
+    display: flex;
+    gap: 0.5rem;
+    font-size: 2rem;
+    align-items: center;
+    background-color: var(--c-primary-light-1);
+    border-bottom: 1px solid var(--c-secondary-dark-1);
+    padding: 1rem 2rem;
+}
