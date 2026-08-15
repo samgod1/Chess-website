@@ -2,10 +2,14 @@ import React, { useContext, useEffect } from "react";
 
 import { puzzles } from "../../../../../../constants";
 import "./PuzzlesSidebarBody.css";
-import { ChessboardContext } from "../../../../../../contexts/ChessboardContext";
+import {
+    ChessboardContext,
+    PuzzlesContext,
+} from "../../../../../../contexts/index.js";
 
 const PuzzlesSidebarBody = () => {
     const { puzzleLevel } = useContext(ChessboardContext);
+    const { setHasPuzzleStarted } = useContext(PuzzlesContext);
 
     function getLevelClassName(i) {
         if (i < puzzleLevel) return "level-btn completed";
@@ -16,7 +20,7 @@ const PuzzlesSidebarBody = () => {
     return (
         <div className="puzzles-sidebar-body">
             <div className="levels-container">
-                {[...Array(10)].map((_, i) => {
+                {[...Array(puzzles.length)].map((_, i) => {
                     return (
                         <div className={getLevelClassName(i)} key={i}>
                             {i}
@@ -24,7 +28,14 @@ const PuzzlesSidebarBody = () => {
                     );
                 })}
             </div>
-            <button className="start-puzzle-btn">Start Puzzle</button>
+            <button
+                className="start-puzzle-btn"
+                onClick={() => {
+                    setHasPuzzleStarted(true);
+                }}
+            >
+                Start Puzzle
+            </button>
         </div>
     );
 };

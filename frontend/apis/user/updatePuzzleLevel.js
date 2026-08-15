@@ -7,6 +7,7 @@ const updatePuzzleLevel = async (puzzleLevel) => {
         const response = await fetch(
             import.meta.env.VITE_BACKEND_URL + "/api/user/puzzleLevel",
             {
+                method: "POST",
                 headers: {
                     Authorization: `Bearer ${token}`,
                     "Content-Type": "application/json",
@@ -14,8 +15,14 @@ const updatePuzzleLevel = async (puzzleLevel) => {
                 body: JSON.stringify({ puzzleLevel: puzzleLevel }),
             },
         );
+
+        const data = response.json();
+
+        if (!response.ok) {
+            throw new Error(data.message);
+        }
     } catch (error) {
-        toast.error(error.message);
+        toast.error(error?.message);
     }
 };
 

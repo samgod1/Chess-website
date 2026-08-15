@@ -32,6 +32,7 @@ const Chessboard = ({ color }) => {
 
     const {
         mode,
+        setChessboardColor,
         files,
         ranks,
         fen,
@@ -64,6 +65,12 @@ const Chessboard = ({ color }) => {
         clearInterval(countdownInterval.current);
         setHasCountdownCompleted(false);
     }
+
+    useEffect(() => {
+        if (color) {
+            setChessboardColor(color);
+        }
+    }, [color]);
 
     useEffect(() => {
         // To prevent any bugs if user decides to visit other page during vision practice

@@ -10,7 +10,7 @@ export const ChessboardContext = createContext();
 
 const ChessboardContextProvider = ({ children }) => {
     const [mode, setMode] = useState("puzzles");
-    const [color, setColor] = useState(null);
+    const [chessboardColor, setChessboardColor] = useState(null);
     const [files, setFiles] = useState([
         "a",
         "b",
@@ -44,7 +44,6 @@ const ChessboardContextProvider = ({ children }) => {
     const [turn, setTurn] = useState("opponent");
     const [userMoveIndex, setUserMoveIndex] = useState(1);
     const [opponentMoveIndex, setOpponentMoveIndex] = useState(0);
-    const [puzzleLevel, setPuzzleLevel] = useState(0);
     const [boardKey, setBoardKey] = useState(0);
     const [hasPlacedPieces, setHasPlacedPieces] = useState(false);
 
@@ -55,8 +54,8 @@ const ChessboardContextProvider = ({ children }) => {
     const capturedPieceRef = useRef(null);
     const firstRender = useRef(true);
 
-    const { user, loading } = useContext(UserContext);
-    const { hasPuzzleStarted } = useContext(PuzzlesContext);
+    const { hasPuzzleStarted, puzzleLevel, setPuzzleLevel } =
+        useContext(PuzzlesContext);
 
     function calculateChessboardWidth() {
         let chessboardContainerWidth =
@@ -178,7 +177,7 @@ const ChessboardContextProvider = ({ children }) => {
     function handlePieceClick(clickedPiece) {
         if (turn !== "player") return;
 
-        let pieceColor =
+        let piecechessboardColor =
             clickedPiece.pieceNotation ===
             clickedPiece.pieceNotation.toUpperCase()
                 ? "white"
@@ -186,7 +185,7 @@ const ChessboardContextProvider = ({ children }) => {
 
         // If piece is already selected
         if (selectedPiece) {
-            let selectedPieceColor =
+            let selectedPiecechessboardColor =
                 selectedPiece.pieceNotation ===
                 selectedPiece.pieceNotation.toUpperCase()
                     ? "white"
@@ -205,10 +204,10 @@ const ChessboardContextProvider = ({ children }) => {
         }
 
         // Don't allow user to select opponent's piece
-        if (pieceColor === color) {
-            // Change the background color of selected piece
+        if (piecechessboardColor === chessboardColor) {
+            // Change the background chessboardColor of selected piece
             gsap.to(pieceRefs.current[clickedPiece.id], {
-                backgroundColor: "var(--c-highlight)",
+                backgroundchessboardColor: "var(--c-highlight)",
                 duration: 0,
             });
 
@@ -226,10 +225,10 @@ const ChessboardContextProvider = ({ children }) => {
         setCaptureSquares([]);
         setSelectedPiece(null);
         setCaptureSquares([]);
-        // Change the background color of selected piece
+        // Change the background chessboardColor of selected piece
         if (selectedPiece)
             gsap.to(pieceRefs.current[selectedPiece.id], {
-                backgroundColor: "",
+                backgroundchessboardColor: "",
                 duration: 0,
             });
     }
@@ -289,14 +288,14 @@ const ChessboardContextProvider = ({ children }) => {
         }
 
         // Moving the opponent piece
-        setPieces((prevPieces) =>
-            prevPieces.map((piece) => {
+        setPieces((prevPieces) => {
+            return prevPieces.map((piece) => {
                 if (piece.square === position) {
                     return { ...piece, square: destination };
                 }
                 return piece;
-            }),
-        );
+            });
+        });
 
         // Capture piece of player if there's any
         setPieces((prevPieces) =>
@@ -306,7 +305,11 @@ const ChessboardContextProvider = ({ children }) => {
                         ? "white"
                         : "black";
 
-                if (piece.square === destination && pieceColor === color) {
+                if (
+                    piece.square === destination &&
+                    pieceColor === chessboardColor
+                ) {
+                    console.log(chessboardColor);
                     return;
                 }
 
@@ -349,7 +352,7 @@ const ChessboardContextProvider = ({ children }) => {
 
     function playCorrectAnimation() {
         gsap.to(pieceRefs.current[selectedPiece.id], {
-            backgroundColor: "var(--c-green)",
+            backgroundchessboardColor: "var(--c-green)",
             duration: 0.2,
             yoyo: true,
             repeat: 1,
@@ -364,7 +367,7 @@ const ChessboardContextProvider = ({ children }) => {
 
     function playIncorrectAnimation() {
         gsap.to(pieceRefs.current[selectedPiece.id], {
-            backgroundColor: "var(--c-red)",
+            backgroundchessboardColor: "var(--c-red)",
             duration: 0.3,
             yoyo: true,
             repeat: 1,
@@ -495,14 +498,14 @@ const ChessboardContextProvider = ({ children }) => {
 
                 if (pieceOnDestSquare) {
                     //Determining if the piece in the way destination squares is white or black
-                    const pieceColor =
+                    const piecechessboardColor =
                         pieceOnDestSquare.pieceNotation ==
                         pieceOnDestSquare.pieceNotation.toUpperCase()
                             ? "white"
                             : "black";
 
                     // Stopping the loop if it's our piece
-                    if (pieceColor == color) {
+                    if (piecechessboardColor == chessboardColor) {
                         break;
                     }
                     // Stopping the loop and creating capture square if it's opponent's piece
@@ -560,14 +563,14 @@ const ChessboardContextProvider = ({ children }) => {
 
                 if (pieceOnDestSquare) {
                     //Determining if the piece in the way destination squares is white or black
-                    const pieceColor =
+                    const piecechessboardColor =
                         pieceOnDestSquare.pieceNotation ==
                         pieceOnDestSquare.pieceNotation.toUpperCase()
                             ? "white"
                             : "black";
 
                     // Stopping the loop if it's our piece
-                    if (pieceColor == color) {
+                    if (piecechessboardColor == chessboardColor) {
                         break;
                     }
                     // Stopping the loop and creating capture square if it's opponent's piece
@@ -635,14 +638,14 @@ const ChessboardContextProvider = ({ children }) => {
 
                     if (pieceOnDestSquare) {
                         //Determining if the piece in the way destination squares is white or black
-                        const pieceColor =
+                        const piecechessboardColor =
                             pieceOnDestSquare.pieceNotation ==
                             pieceOnDestSquare.pieceNotation.toUpperCase()
                                 ? "white"
                                 : "black";
 
                         // Skipping the loop if it's our piece
-                        if (pieceColor == color) {
+                        if (piecechessboardColor == chessboardColor) {
                             continue;
                         }
                         // Skipping the loop and creating capture square if it's opponent's piece
@@ -669,7 +672,7 @@ const ChessboardContextProvider = ({ children }) => {
         updatedCaptureSquares,
     ) {
         let pawnStartingSquares = [];
-        let pieceColor =
+        let piecechessboardColor =
             selectedPiece.pieceNotation ==
             selectedPiece.pieceNotation.toUpperCase()
                 ? "white"
@@ -685,7 +688,7 @@ const ChessboardContextProvider = ({ children }) => {
         ];
 
         for (let i = 0; i < 8; i++) {
-            pieceColor == "white"
+            piecechessboardColor == "white"
                 ? pawnStartingSquares.push(files[i] + ranks[1])
                 : pawnStartingSquares.push(files[i] + ranks[6]);
         }
@@ -698,7 +701,7 @@ const ChessboardContextProvider = ({ children }) => {
             let coordOfFile = files.indexOf(file);
             let coordOfRank = ranks.indexOf(rank);
 
-            pieceColor == "white"
+            piecechessboardColor == "white"
                 ? (coordOfRank += directions[i][1])
                 : (coordOfRank -= directions[i][1]);
 
@@ -723,7 +726,7 @@ const ChessboardContextProvider = ({ children }) => {
             let coordOfRank = ranks.indexOf(rank);
 
             coordOfFile += captureDirections[i][0];
-            pieceColor == "white"
+            piecechessboardColor == "white"
                 ? (coordOfRank += captureDirections[i][1])
                 : (coordOfRank -= captureDirections[i][1]);
 
@@ -734,13 +737,13 @@ const ChessboardContextProvider = ({ children }) => {
             );
 
             if (pieceOnCaptureSquare) {
-                let pieceOnCaptureSquareColor =
+                let pieceOnCaptureSquarechessboardColor =
                     pieceOnCaptureSquare.pieceNotation ===
                     pieceOnCaptureSquare.pieceNotation.toUpperCase()
                         ? "white"
                         : "black";
 
-                if (pieceOnCaptureSquareColor != color) {
+                if (pieceOnCaptureSquarechessboardColor != chessboardColor) {
                     updatedCaptureSquares.push(
                         `${files[coordOfFile]}${ranks[coordOfRank]}`,
                     );
@@ -790,14 +793,14 @@ const ChessboardContextProvider = ({ children }) => {
 
             if (pieceOnDestSquare) {
                 //Determining if the piece in the way destination squares is white or black
-                const pieceColor =
+                const piecechessboardColor =
                     pieceOnDestSquare.pieceNotation ==
                     pieceOnDestSquare.pieceNotation.toUpperCase()
                         ? "white"
                         : "black";
 
                 // Skipping the loop if it's our piece
-                if (pieceColor == color) {
+                if (piecechessboardColor == chessboardColor) {
                     continue;
                 }
                 // Skipping the loop and creating capture square if it's opponent's piece
@@ -859,46 +862,39 @@ const ChessboardContextProvider = ({ children }) => {
     }, [selectedPiece]);
 
     useEffect(() => {
-        // Make the first opponent move
-        if (opponentMoveIndex === 0 && userMoveIndex == 1) {
-            setTimeout(() => moveOpponentPiece(), 500);
-        }
-    }, [opponentMoveIndex, userMoveIndex]);
-
-    useEffect(() => {
         //Update the backend puzzle level
         if (!firstRender.current) updatePuzzleLevel(puzzleLevel);
 
         firstRender.current = false;
     }, [puzzleLevel]);
 
+    // For puzzles chessboard to figure out chessboard color
     useEffect(() => {
-        if (hasPuzzleStarted) {
+        if (hasPuzzleStarted && chessboardColor) {
             let puzzle = puzzles[puzzleLevel];
             setFen(puzzles[puzzleLevel]);
             resetBoard(puzzle);
 
-            // Set color opposite to fen
-            let startColor = puzzle.split(" ")[1];
-            startColor == "b" ? setColor("white") : setColor("black");
-        } else {
+            // Make the first opponent move
+            if (opponentMoveIndex === 0 && userMoveIndex == 1) {
+                setTimeout(() => {
+                    moveOpponentPiece();
+                }, 500);
+            }
+        }
+
+        if (!hasPuzzleStarted) {
             setFen(defaultFen);
         }
-    }, [hasPuzzleStarted]);
-
-    useEffect(() => {
-        if (!loading && user) {
-            setPuzzleLevel(user.puzzleLevel);
-        }
-    }, [loading]);
+    }, [chessboardColor]);
 
     return (
         <ChessboardContext.Provider
             value={{
                 mode,
                 setMode,
-                color,
-                setColor,
+                chessboardColor,
+                setChessboardColor,
                 files,
                 ranks,
                 fen,
