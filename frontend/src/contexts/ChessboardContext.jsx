@@ -177,7 +177,7 @@ const ChessboardContextProvider = ({ children }) => {
     function handlePieceClick(clickedPiece) {
         if (turn !== "player") return;
 
-        let piecechessboardColor =
+        let pieceColor =
             clickedPiece.pieceNotation ===
             clickedPiece.pieceNotation.toUpperCase()
                 ? "white"
@@ -185,12 +185,6 @@ const ChessboardContextProvider = ({ children }) => {
 
         // If piece is already selected
         if (selectedPiece) {
-            let selectedPiecechessboardColor =
-                selectedPiece.pieceNotation ===
-                selectedPiece.pieceNotation.toUpperCase()
-                    ? "white"
-                    : "black";
-
             // If same piece is clicked then run resetSquares and do nothing
             if (selectedPiece.id === clickedPiece.id) {
                 resetSquares();
@@ -204,10 +198,10 @@ const ChessboardContextProvider = ({ children }) => {
         }
 
         // Don't allow user to select opponent's piece
-        if (piecechessboardColor === chessboardColor) {
+        if (pieceColor === chessboardColor) {
             // Change the background chessboardColor of selected piece
             gsap.to(pieceRefs.current[clickedPiece.id], {
-                backgroundchessboardColor: "var(--c-highlight)",
+                backgroundColor: "var(--c-highlight)",
                 duration: 0,
             });
 
@@ -228,7 +222,7 @@ const ChessboardContextProvider = ({ children }) => {
         // Change the background chessboardColor of selected piece
         if (selectedPiece)
             gsap.to(pieceRefs.current[selectedPiece.id], {
-                backgroundchessboardColor: "",
+                backgroundColor: "",
                 duration: 0,
             });
     }
@@ -352,7 +346,7 @@ const ChessboardContextProvider = ({ children }) => {
 
     function playCorrectAnimation() {
         gsap.to(pieceRefs.current[selectedPiece.id], {
-            backgroundchessboardColor: "var(--c-green)",
+            backgroundColor: "var(--c-green)",
             duration: 0.2,
             yoyo: true,
             repeat: 1,
@@ -367,7 +361,7 @@ const ChessboardContextProvider = ({ children }) => {
 
     function playIncorrectAnimation() {
         gsap.to(pieceRefs.current[selectedPiece.id], {
-            backgroundchessboardColor: "var(--c-red)",
+            backgroundColor: "var(--c-red)",
             duration: 0.3,
             yoyo: true,
             repeat: 1,
