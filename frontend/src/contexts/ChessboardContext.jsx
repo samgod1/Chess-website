@@ -2,7 +2,6 @@ import { useState, useRef, createContext, useEffect, useContext } from "react";
 import gsap from "gsap";
 
 import { puzzles } from "../constants";
-import updatePuzzleLevel from "../../apis/user/updatePuzzleLevel";
 import { UserContext } from "./UserContext";
 import { PuzzlesContext } from "./PuzzlesContext";
 
@@ -871,13 +870,6 @@ const ChessboardContextProvider = ({ children }) => {
     useEffect(() => {
         if (selectedPiece) createDestSquares(selectedPiece);
     }, [selectedPiece]);
-
-    useEffect(() => {
-        //Update the backend puzzle level
-        if (!firstRender.current) updatePuzzleLevel(puzzleLevel);
-
-        firstRender.current = false;
-    }, [puzzleLevel]);
 
     useEffect(() => {
         if (colorChanged && resetBoardComplete) {

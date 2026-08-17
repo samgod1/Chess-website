@@ -6,12 +6,17 @@ import {
     ChessboardContext,
     PuzzlesContext,
 } from "../../../../../../contexts/index.js";
+import updatePuzzleLevel from "../../../../../../../apis/user/updatePuzzleLevel.js";
 
 const PuzzlesSidebarBody = () => {
-    const { puzzleLevel, setPuzzleLevel, resetBoard } =
-        useContext(ChessboardContext);
-    const { setHasPuzzleStarted, sidebarMode, setSidebarMode } =
-        useContext(PuzzlesContext);
+    const { resetBoard } = useContext(ChessboardContext);
+    const {
+        setHasPuzzleStarted,
+        sidebarMode,
+        setSidebarMode,
+        puzzleLevel,
+        setPuzzleLevel,
+    } = useContext(PuzzlesContext);
 
     const sidebarModeConfig = {
         started: {},
@@ -28,6 +33,10 @@ const PuzzlesSidebarBody = () => {
             text: "Next Puzzle",
             onClick: () => {
                 setPuzzleLevel((prev) => prev + 1);
+                updatePuzzleLevel(puzzleLevel + 1);
+                setHasPuzzleStarted(false);
+                setSidebarMode("started");
+                resetBoard({ retryLevel: false });
             },
         },
         retry: {

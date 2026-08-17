@@ -10,6 +10,7 @@ const PuzzlesContextProvider = ({ children }) => {
     const [puzzleLevel, setPuzzleLevel] = useState(0);
     const [sidebarMode, setSidebarMode] = useState("notStarted");
     const [colorChangeTrigger, setColorChangeTrigger] = useState(0);
+    const [puzzleLevelUpdated, setPuzzleLevelUpdated] = useState(false);
 
     const { user, loading } = useContext(UserContext);
 
