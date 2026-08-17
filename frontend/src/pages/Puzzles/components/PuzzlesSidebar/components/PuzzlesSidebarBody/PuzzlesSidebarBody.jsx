@@ -8,7 +8,8 @@ import {
 } from "../../../../../../contexts/index.js";
 
 const PuzzlesSidebarBody = () => {
-    const { puzzleLevel } = useContext(ChessboardContext);
+    const { puzzleLevel, setPuzzleLevel, resetBoard } =
+        useContext(ChessboardContext);
     const { setHasPuzzleStarted, sidebarMode, setSidebarMode } =
         useContext(PuzzlesContext);
 
@@ -24,12 +25,16 @@ const PuzzlesSidebarBody = () => {
         completed: {
             className: "next-puzzle-btn",
             text: "Next Puzzle",
-            onClick: () => {},
+            onClick: () => {
+                setPuzzleLevel((prev) => prev + 1);
+            },
         },
         retry: {
             className: "retry-puzzle-btn",
             text: "Retry Puzzle",
-            onClick: () => {},
+            onClick: () => {
+                resetBoard({ retryLevel: true });
+            },
         },
     };
 

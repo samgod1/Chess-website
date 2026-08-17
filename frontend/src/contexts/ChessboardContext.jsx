@@ -54,8 +54,13 @@ const ChessboardContextProvider = ({ children }) => {
     const capturedPieceRef = useRef(null);
     const firstRender = useRef(true);
 
-    const { hasPuzzleStarted, puzzleLevel, setPuzzleLevel, setSidebarMode } =
-        useContext(PuzzlesContext);
+    const {
+        hasPuzzleStarted,
+        puzzleLevel,
+        setPuzzleLevel,
+        sidebarMode,
+        setSidebarMode,
+    } = useContext(PuzzlesContext);
 
     function calculateChessboardWidth() {
         let chessboardContainerWidth =
@@ -304,7 +309,6 @@ const ChessboardContextProvider = ({ children }) => {
                     piece.square === destination &&
                     pieceColor === chessboardColor
                 ) {
-                    console.log(chessboardColor);
                     return;
                 }
 
@@ -367,18 +371,23 @@ const ChessboardContextProvider = ({ children }) => {
             yoyo: true,
             repeat: 1,
             onComplete: () => {
-                // resetBoard();
                 setSidebarMode("retry");
             },
         });
     }
 
-    function resetBoard(puzzle) {
+    function resetBoard({ retryLevel }) {
         setHasPlacedPieces(false);
         setOpponentMoveIndex(0);
         setUserMoveIndex(1);
         setTurn("opponent");
-        setFen(puzzle);
+        // Cause of resetting the board
+        if (retryLevel) {
+            convertFenToPiecesArray();
+            setSidebarMode("started");
+        } else {
+            setFen(puzzles[puzzleLevel]);
+        }
     }
 
     function createDestSquares({ pieceNotation, square }) {
@@ -867,9 +876,7 @@ const ChessboardContextProvider = ({ children }) => {
     // For puzzles chessboard to figure out chessboard color
     useEffect(() => {
         if (hasPuzzleStarted && chessboardColor) {
-            let puzzle = puzzles[puzzleLevel];
-            setFen(puzzles[puzzleLevel]);
-            resetBoard(puzzle);
+            resetBoard({ retryLevel: false });
 
             // Make the first opponent move
             if (opponentMoveIndex === 0 && userMoveIndex == 1) {
@@ -883,6 +890,15 @@ const ChessboardContextProvider = ({ children }) => {
             setFen(defaultFen);
         }
     }, [chessboardColor]);
+
+    useEffect(() => {
+        // Make the first opponent move
+        if (opponentMoveIndex === 0 && userMoveIndex == 1) {
+            setTimeout(() => {
+                moveOpponentPiece();
+            }, 500);
+        }
+    }, [opponentMoveIndex, userMoveIndex]);
 
     return (
         <ChessboardContext.Provider
@@ -911,6 +927,7 @@ const ChessboardContextProvider = ({ children }) => {
                 moveOpponentPiece,
                 hasPlacedPieces,
                 setHasPlacedPieces,
+                resetBoard,
                 pieceRefs,
                 puzzleLevel,
             }}
