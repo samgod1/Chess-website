@@ -8,6 +8,7 @@ const PuzzlesContextProvider = ({ children }) => {
     const [hasPuzzleStarted, setHasPuzzleStarted] = useState(false);
     const [color, setColor] = useState("white");
     const [puzzleLevel, setPuzzleLevel] = useState(0);
+    const [sidebarMode, setSidebarMode] = useState("notStarted");
 
     const { user, loading } = useContext(UserContext);
 
@@ -16,6 +17,9 @@ const PuzzlesContextProvider = ({ children }) => {
             // Set color opposite to fen
             let startColor = puzzles[puzzleLevel].split(" ")[1];
             startColor == "b" ? setColor("white") : setColor("black");
+
+            // Set sidebar mode
+            setSidebarMode("started");
         }
     }, [hasPuzzleStarted]);
 
@@ -34,6 +38,8 @@ const PuzzlesContextProvider = ({ children }) => {
                 setColor,
                 puzzleLevel,
                 setPuzzleLevel,
+                sidebarMode,
+                setSidebarMode,
             }}
         >
             {children}

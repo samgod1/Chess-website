@@ -54,7 +54,7 @@ const ChessboardContextProvider = ({ children }) => {
     const capturedPieceRef = useRef(null);
     const firstRender = useRef(true);
 
-    const { hasPuzzleStarted, puzzleLevel, setPuzzleLevel } =
+    const { hasPuzzleStarted, puzzleLevel, setPuzzleLevel, setSidebarMode } =
         useContext(PuzzlesContext);
 
     function calculateChessboardWidth() {
@@ -277,7 +277,8 @@ const ChessboardContextProvider = ({ children }) => {
 
         // If user has completed the puzzle
         if (!position && !destination) {
-            moveToNextLevel();
+            // moveToNextLevel();
+            setSidebarMode("completed");
             return;
         }
 
@@ -366,7 +367,8 @@ const ChessboardContextProvider = ({ children }) => {
             yoyo: true,
             repeat: 1,
             onComplete: () => {
-                resetBoard();
+                // resetBoard();
+                setSidebarMode("retry");
             },
         });
     }

@@ -9,7 +9,31 @@ import {
 
 const PuzzlesSidebarBody = () => {
     const { puzzleLevel } = useContext(ChessboardContext);
-    const { setHasPuzzleStarted } = useContext(PuzzlesContext);
+    const { setHasPuzzleStarted, sidebarMode, setSidebarMode } =
+        useContext(PuzzlesContext);
+
+    const sidebarModeConfig = {
+        started: {},
+        notStarted: {
+            className: "start-puzzle-btn",
+            text: "Start Puzzle",
+            onClick: () => {
+                setHasPuzzleStarted(true);
+            },
+        },
+        completed: {
+            className: "next-puzzle-btn",
+            text: "Next Puzzle",
+            onClick: () => {},
+        },
+        retry: {
+            className: "retry-puzzle-btn",
+            text: "Retry Puzzle",
+            onClick: () => {},
+        },
+    };
+
+    const { className, text, onClick } = sidebarModeConfig[sidebarMode];
 
     function getLevelClassName(i) {
         if (i < puzzleLevel) return "level-btn completed";
@@ -20,22 +44,23 @@ const PuzzlesSidebarBody = () => {
     return (
         <div className="puzzles-sidebar-body">
             <div className="levels-container">
-                {[...Array(puzzles.length)].map((_, i) => {
-                    return (
-                        <div className={getLevelClassName(i)} key={i}>
-                            {i}
-                        </div>
-                    );
-                })}
+                {sidebarMode === "notStarted" && (
+                    <>
+                        {[...Array(puzzles.length)].map((_, i) => {
+                            return (
+                                <div className={getLevelClassName(i)} key={i}>
+                                    {i}
+                                </div>
+                            );
+                        })}
+                    </>
+                )}
             </div>
-            <button
-                className="start-puzzle-btn"
-                onClick={() => {
-                    setHasPuzzleStarted(true);
-                }}
-            >
-                Start Puzzle
-            </button>
+            {sidebarMode !== "started" && (
+                <button className={className} onClick={onClick}>
+                    {text}
+                </button>
+            )}
         </div>
     );
 };

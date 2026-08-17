@@ -46,4 +46,16 @@
         padding: 0.75rem 0rem;
         border-radius: 0.5rem;
     }
+    .next-puzzle-btn {
+        background-color: var(--c-accent);
+        font-size: 1.5rem;
+        padding: 0.75rem 0rem;
+        border-radius: 0.5rem;
+    }
+    .retry-puzzle-btn {
+        background-color: var(--c-accent);
+        font-size: 1.5rem;
+        padding: 0.75rem 0rem;
+        border-radius: 0.5rem;
+    }
 }
