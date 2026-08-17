@@ -44,8 +44,9 @@ const ChessboardContextProvider = ({ children }) => {
     const [turn, setTurn] = useState("opponent");
     const [userMoveIndex, setUserMoveIndex] = useState(1);
     const [opponentMoveIndex, setOpponentMoveIndex] = useState(0);
-    const [boardKey, setBoardKey] = useState(0);
     const [hasPlacedPieces, setHasPlacedPieces] = useState(false);
+    const [resetBoardComplete, setResetBoardComplete] = useState(false);
+    const [colorChanged, setColorChanged] = useState(false);
 
     const chessboardRef = useRef(null);
     const chessboardContainerRef = useRef(null);
@@ -388,6 +389,7 @@ const ChessboardContextProvider = ({ children }) => {
         } else {
             setFen(puzzles[puzzleLevel]);
         }
+        setResetBoardComplete(true);
     }
 
     function createDestSquares({ pieceNotation, square }) {
@@ -852,6 +854,10 @@ const ChessboardContextProvider = ({ children }) => {
         setPieces(updatedPieces);
     }
 
+    function setDefaultPosition() {
+        setFen(defaultFen);
+    }
+
     function moveToNextLevel() {
         setPuzzleLevel((prev) => prev + 1);
     }
@@ -873,32 +879,20 @@ const ChessboardContextProvider = ({ children }) => {
         firstRender.current = false;
     }, [puzzleLevel]);
 
-    // For puzzles chessboard to figure out chessboard color
     useEffect(() => {
-        if (hasPuzzleStarted && chessboardColor) {
-            resetBoard({ retryLevel: false });
-
-            // Make the first opponent move
-            if (opponentMoveIndex === 0 && userMoveIndex == 1) {
-                setTimeout(() => {
-                    moveOpponentPiece();
-                }, 500);
-            }
-        }
-
-        if (!hasPuzzleStarted) {
-            setFen(defaultFen);
-        }
-    }, [chessboardColor]);
-
-    useEffect(() => {
-        // Make the first opponent move
-        if (opponentMoveIndex === 0 && userMoveIndex == 1) {
+        if (colorChanged && resetBoardComplete) {
             setTimeout(() => {
                 moveOpponentPiece();
             }, 500);
+
+            setResetBoardComplete(false);
         }
-    }, [opponentMoveIndex, userMoveIndex]);
+        setColorChanged(false);
+    }, [colorChanged, resetBoardComplete]);
+
+    useEffect(() => {
+        setDefaultPosition();
+    }, []);
 
     return (
         <ChessboardContext.Provider
@@ -930,6 +924,7 @@ const ChessboardContextProvider = ({ children }) => {
                 resetBoard,
                 pieceRefs,
                 puzzleLevel,
+                setColorChanged,
             }}
         >
             {children}

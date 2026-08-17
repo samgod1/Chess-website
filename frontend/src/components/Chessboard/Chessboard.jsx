@@ -8,7 +8,7 @@ import { VisionContext, ChessboardContext } from "../../contexts";
 import Coords from "./components/Coords.jsx/Coords";
 import { pieceImages } from "../../constants";
 
-const Chessboard = ({ color }) => {
+const Chessboard = ({ color, colorChangeTrigger }) => {
     const {
         hasStarted,
         setHasStarted,
@@ -54,6 +54,7 @@ const Chessboard = ({ color }) => {
         hasPlacedPieces,
         setHasPlacedPieces,
         pieceRefs,
+        setColorChanged,
     } = useContext(ChessboardContext);
 
     const { pathname } = useLocation();
@@ -69,8 +70,9 @@ const Chessboard = ({ color }) => {
     useEffect(() => {
         if (color) {
             setChessboardColor(color);
+            setColorChanged(true);
         }
-    }, [color]);
+    }, [colorChangeTrigger]);
 
     useEffect(() => {
         // To prevent any bugs if user decides to visit other page during vision practice

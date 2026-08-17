@@ -20,6 +20,7 @@ const PuzzlesSidebarBody = () => {
             text: "Start Puzzle",
             onClick: () => {
                 setHasPuzzleStarted(true);
+                resetBoard({ retryLevel: false });
             },
         },
         completed: {

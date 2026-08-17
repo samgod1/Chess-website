@@ -17,7 +17,7 @@ const Puzzles = () => {
 
     const { user, loading } = useContext(UserContext);
     const { setMode } = useContext(ChessboardContext);
-    const { color } = useContext(PuzzlesContext);
+    const { color, colorChangeTrigger } = useContext(PuzzlesContext);
 
     useEffect(() => {
         if (!loading && !user) {
@@ -31,7 +31,7 @@ const Puzzles = () => {
     }, []);
     return (
         <div className="puzzles-page">
-            <Chessboard color={color} />
+            <Chessboard color={color} colorChangeTrigger={colorChangeTrigger} />
             <PuzzlesSidebar />
         </div>
     );

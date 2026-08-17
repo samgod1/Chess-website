@@ -9,6 +9,7 @@ const PuzzlesContextProvider = ({ children }) => {
     const [color, setColor] = useState("white");
     const [puzzleLevel, setPuzzleLevel] = useState(0);
     const [sidebarMode, setSidebarMode] = useState("notStarted");
+    const [colorChangeTrigger, setColorChangeTrigger] = useState(0);
 
     const { user, loading } = useContext(UserContext);
 
@@ -18,8 +19,8 @@ const PuzzlesContextProvider = ({ children }) => {
             let startColor = puzzles[puzzleLevel].split(" ")[1];
             startColor == "b" ? setColor("white") : setColor("black");
 
-            // Set sidebar mode
             setSidebarMode("started");
+            setColorChangeTrigger((prev) => prev + 1);
         }
     }, [hasPuzzleStarted]);
 
@@ -40,6 +41,8 @@ const PuzzlesContextProvider = ({ children }) => {
                 setPuzzleLevel,
                 sidebarMode,
                 setSidebarMode,
+                colorChangeTrigger,
+                setColorChangeTrigger,
             }}
         >
             {children}
