@@ -6,7 +6,7 @@ export const PuzzlesContext = createContext();
 
 const PuzzlesContextProvider = ({ children }) => {
     const [hasPuzzleStarted, setHasPuzzleStarted] = useState(false);
-    const [puzzleLevel, setPuzzleLevel] = useState(0);
+    const [puzzleLevel, setPuzzleLevel] = useState(1);
     const [sidebarMode, setSidebarMode] = useState("notStarted");
     const [colorChangeTrigger, setColorChangeTrigger] = useState(0);
     const [puzzleLevelUpdated, setPuzzleLevelUpdated] = useState(false);

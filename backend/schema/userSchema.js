@@ -31,7 +31,7 @@ const userSchema = new mongoose.Schema(
             type: "Number",
         },
         puzzleLevel: {
-            default: 0,
+            default: 1,
             type: "Number",
         },
     },

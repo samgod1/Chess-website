@@ -267,11 +267,11 @@ const PuzzlesChessboard = () => {
 
     function moveOpponentPiece() {
         // Getting the moves from puzzles data
-        let position = puzzles[puzzleLevel]
+        let position = puzzles[puzzleLevel - 1]
             .split(",")[1]
             .split(" ")
             [opponentMoveIndex]?.slice(0, 2);
-        let destination = puzzles[puzzleLevel]
+        let destination = puzzles[puzzleLevel - 1]
             .split(",")[1]
             .split(" ")
             [opponentMoveIndex]?.slice(2, 4);
@@ -317,11 +317,11 @@ const PuzzlesChessboard = () => {
     function checkUserMove(destination) {
         const position = selectedPiece.square;
 
-        const correctPosition = puzzles[puzzleLevel]
+        const correctPosition = puzzles[puzzleLevel - 1]
             .split(",")[1]
             .split(" ")
             [userMoveIndex].slice(0, 2);
-        const correctDestination = puzzles[puzzleLevel]
+        const correctDestination = puzzles[puzzleLevel - 1]
             .split(",")[1]
             .split(" ")
             [userMoveIndex].slice(2, 4);
@@ -375,7 +375,7 @@ const PuzzlesChessboard = () => {
         setUserMoveIndex(1);
         setTurn("opponent");
         if (hasPuzzleStarted) {
-            setFen(puzzles[puzzleLevel]);
+            setFen(puzzles[puzzleLevel - 1]);
         }
         setResetBoardComplete(true);
     }
@@ -857,7 +857,7 @@ const PuzzlesChessboard = () => {
             resetBoard();
 
             // Set color opposite to fen
-            let startColor = puzzles[puzzleLevel].split(" ")[1];
+            let startColor = puzzles[puzzleLevel - 1].split(" ")[1];
             startColor == "b" ? setColor("white") : setColor("black");
 
             setSidebarMode("started");
