@@ -16,19 +16,10 @@ const Progress = () => {
 
     const [seconds, setSeconds] = useState(time);
 
-    const startTime = useRef(null);
-    const finishTime = useRef(null);
     const timerInterval = useRef(null);
 
     function updateTimer() {
-        const remainingTime = finishTime.current - Date.now();
-        const timer = Math.floor(remainingTime / 1000);
-        setSeconds(String(timer).padStart(2, 0));
-
-        //Stop timer
-        if (timer <= 0) {
-            endTimer();
-        }
+        setSeconds((prev) => prev - 1);
     }
 
     function endTimer() {
@@ -40,10 +31,15 @@ const Progress = () => {
 
     useEffect(() => {
         if (hasCountdownCompleted) {
-            finishTime.current = Date.now() + time * 1000;
             timerInterval.current = setInterval(updateTimer, 1000);
         }
     }, [hasCountdownCompleted]);
+
+    useEffect(() => {
+        if (seconds === 0) {
+            endTimer();
+        }
+    }, [seconds]);
 
     useEffect(() => {
         return () => {
@@ -56,7 +52,7 @@ const Progress = () => {
             <div className="score">{score}</div>
             <div className="time-display">
                 <img src="/images/time-dark.png" alt="time" />
-                <span>00:{seconds}</span>
+                <span>00:{String(seconds).padStart(2, 0)}</span>
             </div>
         </div>
     );
