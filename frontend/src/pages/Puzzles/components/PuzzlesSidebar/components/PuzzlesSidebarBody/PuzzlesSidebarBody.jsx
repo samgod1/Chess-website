@@ -29,7 +29,7 @@ const PuzzlesSidebarBody = () => {
             onClick: () => {
                 setPuzzleLevel((prev) => prev + 1);
                 updatePuzzleLevel(puzzleLevel + 1);
-                setHasPuzzleStarted(false);
+                setHasPuzzleStarted(true);
                 setSidebarMode("started");
             },
         },

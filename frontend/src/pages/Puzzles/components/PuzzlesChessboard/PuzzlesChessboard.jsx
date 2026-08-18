@@ -278,7 +278,7 @@ const PuzzlesChessboard = () => {
 
         // If user has completed the puzzle
         if (!position && !destination) {
-            // moveToNextLevel();
+            setHasPuzzleStarted(false);
             setSidebarMode("completed");
             return;
         }
@@ -335,6 +335,7 @@ const PuzzlesChessboard = () => {
                 playCorrectAnimation();
             }, 100);
         } else {
+            setHasPuzzleStarted(false);
             // The 100 ms delay for the transition piece move transition to end
             setTimeout(() => {
                 playIncorrectAnimation(destination);
