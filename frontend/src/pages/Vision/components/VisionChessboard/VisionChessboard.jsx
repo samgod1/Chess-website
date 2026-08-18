@@ -27,6 +27,7 @@ const VisionChessboard = () => {
         "8",
     ]);
     const [time, setTime] = useState(30);
+    const [chessboardSize, setChessboardSize] = useState(0);
 
     const countdownInterval = useRef(null);
     const correctAudioRef = useRef(null);
@@ -34,7 +35,6 @@ const VisionChessboard = () => {
     const countdownAudioRef = useRef(null);
     const startAudioRef = useRef(null);
     const chessboardContainerRef = useRef(null);
-    const chessboardRef = useRef(null);
 
     const {
         color,
@@ -53,6 +53,17 @@ const VisionChessboard = () => {
         setBestScore,
     } = useContext(VisionContext);
     const { user } = useContext(UserContext);
+
+    function calculateChessboardSize() {
+        let chessboardContainerWidth =
+            chessboardContainerRef.current.offsetWidth;
+
+        while (chessboardContainerWidth % 4 != 0) {
+            chessboardContainerWidth -= 1;
+        }
+
+        setChessboardSize(chessboardContainerWidth);
+    }
 
     function startCountdown() {
         countdownInterval.current = setInterval(() => {
@@ -146,6 +157,7 @@ const VisionChessboard = () => {
     }, [hasCountdownCompleted]);
 
     useEffect(() => {
+        calculateChessboardSize();
         setBestScore(user?.bestScore || 0);
     }, []);
 
@@ -160,7 +172,10 @@ const VisionChessboard = () => {
             {hasStarted && hasCountdownCompleted && (
                 <div className="display">{randomSquare}</div>
             )}
-            <div className={`vision-chessboard ${color}`} ref={chessboardRef}>
+            <div
+                className={`vision-chessboard ${color}`}
+                style={{ width: chessboardSize, height: chessboardSize }}
+            >
                 {/* Ranks and Files */}
                 {ranks.map((rank, i) => {
                     //Alternating ranks

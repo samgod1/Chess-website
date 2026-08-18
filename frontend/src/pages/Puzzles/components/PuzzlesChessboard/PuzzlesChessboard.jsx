@@ -46,7 +46,7 @@ const PuzzlesChessboard = () => {
     const [color, setColor] = useState("white");
     const [pieces, setPieces] = useState([]);
     const [selectedPiece, setSelectedPiece] = useState(null);
-    const [chessboardWidth, setChessboardWidth] = useState(0);
+    const [chessboardSize, setChessboardSize] = useState(0);
     const [squareWidth, setSquareWidth] = useState(0);
     const [destinationSquares, setDestinationSquares] = useState([]);
     const [captureSquares, setCaptureSquares] = useState([]);
@@ -58,11 +58,10 @@ const PuzzlesChessboard = () => {
     const [colorChanged, setColorChanged] = useState(false);
 
     const chessboardContainerRef = useRef(null);
-    const chessboardRef = useRef(null);
     const pieceRefs = useRef({});
     const firstRender = useRef(true);
 
-    function calculateChessboardWidth() {
+    function calculateChessboardSize() {
         let chessboardContainerWidth =
             chessboardContainerRef.current.offsetWidth;
 
@@ -70,10 +69,7 @@ const PuzzlesChessboard = () => {
             chessboardContainerWidth -= 1;
         }
 
-        chessboardRef.current.style.width = `${chessboardContainerWidth}px`;
-        chessboardRef.current.style.height = `${chessboardContainerWidth}px`;
-
-        setChessboardWidth(chessboardContainerWidth);
+        setChessboardSize(chessboardContainerWidth);
         setSquareWidth(chessboardContainerWidth / 8);
     }
 
@@ -894,7 +890,7 @@ const PuzzlesChessboard = () => {
     }, [resetBoardComplete]);
 
     useEffect(() => {
-        calculateChessboardWidth();
+        calculateChessboardSize();
         setPuzzleLevel(user.puzzleLevel);
         setDefaultPosition();
     }, []);
@@ -904,7 +900,10 @@ const PuzzlesChessboard = () => {
             className="puzzles-chessboard-container"
             ref={chessboardContainerRef}
         >
-            <div className={`puzzles-chessboard ${color}`} ref={chessboardRef}>
+            <div
+                className={`puzzles-chessboard ${color}`}
+                style={{ height: chessboardSize, width: chessboardSize }}
+            >
                 {/* Ranks and Files */}
                 {ranks.map((rank, i) => {
                     //Alternating ranks
