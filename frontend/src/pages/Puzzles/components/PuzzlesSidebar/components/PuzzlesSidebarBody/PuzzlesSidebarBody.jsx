@@ -2,14 +2,11 @@ import React, { useContext, useEffect } from "react";
 
 import { puzzles } from "../../../../../../constants";
 import "./PuzzlesSidebarBody.css";
-import {
-    ChessboardContext,
-    PuzzlesContext,
-} from "../../../../../../contexts/index.js";
+import { PuzzlesContext } from "../../../../../../contexts/index.js";
 import updatePuzzleLevel from "../../../../../../../apis/user/updatePuzzleLevel.js";
 
 const PuzzlesSidebarBody = () => {
-    const { resetBoard } = useContext(ChessboardContext);
+    const { resetBoard } = useContext(PuzzlesContext);
     const {
         setHasPuzzleStarted,
         sidebarMode,

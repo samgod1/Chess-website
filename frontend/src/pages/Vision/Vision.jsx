@@ -5,7 +5,7 @@ import toast from "react-hot-toast";
 import "./Vision.css";
 import VisionSidebar from "./components/VisionSidebar/VisionSidebar.jsx";
 import VisionChessboard from "./components/VisionChessboard/VisionChessboard.jsx";
-import { UserContext, ChessboardContext, VisionContext } from "../../contexts/";
+import { UserContext, VisionContext } from "../../contexts/";
 
 const Vision = () => {
     const navigate = useNavigate();

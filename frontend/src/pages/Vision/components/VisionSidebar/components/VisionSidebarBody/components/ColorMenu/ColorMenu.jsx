@@ -1,17 +1,14 @@
 import { useEffect, useRef, useState, useContext } from "react";
 
-import {
-    ChessboardContext,
-    VisionContext,
-} from "../../../../../../../../contexts";
+import { VisionContext } from "../../../../../../../../contexts";
 
 const ColorMenu = ({ setIsColorMenuOpen }) => {
     const buttons = ["white", "black", "random"];
 
     const colorMenuRef = useRef(null);
 
-    const { selectedColor, setSelectedColor } = useContext(VisionContext);
-    const { color, setColor } = useContext(VisionContext);
+    const { color, setColor, selectedColor, setSelectedColor } =
+        useContext(VisionContext);
 
     function handleClick(e) {
         if (!colorMenuRef.current.contains(e.target)) {

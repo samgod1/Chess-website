@@ -1,10 +1,7 @@
 import { useEffect, useRef, useState, useContext } from "react";
 
 import "./Progress.css";
-import {
-    ChessboardContext,
-    VisionContext,
-} from "../../../../../../../../contexts";
+import { VisionContext } from "../../../../../../../../contexts";
 import updateBestScore from "../../../../../../../../../apis/user/updateBestScore";
 
 const Progress = () => {
@@ -27,7 +24,6 @@ const Progress = () => {
         const remainingTime = finishTime.current - Date.now();
         const timer = Math.floor(remainingTime / 1000);
         setSeconds(String(timer).padStart(2, 0));
-        console.log("hello");
 
         //Stop timer
         if (timer <= 0) {
@@ -44,7 +40,6 @@ const Progress = () => {
 
     useEffect(() => {
         if (hasCountdownCompleted) {
-            console.log("H");
             finishTime.current = Date.now() + time * 1000;
             timerInterval.current = setInterval(updateTimer, 1000);
         }

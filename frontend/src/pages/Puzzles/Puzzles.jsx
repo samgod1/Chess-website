@@ -5,12 +5,7 @@ import toast from "react-hot-toast";
 import "./Puzzles.css";
 import PuzzlesChessboard from "./components/PuzzlesChessboard/PuzzlesChessboard";
 import PuzzlesSidebar from "./components/PuzzlesSidebar/PuzzlesSidebar";
-import {
-    UserContext,
-    ChessboardContext,
-    VisionContext,
-    PuzzlesContext,
-} from "../../contexts";
+import { UserContext, VisionContext, PuzzlesContext } from "../../contexts";
 
 const Puzzles = () => {
     const navigate = useNavigate();
