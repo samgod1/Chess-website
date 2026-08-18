@@ -3,7 +3,6 @@ import gsap from "gsap";
 
 import { UserContext } from "./UserContext";
 import updateBestScore from "../../apis/user/updateBestScore";
-import { ChessboardContext } from "./ChessboardContext";
 
 export const VisionContext = createContext();
 
@@ -28,7 +27,7 @@ const VisionContextProvider = ({ children }) => {
         "7",
         "8",
     ]);
-    const [hasStarted, setHasStarted] = useState(false); //Vision practice
+    const [hasStarted, setHasStarted] = useState(false);
     const [attempts, setAttempts] = useState([]);
     const [score, setScore] = useState(0);
     const [time, setTime] = useState(30);
@@ -39,7 +38,6 @@ const VisionContextProvider = ({ children }) => {
     const [countdown, setCountdown] = useState(3);
     const [color, setColor] = useState("white");
 
-    //Don't want this to update chessboard as a whole, so that's why this isn't place in ChessboardContext
     const [isCoordinates, setIsCoordinates] = useState(true);
 
     const countdownInterval = useRef(null);

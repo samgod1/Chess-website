@@ -6,7 +6,6 @@ import { PuzzlesContext } from "../../../../../../contexts/index.js";
 import updatePuzzleLevel from "../../../../../../../apis/user/updatePuzzleLevel.js";
 
 const PuzzlesSidebarBody = () => {
-    const { resetBoard } = useContext(PuzzlesContext);
     const {
         setHasPuzzleStarted,
         sidebarMode,
@@ -22,7 +21,6 @@ const PuzzlesSidebarBody = () => {
             text: "Start Puzzle",
             onClick: () => {
                 setHasPuzzleStarted(true);
-                resetBoard({ retryLevel: false });
             },
         },
         completed: {
@@ -33,14 +31,13 @@ const PuzzlesSidebarBody = () => {
                 updatePuzzleLevel(puzzleLevel + 1);
                 setHasPuzzleStarted(false);
                 setSidebarMode("started");
-                resetBoard({ retryLevel: false });
             },
         },
         retry: {
             className: "retry-puzzle-btn",
             text: "Retry Puzzle",
             onClick: () => {
-                resetBoard({ retryLevel: true });
+                setHasPuzzleStarted(true);
             },
         },
     };

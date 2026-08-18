@@ -373,16 +373,12 @@ const PuzzlesChessboard = () => {
         });
     }
 
-    function resetBoard({ retryLevel }) {
+    function resetBoard() {
         setHasPlacedPieces(false);
         setOpponentMoveIndex(0);
         setUserMoveIndex(1);
         setTurn("opponent");
-        // Cause of resetting the board
-        if (retryLevel) {
-            convertFenToPiecesArray();
-            setSidebarMode("started");
-        } else {
+        if (hasPuzzleStarted) {
             setFen(puzzles[puzzleLevel]);
         }
         setResetBoardComplete(true);
@@ -852,6 +848,7 @@ const PuzzlesChessboard = () => {
     }
 
     function setDefaultPosition() {
+        resetBoard();
         setFen(defaultFen);
     }
 
@@ -860,14 +857,8 @@ const PuzzlesChessboard = () => {
     }
 
     useEffect(() => {
-        if (fen) {
-            convertFenToPiecesArray();
-        }
-    }, [fen]);
-
-    useEffect(() => {
         if (hasPuzzleStarted) {
-            resetBoard({ retryLevel: false });
+            resetBoard();
 
             // Set color opposite to fen
             let startColor = puzzles[puzzleLevel].split(" ")[1];
@@ -894,6 +885,13 @@ const PuzzlesChessboard = () => {
     useEffect(() => {
         if (hasPlacedPieces) setHasPlacedPieces(false);
     }, [hasPlacedPieces]);
+
+    useEffect(() => {
+        if (resetBoardComplete) {
+            convertFenToPiecesArray();
+            setResetBoardComplete(false);
+        }
+    }, [resetBoardComplete]);
 
     useEffect(() => {
         calculateChessboardWidth();
