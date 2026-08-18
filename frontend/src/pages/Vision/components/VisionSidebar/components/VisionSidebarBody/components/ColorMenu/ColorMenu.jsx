@@ -11,7 +11,7 @@ const ColorMenu = ({ setIsColorMenuOpen }) => {
     const colorMenuRef = useRef(null);
 
     const { selectedColor, setSelectedColor } = useContext(VisionContext);
-    const { color, setColor } = useContext(ChessboardContext);
+    const { color, setColor } = useContext(VisionContext);
 
     function handleClick(e) {
         if (!colorMenuRef.current.contains(e.target)) {

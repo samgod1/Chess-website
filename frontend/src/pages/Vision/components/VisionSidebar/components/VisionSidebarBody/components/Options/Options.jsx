@@ -1,4 +1,4 @@
-import { useState, useContext, Activity } from "react";
+import { useState, useEffect, useContext, Activity } from "react";
 
 import "./Options.css";
 import { TimeMenu, ColorMenu } from "../index.js";
@@ -8,8 +8,24 @@ const Options = () => {
     const [isColorMenuOpen, setIsColorMenuOpen] = useState(false);
     const [isTimeMenuOpen, setIsTimeMenuOpen] = useState(false);
 
-    const { setHasStarted, isCoordinates, setIsCoordinates } =
-        useContext(VisionContext);
+    const {
+        hasStarted,
+        setHasStarted,
+        setColor,
+        isCoordinates,
+        setIsCoordinates,
+    } = useContext(VisionContext);
+
+    function selectRandomColor() {
+        const colors = ["white", "black"];
+        const randomNumber = Math.floor(Math.random() * 2);
+
+        setColor(colors[randomNumber]);
+    }
+
+    useEffect(() => {
+        if (hasStarted && selectedColor == "random") selectRandomColor();
+    }, [hasStarted]);
 
     return (
         <>

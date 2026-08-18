@@ -1,4 +1,4 @@
-.chessboard-container {
+.vision-chessboard-container {
     aspect-ratio: 1/1;
     height: 100%;
     position: relative;
@@ -14,7 +14,7 @@
         pointer-events: none;
     }
 
-    .chessboard {
+    .vision-chessboard {
         display: flex;
         flex-direction: column-reverse;
         border-radius: 1.25rem;

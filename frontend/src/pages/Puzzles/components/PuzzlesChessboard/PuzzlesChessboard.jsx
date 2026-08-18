@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect, useContext } from "react";
 import { PuzzlesContext, UserContext } from "../../../../contexts";
-import Coords from "../../../../components/Chessboard/components/Coords.jsx/Coords";
+import Coords from "./components/Coords/Coords";
 import { puzzles, pieceImages } from "../../../../constants";
 import gsap from "gsap";
 

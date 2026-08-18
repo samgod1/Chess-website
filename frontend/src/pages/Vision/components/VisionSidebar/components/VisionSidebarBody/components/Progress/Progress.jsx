@@ -15,21 +15,19 @@ const Progress = () => {
         score,
         hasCountdownCompleted,
         setHasCountdownCompleted,
-        checkForNewBest,
     } = useContext(VisionContext);
 
-    const { mode } = useContext(ChessboardContext);
     const [seconds, setSeconds] = useState(time);
 
     const startTime = useRef(null);
     const finishTime = useRef(null);
     const timerInterval = useRef(null);
-    const scoreRef = useRef(0); // For passing value inside updateTimer
 
     function updateTimer() {
         const remainingTime = finishTime.current - Date.now();
         const timer = Math.floor(remainingTime / 1000);
         setSeconds(String(timer).padStart(2, 0));
+        console.log("hello");
 
         //Stop timer
         if (timer <= 0) {
@@ -39,7 +37,6 @@ const Progress = () => {
 
     function endTimer() {
         clearInterval(timerInterval.current);
-        checkForNewBest(scoreRef);
         setHasStarted(false);
         //Reset countdown completed
         setHasCountdownCompleted(false);
@@ -47,14 +44,11 @@ const Progress = () => {
 
     useEffect(() => {
         if (hasCountdownCompleted) {
+            console.log("H");
             finishTime.current = Date.now() + time * 1000;
             timerInterval.current = setInterval(updateTimer, 1000);
         }
     }, [hasCountdownCompleted]);
-
-    useEffect(() => {
-        scoreRef.current = score;
-    }, [score]);
 
     useEffect(() => {
         return () => {

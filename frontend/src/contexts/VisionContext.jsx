@@ -48,124 +48,19 @@ const VisionContextProvider = ({ children }) => {
     const countdownAudioRef = useRef(null);
     const startAudioRef = useRef(null);
 
-    const { user, loading } = useContext(UserContext);
-
-    function selectRandomColor() {
-        const colors = ["white", "black"];
-        const randomNumber = Math.floor(Math.random() * 2);
-        console.log(colors[randomNumber]);
-
-        setColor(colors[randomNumber]);
-    }
-
-    function checkForNewBest(scoreRef) {
-        if (scoreRef.current > bestScore) {
-            setBestScore(scoreRef.current);
-            updateBestScore(scoreRef.current);
-        }
-    }
-
-    function startCountdown() {
-        countdownInterval.current = setInterval(() => {
-            setCountdown((prev) => prev - 1);
-        }, 1000);
-    }
-
-    function generateRandomChessSquare() {
-        const firstRandomNumber = Math.floor(Math.random() * 8);
-        const secondRandomNumber = Math.floor(Math.random() * 8);
-
-        const randomSquare =
-            files[firstRandomNumber] + ranks[secondRandomNumber];
-
-        setRandomSquare(randomSquare);
-    }
-
-    function checkUserInput(e) {
-        if (!hasStarted || !hasCountdownCompleted) return;
-
-        generateRandomChessSquare();
-        hideSquareDisplay();
-
-        const square = e.target;
-        const isCorrect = square.id === randomSquare;
-
-        if (isCorrect) setScore((prev) => prev + 1);
-
-        // Prevent a fast click from racing a previous animation on this square
-        gsap.killTweensOf(square);
-
-        gsap.to(square, {
-            backgroundColor: isCorrect ? "var(--c-green)" : "var(--c-red)",
-            duration: 0.2,
-            yoyo: true,
-            repeat: 1,
-            onInterrupt: () => {
-                gsap.set(square, { clearProps: "backgroundColor" });
-            },
-        });
-
-        if (isCorrect) {
-            correctAudioRef.current.currentTime = 0;
-            correctAudioRef.current.play();
-        } else {
-            incorrectAudioRef.current.currentTime = 0;
-            incorrectAudioRef.current.play();
-        }
-
-        setAttempts([...attempts, { square: randomSquare, isCorrect }]);
-    }
-
-    function hideSquareDisplay() {
-        gsap.killTweensOf(".display");
-        gsap.fromTo(
-            ".display",
-            {
-                opacity: 1,
-            },
-            {
-                opacity: 0,
-                delay: 0.5,
-            },
-        );
-    }
-
+    //Update best score
     useEffect(() => {
-        if (hasStarted) {
-            setCountdown(3);
-            startCountdown();
-            countdownAudioRef.current.play();
+        if (score > bestScore) {
+            setBestScore(score);
+            updateBestScore(score);
         }
-
-        if (hasStarted && selectedColor == "random") selectRandomColor();
-    }, [hasStarted]);
-
-    useEffect(() => {
-        if (countdown <= 0) {
-            clearInterval(countdownInterval.current);
-            generateRandomChessSquare();
-            setHasCountdownCompleted(true);
-            startAudioRef.current.play();
-        }
-
-        if (hasStarted && !countdown <= 0) {
-            countdownAudioRef.current.currentTime = 0;
-            countdownAudioRef.current.play();
-        }
-    }, [countdown]);
-
-    useEffect(() => {
-        if (hasCountdownCompleted) hideSquareDisplay();
-    }, [hasCountdownCompleted]);
-
-    useEffect(() => {
-        if (!loading && user) setBestScore(user?.bestScore || 0);
-    }, [loading]);
+    }, [!hasStarted]);
 
     return (
         <VisionContext.Provider
             value={{
                 color,
+                setColor,
                 attempts,
                 setAttempts,
                 hasStarted,
@@ -181,17 +76,12 @@ const VisionContextProvider = ({ children }) => {
                 randomSquare,
                 setRandomSquare,
                 bestScore,
-                checkForNewBest,
+                setBestScore,
                 isCoordinates,
                 setIsCoordinates,
                 countdown,
                 setCountdown,
                 countdownInterval,
-                correctAudioRef,
-                incorrectAudioRef,
-                countdownAudioRef,
-                startAudioRef,
-                checkUserInput,
             }}
         >
             {children}
