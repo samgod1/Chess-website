@@ -862,6 +862,8 @@ const PuzzlesChessboard = () => {
 
             setSidebarMode("started");
             setColorChanged(true);
+        } else {
+            setHasPlacedPieces(false);
         }
     }, [hasPuzzleStarted]);
 
@@ -877,10 +879,6 @@ const PuzzlesChessboard = () => {
     useEffect(() => {
         if (selectedPiece) createDestSquares(selectedPiece);
     }, [selectedPiece]);
-
-    useEffect(() => {
-        if (hasPlacedPieces) setHasPlacedPieces(false);
-    }, [hasPlacedPieces]);
 
     useEffect(() => {
         if (resetBoardComplete) {
