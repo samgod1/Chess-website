@@ -3,7 +3,7 @@ import { useNavigate } from "react-router";
 import toast from "react-hot-toast";
 
 import "./Puzzles.css";
-import { Chessboard } from "../../components";
+import PuzzlesChessboard from "./components/PuzzlesChessboard/PuzzlesChessboard";
 import PuzzlesSidebar from "./components/PuzzlesSidebar/PuzzlesSidebar";
 import {
     UserContext,
@@ -16,8 +16,6 @@ const Puzzles = () => {
     const navigate = useNavigate();
 
     const { user, loading } = useContext(UserContext);
-    const { setMode } = useContext(ChessboardContext);
-    const { color, colorChangeTrigger } = useContext(PuzzlesContext);
 
     useEffect(() => {
         if (!loading && !user) {
@@ -26,12 +24,9 @@ const Puzzles = () => {
         }
     }, [loading]);
 
-    useEffect(() => {
-        setMode("puzzles");
-    }, []);
     return (
         <div className="puzzles-page">
-            <Chessboard color={color} colorChangeTrigger={colorChangeTrigger} />
+            <PuzzlesChessboard />
             <PuzzlesSidebar />
         </div>
     );
