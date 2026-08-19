@@ -841,7 +841,6 @@ const PuzzlesChessboard = () => {
         }
 
         setPieces(updatedPieces);
-        setHasPlacedPieces(true);
     }
 
     function setDefaultPosition() {
@@ -863,8 +862,6 @@ const PuzzlesChessboard = () => {
 
             setSidebarMode("started");
             setColorChanged(true);
-        } else {
-            setHasPlacedPieces(false);
         }
     }, [hasPuzzleStarted]);
 
@@ -893,6 +890,10 @@ const PuzzlesChessboard = () => {
         setPuzzleLevel(user.puzzleLevel);
         setDefaultPosition();
     }, []);
+
+    useEffect(() => {
+        setHasPlacedPieces(true);
+    }, [pieces]);
 
     return (
         <div

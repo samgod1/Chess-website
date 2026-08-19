@@ -38,6 +38,7 @@ const PuzzlesSidebarBody = () => {
             text: "Retry Puzzle",
             onClick: () => {
                 setHasPuzzleStarted(true);
+                setSidebarMode("started");
             },
         },
     };
