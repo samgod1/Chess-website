@@ -58,7 +58,7 @@ const PuzzlesSidebarBody = () => {
             <div className="levels-container">
                 {sidebarMode === "notStarted" && (
                     <>
-                        {[...Array(10)].map((_, i) => {
+                        {[...Array(puzzles.length)].map((_, i) => {
                             return (
                                 <div
                                     className={getLevelClassName(i + 1)}
