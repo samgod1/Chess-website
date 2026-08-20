@@ -26,7 +26,6 @@ const VisionChessboard = () => {
         "7",
         "8",
     ]);
-    const [time, setTime] = useState(30);
     const [chessboardSize, setChessboardSize] = useState(0);
 
     const countdownInterval = useRef(null);
@@ -130,6 +129,13 @@ const VisionChessboard = () => {
         );
     }
 
+    function handleComponentUnmount() {
+        setChessboardSize(0);
+        setHasCountdownCompleted(false);
+        clearInterval(countdownInterval.current);
+        setCountdown(3);
+    }
+
     useEffect(() => {
         if (hasStarted) {
             setCountdown(3);
@@ -139,6 +145,7 @@ const VisionChessboard = () => {
     }, [hasStarted]);
 
     useEffect(() => {
+        // Handle countdown finish
         if (countdown <= 0) {
             clearInterval(countdownInterval.current);
             generateRandomChessSquare();
@@ -146,6 +153,7 @@ const VisionChessboard = () => {
             startAudioRef.current.play();
         }
 
+        // Play the countdown audio on every countdown update
         if (hasStarted && !countdown <= 0) {
             countdownAudioRef.current.currentTime = 0;
             countdownAudioRef.current.play();
@@ -159,6 +167,10 @@ const VisionChessboard = () => {
     useEffect(() => {
         calculateChessboardSize();
         setBestScore(user?.bestScore || 0);
+
+        return () => {
+            handleComponentUnmount();
+        };
     }, []);
 
     return (

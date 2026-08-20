@@ -7,26 +7,6 @@ import updateBestScore from "../../apis/user/updateBestScore";
 export const VisionContext = createContext();
 
 const VisionContextProvider = ({ children }) => {
-    const [files, setFiles] = useState([
-        "a",
-        "b",
-        "c",
-        "d",
-        "e",
-        "f",
-        "g",
-        "h",
-    ]);
-    const [ranks, setRanks] = useState([
-        "1",
-        "2",
-        "3",
-        "4",
-        "5",
-        "6",
-        "7",
-        "8",
-    ]);
     const [hasStarted, setHasStarted] = useState(false);
     const [attempts, setAttempts] = useState([]);
     const [score, setScore] = useState(0);
@@ -41,10 +21,6 @@ const VisionContextProvider = ({ children }) => {
     const [isCoordinates, setIsCoordinates] = useState(true);
 
     const countdownInterval = useRef(null);
-    const correctAudioRef = useRef(null);
-    const incorrectAudioRef = useRef(null);
-    const countdownAudioRef = useRef(null);
-    const startAudioRef = useRef(null);
 
     //Update best score
     useEffect(() => {

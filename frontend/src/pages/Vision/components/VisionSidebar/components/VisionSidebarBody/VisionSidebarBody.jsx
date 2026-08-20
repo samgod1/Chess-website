@@ -1,22 +1,11 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 
 import "./VisionSidebarBody.css";
 import { VisionContext } from "../../../../../../contexts";
 import { Progress, Options, Info } from "./components";
 
 const VisionSidebarBody = () => {
-    const {
-        attempts,
-        setAttempts,
-        hasStarted,
-        setHasStarted,
-        score,
-        setScore,
-        hasCountdownCompleted,
-        setHasCountdownCompleted,
-        time,
-        setTime,
-    } = useContext(VisionContext);
+    const { attempts, setAttempts, hasStarted } = useContext(VisionContext);
 
     return (
         <div className="vision-sidebar-body">
