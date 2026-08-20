@@ -11,12 +11,12 @@ const PuzzlesChessboard = () => {
     const {
         hasPuzzleStarted,
         setHasPuzzleStarted,
-        puzzleLevel,
-        setPuzzleLevel,
+        selectedLevel,
+        setSelectedLevel,
+        highestLevelReached,
+        setHighestLevelReached,
         sidebarMode,
         setSidebarMode,
-        colorChangeTrigger,
-        setColorChangeTrigger,
     } = useContext(PuzzlesContext);
     const { user } = useContext(UserContext);
 
@@ -268,11 +268,11 @@ const PuzzlesChessboard = () => {
 
     function moveOpponentPiece() {
         // Getting the moves from puzzles data
-        let position = puzzles[puzzleLevel - 1]
+        let position = puzzles[selectedLevel - 1]
             .split(",")[1]
             .split(" ")
             [opponentMoveIndex]?.slice(0, 2);
-        let destination = puzzles[puzzleLevel - 1]
+        let destination = puzzles[selectedLevel - 1]
             .split(",")[1]
             .split(" ")
             [opponentMoveIndex]?.slice(2, 4);
@@ -281,8 +281,13 @@ const PuzzlesChessboard = () => {
         if (!position && !destination) {
             setHasPuzzleStarted(false);
             setSidebarMode("completed");
-            setPuzzleLevel((prev) => prev + 1);
-            updatePuzzleLevel(puzzleLevel + 1);
+            setSelectedLevel((prev) => prev + 1);
+
+            // Only update the backend level if user has completed their highestLevel
+            if (selectedLevel === highestLevelReached) {
+                setHighestLevelReached(selectedLevel + 1);
+                updatePuzzleLevel(selectedLevel + 1);
+            }
             return;
         }
 
@@ -320,11 +325,11 @@ const PuzzlesChessboard = () => {
     function checkUserMove(destination) {
         const position = selectedPiece.square;
 
-        const correctPosition = puzzles[puzzleLevel - 1]
+        const correctPosition = puzzles[selectedLevel - 1]
             .split(",")[1]
             .split(" ")
             [userMoveIndex].slice(0, 2);
-        const correctDestination = puzzles[puzzleLevel - 1]
+        const correctDestination = puzzles[selectedLevel - 1]
             .split(",")[1]
             .split(" ")
             [userMoveIndex].slice(2, 4);
@@ -379,7 +384,7 @@ const PuzzlesChessboard = () => {
         setUserMoveIndex(1);
         setTurn("opponent");
         hasPuzzleStarted
-            ? setFen(puzzles[puzzleLevel - 1])
+            ? setFen(puzzles[selectedLevel - 1])
             : setFen(defaultFen);
         setResetBoardComplete(true);
     }
@@ -851,7 +856,7 @@ const PuzzlesChessboard = () => {
             resetBoard();
 
             // Set color opposite to fen
-            let startColor = puzzles[puzzleLevel - 1].split(" ")[1];
+            let startColor = puzzles[selectedLevel - 1].split(" ")[1];
             startColor == "b" ? setColor("white") : setColor("black");
 
             setSidebarMode("started");
@@ -892,7 +897,8 @@ const PuzzlesChessboard = () => {
 
     useEffect(() => {
         calculateChessboardSize();
-        setPuzzleLevel(user.puzzleLevel);
+        setSelectedLevel(user.puzzleLevel);
+        setHighestLevelReached(user.puzzleLevel);
     }, []);
 
     return (

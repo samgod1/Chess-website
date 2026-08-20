@@ -1,17 +1,17 @@
-import React, { useContext, useEffect } from "react";
+import { useContext } from "react";
 
 import { puzzles } from "../../../../../../constants";
 import "./PuzzlesSidebarBody.css";
 import { PuzzlesContext } from "../../../../../../contexts/index.js";
-import updatePuzzleLevel from "../../../../../../../apis/user/updatePuzzleLevel.js";
 
 const PuzzlesSidebarBody = () => {
     const {
         setHasPuzzleStarted,
         sidebarMode,
         setSidebarMode,
-        puzzleLevel,
-        setPuzzleLevel,
+        selectedLevel,
+        setSelectedLevel,
+        highestLevelReached,
     } = useContext(PuzzlesContext);
 
     const sidebarModeConfig = {
@@ -44,9 +44,9 @@ const PuzzlesSidebarBody = () => {
     const { className, text, onClick } = sidebarModeConfig[sidebarMode];
 
     function getLevelClassName(i) {
-        if (i < puzzleLevel) return "level-btn completed";
-        if (i == puzzleLevel) return "level-btn current";
-        if (i > puzzleLevel) return "level-btn locked";
+        if (i == selectedLevel) return "level-btn selected";
+        if (i <= highestLevelReached) return "level-btn completed";
+        if (i > highestLevelReached) return "level-btn locked";
     }
 
     function handleBack() {
@@ -63,6 +63,11 @@ const PuzzlesSidebarBody = () => {
                                 <div
                                     className={getLevelClassName(i + 1)}
                                     key={i + 1}
+                                    onClick={() => {
+                                        if (i + 1 <= highestLevelReached) {
+                                            setSelectedLevel(i + 1);
+                                        }
+                                    }}
                                 >
                                     {i + 1}
                                 </div>

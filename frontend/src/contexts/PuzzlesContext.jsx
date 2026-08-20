@@ -1,12 +1,11 @@
-import { useState, useRef, useEffect, createContext, useContext } from "react";
-import { puzzles } from "../constants";
-import { UserContext } from "./UserContext";
+import { useState, createContext } from "react";
 
 export const PuzzlesContext = createContext();
 
 const PuzzlesContextProvider = ({ children }) => {
     const [hasPuzzleStarted, setHasPuzzleStarted] = useState(false);
-    const [puzzleLevel, setPuzzleLevel] = useState(1);
+    const [selectedLevel, setSelectedLevel] = useState(1);
+    const [highestLevelReached, setHighestLevelReached] = useState(null);
     const [sidebarMode, setSidebarMode] = useState("notStarted");
     const [colorChangeTrigger, setColorChangeTrigger] = useState(0);
 
@@ -15,8 +14,10 @@ const PuzzlesContextProvider = ({ children }) => {
             value={{
                 hasPuzzleStarted,
                 setHasPuzzleStarted,
-                puzzleLevel,
-                setPuzzleLevel,
+                selectedLevel,
+                setSelectedLevel,
+                highestLevelReached,
+                setHighestLevelReached,
                 sidebarMode,
                 setSidebarMode,
                 colorChangeTrigger,

@@ -25,7 +25,7 @@
             aspect-ratio: 1/1;
         }
 
-        .current {
+        .selected {
             background-color: var(--c-primary-light-1);
             font-weight: bold;
             border-color: var(--c-secondary);
