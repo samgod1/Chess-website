@@ -1,10 +1,11 @@
 import { useState, useRef, useEffect, useContext } from "react";
-import { PuzzlesContext, UserContext } from "../../../../contexts";
-import Coords from "./components/Coords/Coords";
-import { puzzles, pieceImages } from "../../../../constants";
 import gsap from "gsap";
 
 import "./PuzzlesChessboard.css";
+import Coords from "./components/Coords/Coords";
+import { puzzles, pieceImages } from "../../../../constants";
+import { PuzzlesContext, UserContext } from "../../../../contexts";
+import updatePuzzleLevel from "../../../../../apis/user/updatePuzzleLevel";
 
 const PuzzlesChessboard = () => {
     const {
@@ -280,6 +281,8 @@ const PuzzlesChessboard = () => {
         if (!position && !destination) {
             setHasPuzzleStarted(false);
             setSidebarMode("completed");
+            setPuzzleLevel((prev) => prev + 1);
+            updatePuzzleLevel(puzzleLevel + 1);
             return;
         }
 
