@@ -51,6 +51,10 @@ const PuzzlesSidebarBody = () => {
         if (i > puzzleLevel) return "level-btn locked";
     }
 
+    function handleBack() {
+        setSidebarMode("notStarted");
+    }
+
     return (
         <div className="puzzles-sidebar-body">
             <div className="levels-container">
@@ -70,9 +74,16 @@ const PuzzlesSidebarBody = () => {
                 )}
             </div>
             {sidebarMode !== "started" && (
-                <button className={className} onClick={onClick}>
-                    {text}
-                </button>
+                <div className="buttons-container">
+                    {sidebarMode !== "notStarted" && (
+                        <button className="back-btn" onClick={handleBack}>
+                            Back
+                        </button>
+                    )}
+                    <button className={className} onClick={onClick}>
+                        {text}
+                    </button>
+                </div>
             )}
         </div>
     );

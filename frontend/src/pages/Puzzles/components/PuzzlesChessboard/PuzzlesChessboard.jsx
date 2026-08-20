@@ -375,9 +375,9 @@ const PuzzlesChessboard = () => {
         setOpponentMoveIndex(0);
         setUserMoveIndex(1);
         setTurn("opponent");
-        if (hasPuzzleStarted) {
-            setFen(puzzles[puzzleLevel - 1]);
-        }
+        hasPuzzleStarted
+            ? setFen(puzzles[puzzleLevel - 1])
+            : setFen(defaultFen);
         setResetBoardComplete(true);
     }
 
@@ -843,15 +843,6 @@ const PuzzlesChessboard = () => {
         setPieces(updatedPieces);
     }
 
-    function setDefaultPosition() {
-        resetBoard();
-        setFen(defaultFen);
-    }
-
-    function moveToNextLevel() {
-        setPuzzleLevel((prev) => prev + 1);
-    }
-
     useEffect(() => {
         if (hasPuzzleStarted) {
             resetBoard();
@@ -886,14 +877,20 @@ const PuzzlesChessboard = () => {
     }, [resetBoardComplete]);
 
     useEffect(() => {
-        calculateChessboardSize();
-        setPuzzleLevel(user.puzzleLevel);
-        setDefaultPosition();
-    }, []);
-
-    useEffect(() => {
         setHasPlacedPieces(true);
     }, [pieces]);
+
+    useEffect(() => {
+        if (sidebarMode === "notStarted") {
+            // Resetting the board for setting the default chessboard position
+            resetBoard();
+        }
+    }, [sidebarMode]);
+
+    useEffect(() => {
+        calculateChessboardSize();
+        setPuzzleLevel(user.puzzleLevel);
+    }, []);
 
     return (
         <div

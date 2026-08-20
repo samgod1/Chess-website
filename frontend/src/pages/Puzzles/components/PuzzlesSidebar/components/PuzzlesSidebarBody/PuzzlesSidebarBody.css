@@ -40,22 +40,43 @@
         }
     }
 
-    .start-puzzle-btn {
-        background-color: var(--c-accent);
-        font-size: 1.5rem;
-        padding: 0.75rem 0rem;
-        border-radius: 0.5rem;
-    }
-    .next-puzzle-btn {
-        background-color: var(--c-accent);
-        font-size: 1.5rem;
-        padding: 0.75rem 0rem;
-        border-radius: 0.5rem;
-    }
-    .retry-puzzle-btn {
-        background-color: var(--c-accent);
-        font-size: 1.5rem;
-        padding: 0.75rem 0rem;
-        border-radius: 0.5rem;
+    .buttons-container {
+        display: flex;
+        gap: 0.5rem;
+
+        .start-puzzle-btn {
+            flex-grow: 1;
+            flex-basis: 0;
+            background-color: var(--c-accent);
+            font-size: 1.5rem;
+            padding: 0.75rem 0rem;
+            border-radius: 0.5rem;
+        }
+        .next-puzzle-btn {
+            flex-grow: 1;
+            flex-basis: auto;
+            background-color: var(--c-accent);
+            font-size: 1.5rem;
+            padding: 0.75rem 0rem;
+            border-radius: 0.5rem;
+        }
+        .retry-puzzle-btn {
+            flex-grow: 1;
+            flex-basis: auto;
+
+            background-color: var(--c-accent);
+            font-size: 1.5rem;
+            padding: 0.75rem 0rem;
+            border-radius: 0.5rem;
+        }
+
+        .back-btn {
+            flex-grow: 1;
+            flex-basis: 0;
+            background-color: var(--c-accent);
+            font-size: 1.5rem;
+            padding: 0.75rem 0rem;
+            border-radius: 0.5rem;
+        }
     }
 }
