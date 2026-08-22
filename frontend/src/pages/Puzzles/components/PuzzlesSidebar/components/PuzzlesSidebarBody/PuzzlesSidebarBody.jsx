@@ -60,6 +60,8 @@ const PuzzlesSidebarBody = () => {
                 className: "next-puzzle-btn",
                 text: "Next Puzzle",
                 onClick: () => {
+                    if (puzzles.length === selectedLevel) return;
+
                     setHasPuzzleStarted(true);
                     setSidebarMode("started");
                 },

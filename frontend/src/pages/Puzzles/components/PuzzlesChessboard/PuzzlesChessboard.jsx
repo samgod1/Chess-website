@@ -191,9 +191,12 @@ const PuzzlesChessboard = () => {
         if (!position && !destination) {
             setHasPuzzleStarted(false);
             setSidebarMode("completed");
-            setSelectedLevel((prev) => prev + 1);
 
-            // Only update the backend level if user has completed their highestLevel
+            //Do nothing if it's last level
+            if (puzzles.length === selectedLevel) return;
+
+            setSelectedLevel((prev) => prev + 1);
+            // Only update the level if user has completed their highestLevel
             if (selectedLevel === highestLevelReached) {
                 setHighestLevelReached(selectedLevel + 1);
                 updatePuzzleLevel(selectedLevel + 1);
