@@ -64,5 +64,11 @@
             padding: 0.75rem 0rem;
             border-radius: 0.5rem;
         }
+
+        .disabled {
+            background-color: var(--c-secondary-dark-3);
+            color: var(--c-secondary-dark);
+            transition: all 0.2s ease;
+        }
     }
 }

@@ -118,9 +118,12 @@ const PuzzlesSidebarBody = () => {
                     </button>
                 )}
                 <button
-                    className={className}
+                    className={
+                        text === "Hint" && showHint
+                            ? className + " " + "disabled"
+                            : className
+                    }
                     onClick={onClick}
-                    disabled={text === "Hint" ? showHint : false}
                 >
                     {text}
                 </button>
