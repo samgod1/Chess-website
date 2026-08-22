@@ -8,6 +8,8 @@ const PuzzlesContextProvider = ({ children }) => {
     const [highestLevelReached, setHighestLevelReached] = useState(null);
     const [sidebarMode, setSidebarMode] = useState("notStarted");
     const [colorChangeTrigger, setColorChangeTrigger] = useState(0);
+    const [showHint, setShowHint] = useState(false);
+    const [hintPiece, setHintPiece] = useState(null);
 
     return (
         <PuzzlesContext.Provider
@@ -22,6 +24,10 @@ const PuzzlesContextProvider = ({ children }) => {
                 setSidebarMode,
                 colorChangeTrigger,
                 setColorChangeTrigger,
+                showHint,
+                setShowHint,
+                hintPiece,
+                setHintPiece,
             }}
         >
             {children}

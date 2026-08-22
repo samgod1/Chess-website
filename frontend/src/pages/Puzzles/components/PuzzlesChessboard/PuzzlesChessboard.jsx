@@ -17,8 +17,20 @@ const PuzzlesChessboard = () => {
         setHighestLevelReached,
         sidebarMode,
         setSidebarMode,
+        showHint,
+        setShowHint,
+        setHintPiece,
     } = useContext(PuzzlesContext);
     const { user } = useContext(UserContext);
+
+    const piecesNotationTranslation = {
+        p: "pawn",
+        r: "rook",
+        n: "knight",
+        b: "bishop",
+        k: "king",
+        q: "queen",
+    };
 
     const [files, setFiles] = useState([
         "a",
@@ -344,6 +356,7 @@ const PuzzlesChessboard = () => {
             }, 100);
         } else {
             setHasPuzzleStarted(false);
+            setSidebarMode("retry");
             // The 100 ms delay for the transition piece move transition to end
             setTimeout(() => {
                 playIncorrectAnimation(destination);
@@ -372,9 +385,6 @@ const PuzzlesChessboard = () => {
             duration: 0.3,
             yoyo: true,
             repeat: 1,
-            onComplete: () => {
-                setSidebarMode("retry");
-            },
         });
     }
 
@@ -386,6 +396,8 @@ const PuzzlesChessboard = () => {
         hasPuzzleStarted
             ? setFen(puzzles[selectedLevel - 1])
             : setFen(defaultFen);
+        setHintPiece(null);
+        setShowHint(false);
         setResetBoardComplete(true);
     }
 
@@ -894,6 +906,25 @@ const PuzzlesChessboard = () => {
             resetBoard();
         }
     }, [sidebarMode]);
+
+    // Hint related stuff
+    useEffect(() => {
+        if (showHint) {
+            const correctSquare = puzzles[selectedLevel - 1]
+                .split(",")[1]
+                .split(" ")
+                [userMoveIndex].slice(0, 2);
+
+            const correctPieceNotation = pieces
+                .find((piece) => piece.square == correctSquare)
+                .pieceNotation.toLowerCase();
+
+            const correctPiece =
+                piecesNotationTranslation[correctPieceNotation];
+
+            setHintPiece(correctPiece);
+        }
+    }, [showHint]);
 
     useEffect(() => {
         calculateChessboardSize();
