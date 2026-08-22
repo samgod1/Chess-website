@@ -21,39 +21,68 @@ const PuzzlesSidebarBody = () => {
     } = useContext(PuzzlesContext);
 
     const sidebarModeConfig = {
-        started: {
-            className: "hint-btn",
-            text: "Hint",
-            onClick: () => {
-                setShowHint(true);
+        started: [
+            {
+                className: "hint-btn",
+                text: "Hint",
+                onClick: () => {
+                    setShowHint(true);
+                },
             },
-        },
-        notStarted: {
-            className: "start-puzzle-btn",
-            text: "Start Puzzle",
-            onClick: () => {
-                setHasPuzzleStarted(true);
+        ],
+        notStarted: [
+            {
+                className: "start-puzzle-btn",
+                text: "Start Puzzle",
+                onClick: () => {
+                    setHasPuzzleStarted(true);
+                },
             },
-        },
-        completed: {
-            className: "next-puzzle-btn",
-            text: "Next Puzzle",
-            onClick: () => {
-                setHasPuzzleStarted(true);
-                setSidebarMode("started");
+        ],
+        completed: [
+            {
+                className: "back-btn",
+                text: "Back",
+                onClick: () => {
+                    handleBack();
+                },
             },
-        },
-        retry: {
-            className: "retry-puzzle-btn",
-            text: "Retry Puzzle",
-            onClick: () => {
-                setHasPuzzleStarted(true);
-                setSidebarMode("started");
+            {
+                className: "retry-puzzle-btn",
+                text: "Replay",
+                onClick: () => {
+                    setSelectedLevel((prev) => prev - 1);
+                    setHasPuzzleStarted(true);
+                    setSidebarMode("started");
+                },
             },
-        },
+            {
+                className: "next-puzzle-btn",
+                text: "Next Puzzle",
+                onClick: () => {
+                    setHasPuzzleStarted(true);
+                    setSidebarMode("started");
+                },
+            },
+        ],
+        retry: [
+            {
+                className: "back-btn",
+                text: "Back",
+                onClick: () => {
+                    handleBack();
+                },
+            },
+            {
+                className: "retry-puzzle-btn",
+                text: "Retry Puzzle",
+                onClick: () => {
+                    setHasPuzzleStarted(true);
+                    setSidebarMode("started");
+                },
+            },
+        ],
     };
-
-    const { className, text, onClick } = sidebarModeConfig[sidebarMode];
 
     function getLevelClassName(i) {
         if (i == selectedLevel) return "level-btn selected";
@@ -105,28 +134,26 @@ const PuzzlesSidebarBody = () => {
                         <>
                             <span className="title">Hint:</span>
                             <span className="text">
-                                It has to do something with the {hintPiece}
+                                Try moving the {hintPiece}
                             </span>
                         </>
                     )}
                 </div>
             )}
             <div className="buttons-container">
-                {sidebarMode !== "notStarted" && sidebarMode !== "started" && (
-                    <button className="back-btn" onClick={handleBack}>
-                        Back
+                {sidebarModeConfig[sidebarMode].map((buttonData, i) => (
+                    <button
+                        className={
+                            buttonData.text === "Hint" && showHint
+                                ? buttonData.className + " " + "disabled"
+                                : buttonData.className
+                        }
+                        onClick={buttonData.onClick}
+                        key={i}
+                    >
+                        {buttonData.text}
                     </button>
-                )}
-                <button
-                    className={
-                        text === "Hint" && showHint
-                            ? className + " " + "disabled"
-                            : className
-                    }
-                    onClick={onClick}
-                >
-                    {text}
-                </button>
+                ))}
             </div>
         </div>
     );

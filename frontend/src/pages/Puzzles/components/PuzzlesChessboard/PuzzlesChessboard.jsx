@@ -86,108 +86,6 @@ const PuzzlesChessboard = () => {
         setSquareWidth(chessboardContainerWidth / 8);
     }
 
-    function displayCorrectPiece(piece) {
-        switch (true) {
-            case piece == "p":
-                return (
-                    <img
-                        src={`/images/chess-piece-set/black-pawn.png`}
-                        alt={"black-pawn"}
-                    />
-                );
-                break;
-            case piece == "n":
-                return (
-                    <img
-                        src={`/images/chess-piece-set/black-knight.png`}
-                        alt={"black-knight"}
-                    />
-                );
-                break;
-            case piece == "b":
-                return (
-                    <img
-                        src={`/images/chess-piece-set/black-bishop.png`}
-                        alt={"black-bishop"}
-                    />
-                );
-                break;
-            case piece == "k":
-                return (
-                    <img
-                        src={`/images/chess-piece-set/black-king.png`}
-                        alt={"black-king"}
-                    />
-                );
-                break;
-            case piece == "q":
-                return (
-                    <img
-                        src={`/images/chess-piece-set/black-queen.png`}
-                        alt={"black-queen"}
-                    />
-                );
-                break;
-            case piece == "r":
-                return (
-                    <img
-                        src={`/images/chess-piece-set/black-rook.png`}
-                        alt={"black-rook"}
-                    />
-                );
-                break;
-
-            case piece == "P":
-                return (
-                    <img
-                        src={`/images/chess-piece-set/white-pawn.png`}
-                        alt={"white-pawn"}
-                    />
-                );
-                break;
-            case piece == "N":
-                return (
-                    <img
-                        src={`/images/chess-piece-set/white-knight.png`}
-                        alt={"black-pawn"}
-                    />
-                );
-                break;
-            case piece == "B":
-                return (
-                    <img
-                        src={`/images/chess-piece-set/white-bishop.png`}
-                        alt={"white-bishop"}
-                    />
-                );
-                break;
-            case piece == "K":
-                return (
-                    <img
-                        src={`/images/chess-piece-set/white-king.png`}
-                        alt={"white-king"}
-                    />
-                );
-                break;
-            case piece == "Q":
-                return (
-                    <img
-                        src={`/images/chess-piece-set/white-queen.png`}
-                        alt={"white-queen"}
-                    />
-                );
-                break;
-            case piece == "R":
-                return (
-                    <img
-                        src={`/images/chess-piece-set/white-rook.png`}
-                        alt={"white-rook"}
-                    />
-                );
-                break;
-        }
-    }
-
     function handlePieceClick(clickedPiece) {
         if (turn !== "player") return;
 
@@ -952,14 +850,14 @@ const PuzzlesChessboard = () => {
                                     <div
                                         className="square dark"
                                         id={file + rank}
-                                        onClick={handlePieceClick}
+                                        onClick={handleSquareClick}
                                         key={i}
                                     ></div>
                                 ) : (
                                     <div
                                         className="square light"
                                         id={file + rank}
-                                        onClick={handlePieceClick}
+                                        onClick={handleSquareClick}
                                         key={i}
                                     ></div>
                                 );
@@ -973,14 +871,14 @@ const PuzzlesChessboard = () => {
                                     <div
                                         className="square dark"
                                         id={file + rank}
-                                        onClick={handlePieceClick}
+                                        onClick={handleSquareClick}
                                         key={i}
                                     ></div>
                                 ) : (
                                     <div
                                         className="square light"
                                         id={file + rank}
-                                        onClick={handlePieceClick}
+                                        onClick={handleSquareClick}
                                         key={i}
                                     ></div>
                                 );
