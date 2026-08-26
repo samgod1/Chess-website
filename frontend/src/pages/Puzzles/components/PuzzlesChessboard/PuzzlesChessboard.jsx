@@ -72,7 +72,9 @@ const PuzzlesChessboard = () => {
 
     const chessboardContainerRef = useRef(null);
     const pieceRefs = useRef({});
-    const firstRender = useRef(true);
+    const moveAudioRef = useRef(null);
+    const captureAudioRef = useRef(null);
+    const puzzleCompleteAudioRef = useRef(null);
 
     function calculateChessboardSize() {
         let chessboardContainerWidth =
@@ -150,6 +152,8 @@ const PuzzlesChessboard = () => {
             }),
         );
 
+        moveAudioRef.current.currentTime = 0;
+        moveAudioRef.current.play();
         setTurn("opponent");
         resetSquares();
         checkUserMove(destination);
@@ -171,6 +175,8 @@ const PuzzlesChessboard = () => {
             }),
         );
 
+        captureAudioRef.current.currentTime = 0;
+        captureAudioRef.current.play();
         setTurn("opponent");
         resetSquares();
         checkUserMove(destination);
@@ -186,11 +192,13 @@ const PuzzlesChessboard = () => {
             .split(",")[1]
             .split(" ")
             [opponentMoveIndex]?.slice(2, 4);
+        let isCapturing = false;
 
         // If user has completed the puzzle
         if (!position && !destination) {
             setHasPuzzleStarted(false);
             setSidebarMode("completed");
+            puzzleCompleteAudioRef.current.play();
 
             //Do nothing if it's last level
             if (puzzles.length === selectedLevel) return;
@@ -215,20 +223,32 @@ const PuzzlesChessboard = () => {
         });
 
         // Capture piece of player if there's any
-        setPieces((prevPieces) =>
-            prevPieces.filter((piece) => {
+        setPieces((prevPieces) => {
+            let isCapturing = false;
+
+            let updatedPieces = prevPieces.filter((piece) => {
                 let pieceColor =
                     piece.pieceNotation === piece.pieceNotation.toUpperCase()
                         ? "white"
                         : "black";
 
                 if (piece.square === destination && pieceColor === color) {
+                    captureAudioRef.current.currentTime = 0;
+                    captureAudioRef.current.play();
+                    isCapturing = true;
                     return;
                 }
 
                 return piece;
-            }),
-        );
+            });
+
+            if (!isCapturing) {
+                moveAudioRef.current.currentTime = 0;
+                moveAudioRef.current.play();
+            }
+
+            return updatedPieces;
+        });
 
         // Change the turn and update the opponentMoveCount
         setTurn("player");
@@ -993,6 +1013,12 @@ const PuzzlesChessboard = () => {
                     );
                 })}
             </div>
+            <audio src="/sounds/move-piece.mp3" ref={moveAudioRef} />
+            <audio src="/sounds/capture-piece.mp3" ref={captureAudioRef} />
+            <audio
+                src="/sounds/puzzle-complete.mp3"
+                ref={puzzleCompleteAudioRef}
+            />
         </div>
     );
 };
