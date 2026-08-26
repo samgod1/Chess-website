@@ -33,9 +33,20 @@
                 align-items: center;
                 gap: 0.5rem;
                 transition: all 0.2s ease;
+
+                svg {
+                    color: black;
+                    transition: all 0.2s ease;
+                }
             }
+
             button:hover {
-                background-color: var(--c-secondary-dark);
+                background-color: var(--c-red);
+                color: var(--c-secondary);
+
+                svg {
+                    color: var(--c-secondary);
+                }
             }
         }
     }
