@@ -18,6 +18,7 @@ const PuzzlesSidebarBody = () => {
         hintPiece,
         showHint,
         setShowHint,
+        isHintButtonDisabled,
     } = useContext(PuzzlesContext);
 
     const sidebarModeConfig = {
@@ -152,6 +153,7 @@ const PuzzlesSidebarBody = () => {
                         }
                         onClick={buttonData.onClick}
                         key={i}
+                        disabled={isHintButtonDisabled}
                     >
                         {buttonData.text}
                     </button>

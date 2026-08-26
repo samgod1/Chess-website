@@ -20,6 +20,7 @@ const PuzzlesChessboard = () => {
         showHint,
         setShowHint,
         setHintPiece,
+        setIsHintButtonDisabled,
     } = useContext(PuzzlesContext);
     const { user } = useContext(UserContext);
 
@@ -142,6 +143,8 @@ const PuzzlesChessboard = () => {
     }
 
     function movePiece(destination) {
+        setIsHintButtonDisabled(true);
+
         //Moves the piece
         setPieces((prevPieces) =>
             prevPieces.map((piece) => {
@@ -160,6 +163,8 @@ const PuzzlesChessboard = () => {
     }
 
     function capturePiece(destination) {
+        setIsHintButtonDisabled(true);
+
         // Removes the captured piece from pieces
         setPieces((prevPieces) =>
             prevPieces.filter((piece) => piece.square !== destination),
@@ -192,12 +197,13 @@ const PuzzlesChessboard = () => {
             .split(",")[1]
             .split(" ")
             [opponentMoveIndex]?.slice(2, 4);
-        let isCapturing = false;
 
         // If user has completed the puzzle
         if (!position && !destination) {
             setHasPuzzleStarted(false);
             setSidebarMode("completed");
+            setIsHintButtonDisabled(false);
+
             puzzleCompleteAudioRef.current.play();
 
             //Do nothing if it's last level
@@ -250,7 +256,7 @@ const PuzzlesChessboard = () => {
             return updatedPieces;
         });
 
-        // Change the turn and update the opponentMoveCount
+        setIsHintButtonDisabled(false);
         setTurn("player");
         setOpponentMoveIndex((prev) => (prev += 2));
     }

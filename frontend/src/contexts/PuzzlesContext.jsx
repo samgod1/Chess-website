@@ -1,4 +1,4 @@
-import { useState, createContext } from "react";
+import { useState, createContext, useEffect } from "react";
 
 export const PuzzlesContext = createContext();
 
@@ -10,6 +10,11 @@ const PuzzlesContextProvider = ({ children }) => {
     const [colorChangeTrigger, setColorChangeTrigger] = useState(0);
     const [showHint, setShowHint] = useState(false);
     const [hintPiece, setHintPiece] = useState(null);
+    const [isHintButtonDisabled, setIsHintButtonDisabled] = useState(false);
+
+    useEffect(() => {
+        console.log(isHintButtonDisabled);
+    }, [isHintButtonDisabled]);
 
     return (
         <PuzzlesContext.Provider
@@ -28,6 +33,8 @@ const PuzzlesContextProvider = ({ children }) => {
                 setShowHint,
                 hintPiece,
                 setHintPiece,
+                isHintButtonDisabled,
+                setIsHintButtonDisabled,
             }}
         >
             {children}
