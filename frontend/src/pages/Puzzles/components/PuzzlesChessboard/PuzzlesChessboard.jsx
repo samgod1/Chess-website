@@ -9,6 +9,8 @@ import updatePuzzleLevel from "../../../../../apis/user/updatePuzzleLevel";
 
 const PuzzlesChessboard = () => {
     const {
+        color,
+        setColor,
         hasPuzzleStarted,
         setHasPuzzleStarted,
         selectedLevel,
@@ -57,7 +59,6 @@ const PuzzlesChessboard = () => {
     const [defaultFen, setDefaultFen] = useState(
         "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
     );
-    const [color, setColor] = useState("white");
     const [pieces, setPieces] = useState([]);
     const [selectedPiece, setSelectedPiece] = useState(null);
     const [chessboardSize, setChessboardSize] = useState(0);

@@ -3,6 +3,7 @@ import { useState, createContext, useEffect } from "react";
 export const PuzzlesContext = createContext();
 
 const PuzzlesContextProvider = ({ children }) => {
+    const [color, setColor] = useState("white");
     const [hasPuzzleStarted, setHasPuzzleStarted] = useState(false);
     const [selectedLevel, setSelectedLevel] = useState(1);
     const [highestLevelReached, setHighestLevelReached] = useState(null);
@@ -12,13 +13,11 @@ const PuzzlesContextProvider = ({ children }) => {
     const [hintPiece, setHintPiece] = useState(null);
     const [isHintButtonDisabled, setIsHintButtonDisabled] = useState(false);
 
-    useEffect(() => {
-        console.log(isHintButtonDisabled);
-    }, [isHintButtonDisabled]);
-
     return (
         <PuzzlesContext.Provider
             value={{
+                color,
+                setColor,
                 hasPuzzleStarted,
                 setHasPuzzleStarted,
                 selectedLevel,

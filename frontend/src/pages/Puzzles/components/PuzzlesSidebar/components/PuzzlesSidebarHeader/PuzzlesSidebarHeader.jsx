@@ -5,7 +5,7 @@ import "./PuzzlesSidebarHeader.css";
 const PuzzlesSidebarHeader = () => {
     return (
         <div className="puzzles-sidebar-header">
-            <img src="/images/puzzle.png" alt="vision" width={40} height={40} />
+            <img src="/images/puzzle.png" alt="vision" width={30} height={30} />
             <p>Puzzles</p>
         </div>
     );

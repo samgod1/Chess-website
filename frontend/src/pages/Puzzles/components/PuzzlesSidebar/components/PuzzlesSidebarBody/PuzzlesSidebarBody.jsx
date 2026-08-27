@@ -9,6 +9,7 @@ import { PuzzlesContext } from "../../../../../../contexts/index.js";
 
 const PuzzlesSidebarBody = () => {
     const {
+        color,
         setHasPuzzleStarted,
         sidebarMode,
         setSidebarMode,
@@ -133,13 +134,28 @@ const PuzzlesSidebarBody = () => {
             )}
             {sidebarMode !== "notStarted" && (
                 <div className="hint-container">
+                    <div className="player-color">
+                        <div
+                            className="square"
+                            style={{
+                                height: "1.5rem",
+                                width: "1.5rem",
+                                borderRadius: "0.25rem",
+                                backgroundColor:
+                                    color == "white"
+                                        ? "var(--c-secondary)"
+                                        : "var(--c-secondary-dark-3)",
+                            }}
+                        ></div>
+                        <p>{color == "white" ? "White" : "Black"} to play</p>
+                    </div>
                     {sidebarMode === "started" && hintPiece && (
-                        <>
+                        <div className="hint-text">
                             <span className="title">Hint:</span>
                             <span className="text">
                                 Try moving the {hintPiece}
                             </span>
-                        </>
+                        </div>
                     )}
                 </div>
             )}
