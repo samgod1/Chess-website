@@ -25,22 +25,24 @@ const ColorMenu = ({ setIsColorMenuOpen }) => {
     }, []);
 
     return (
-        <ul className="popup-menu" id={"colorMenu"} ref={colorMenuRef}>
-            {buttons.map((option, i) => (
-                <li
-                    onClick={(e) => {
-                        e.stopPropagation();
-                        setSelectedColor(option);
-                        if (option != "random") setColor(option);
-                        setIsColorMenuOpen(false);
-                    }}
-                    className={selectedColor == option ? "selected" : ""}
-                    key={i}
-                >
-                    {option}
-                </li>
-            ))}
-        </ul>
+        <div className="color-menu-container">
+            <ul className="popup-menu" id={"colorMenu"} ref={colorMenuRef}>
+                {buttons.map((option, i) => (
+                    <li
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            setSelectedColor(option);
+                            if (option != "random") setColor(option);
+                            setIsColorMenuOpen(false);
+                        }}
+                        className={selectedColor == option ? "selected" : ""}
+                        key={i}
+                    >
+                        {option}
+                    </li>
+                ))}
+            </ul>
+        </div>
     );
 };
 

@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState, useContext } from "react";
+import gsap from "gsap";
 
 import { VisionContext } from "../../../../../../../../contexts";
 
@@ -24,22 +25,26 @@ const TimeMenu = ({ setIsTimeMenuOpen }) => {
     }, []);
 
     return (
-        <ul className="popup-menu" id={"timeMenu"} ref={timeMenuRef}>
-            {buttons.map((option, i) => (
-                <li
-                    onClick={(e) => {
-                        setTime(Number(option.split("s")[0]));
-                        setIsTimeMenuOpen(false);
-                    }}
-                    className={
-                        time == Number(option.split("s")[0]) ? "selected" : ""
-                    }
-                    key={i}
-                >
-                    {option}
-                </li>
-            ))}
-        </ul>
+        <div className="time-menu-container">
+            <ul className="popup-menu" id={"timeMenu"} ref={timeMenuRef}>
+                {buttons.map((option, i) => (
+                    <li
+                        onClick={(e) => {
+                            setTime(Number(option.split("s")[0]));
+                            setIsTimeMenuOpen(false);
+                        }}
+                        className={
+                            time == Number(option.split("s")[0])
+                                ? "selected"
+                                : ""
+                        }
+                        key={i}
+                    >
+                        {option}
+                    </li>
+                ))}
+            </ul>
+        </div>
     );
 };
 

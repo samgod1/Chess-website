@@ -1,4 +1,5 @@
 import { useState, useEffect, useContext, Activity } from "react";
+import gsap from "gsap";
 
 import "./Options.css";
 import { TimeMenu, ColorMenu } from "../index.js";
@@ -26,6 +27,28 @@ const Options = () => {
     useEffect(() => {
         if (hasStarted && selectedColor == "random") selectRandomColor();
     }, [hasStarted]);
+
+    useEffect(() => {
+        if (isTimeMenuOpen) {
+            gsap.to(".time-menu-container", {
+                height: "auto",
+                duration: 0.1,
+            });
+        } else {
+            gsap.to(".time-menu-container", { height: "0px", duration: 0.1 });
+        }
+    }, [isTimeMenuOpen]);
+
+    useEffect(() => {
+        if (isColorMenuOpen) {
+            gsap.to(".color-menu-container", {
+                height: "auto",
+                duration: 0.1,
+            });
+        } else {
+            gsap.to(".color-menu-container", { height: "0px", duration: 0.1 });
+        }
+    }, [isColorMenuOpen]);
 
     return (
         <>
@@ -60,9 +83,10 @@ const Options = () => {
                             />
                             <span>Time</span>
                         </button>
-                        <Activity mode={isTimeMenuOpen ? "visible" : "hidden"}>
-                            <TimeMenu setIsTimeMenuOpen={setIsTimeMenuOpen} />
-                        </Activity>
+                        <TimeMenu
+                            isTimeMenuOpen={isTimeMenuOpen}
+                            setIsTimeMenuOpen={setIsTimeMenuOpen}
+                        />
                     </div>
                     <span className="button-wrapper">
                         <button
@@ -83,11 +107,7 @@ const Options = () => {
                             />
                             <span>Color</span>
                         </button>
-                        <Activity mode={isColorMenuOpen ? "visible" : "hidden"}>
-                            <ColorMenu
-                                setIsColorMenuOpen={setIsColorMenuOpen}
-                            />
-                        </Activity>
+                        <ColorMenu setIsColorMenuOpen={setIsColorMenuOpen} />
                     </span>
                 </div>
             </div>
