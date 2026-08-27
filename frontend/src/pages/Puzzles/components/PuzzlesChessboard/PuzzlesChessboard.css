@@ -19,6 +19,8 @@
         flex-direction: column-reverse;
         border-radius: 1.25rem;
         overflow: hidden;
+        -webkit-user-select: none;
+        user-select: none;
 
         .rank {
             display: flex;

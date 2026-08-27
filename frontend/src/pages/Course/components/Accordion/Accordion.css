@@ -5,6 +5,8 @@
     color: var(--c-secondary);
     display: flex;
     flex-direction: column;
+    -webkit-user-select: none;
+    user-select: none;
 
     .card {
         cursor: pointer;
