@@ -9,24 +9,8 @@ const Options = () => {
     const [isColorMenuOpen, setIsColorMenuOpen] = useState(false);
     const [isTimeMenuOpen, setIsTimeMenuOpen] = useState(false);
 
-    const {
-        hasStarted,
-        setHasStarted,
-        setColor,
-        isCoordinates,
-        setIsCoordinates,
-    } = useContext(VisionContext);
-
-    function selectRandomColor() {
-        const colors = ["white", "black"];
-        const randomNumber = Math.floor(Math.random() * 2);
-
-        setColor(colors[randomNumber]);
-    }
-
-    useEffect(() => {
-        if (hasStarted && selectedColor == "random") selectRandomColor();
-    }, [hasStarted]);
+    const { setHasStarted, isCoordinates, setIsCoordinates } =
+        useContext(VisionContext);
 
     useEffect(() => {
         if (isTimeMenuOpen) {

@@ -22,13 +22,22 @@ const VisionContextProvider = ({ children }) => {
 
     const countdownInterval = useRef(null);
 
+    function selectRandomColor() {
+        const colors = ["white", "black"];
+        const randomNumber = Math.floor(Math.random() * 2);
+
+        setColor(colors[randomNumber]);
+    }
+
     //Update best score
     useEffect(() => {
-        if (score > bestScore) {
+        if (hasStarted && selectedColor === "random") selectRandomColor();
+
+        if (!hasStarted && score > bestScore) {
             setBestScore(score);
             updateBestScore(score);
         }
-    }, [!hasStarted]);
+    }, [hasStarted]);
 
     return (
         <VisionContext.Provider
