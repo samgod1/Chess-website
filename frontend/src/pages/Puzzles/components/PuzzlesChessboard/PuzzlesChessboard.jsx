@@ -190,14 +190,34 @@ const PuzzlesChessboard = () => {
 
     function moveOpponentPiece() {
         // Getting the moves from puzzles data
-        let position = puzzles[selectedLevel - 1]
-            .split(",")[1]
-            .split(" ")
-            [opponentMoveIndex]?.slice(0, 2);
-        let destination = puzzles[selectedLevel - 1]
-            .split(",")[1]
-            .split(" ")
-            [opponentMoveIndex]?.slice(2, 4);
+        let opponentMove = puzzles[selectedLevel - 1].split(",")[1].split(" ")[
+            opponentMoveIndex
+        ];
+        let position = opponentMove?.slice(0, 2);
+        let destination = opponentMove?.slice(2, 4);
+
+        // There's pawn promotion if opponent move length is 5
+        let isPawnPromotion = opponentMove?.length === 5;
+
+        if (isPawnPromotion) {
+            let promotionPieceNotation = opponentMove?.slice(-1);
+
+            setPieces((prevPieces) =>
+                prevPieces.map((piece) => {
+                    if (piece.square === position) {
+                        return {
+                            ...piece,
+                            pieceNotation:
+                                color == "white"
+                                    ? promotionPieceNotation
+                                    : promotionPieceNotation.toUpperCase(),
+                        };
+                    }
+
+                    return piece;
+                }),
+            );
+        }
 
         // If user has completed the puzzle
         if (!position && !destination) {
