@@ -20,6 +20,7 @@ const PuzzlesSidebarBody = () => {
         showHint,
         setShowHint,
         isHintButtonDisabled,
+        setIsHintButtonDisabled,
     } = useContext(PuzzlesContext);
 
     const sidebarModeConfig = {
@@ -53,7 +54,8 @@ const PuzzlesSidebarBody = () => {
                 className: "retry-puzzle-btn",
                 text: "Replay",
                 onClick: () => {
-                    setSelectedLevel((prev) => prev - 1);
+                    if (selectedLevel !== highestLevelReached)
+                        setSelectedLevel((prev) => prev - 1);
                     setHasPuzzleStarted(true);
                     setSidebarMode("started");
                 },
@@ -110,6 +112,12 @@ const PuzzlesSidebarBody = () => {
             });
         }
     }, [hintPiece]);
+
+    useEffect(() => {
+        if (sidebarMode !== "started") {
+            setIsHintButtonDisabled(false);
+        }
+    }, [sidebarMode]);
 
     return (
         <div className="puzzles-sidebar-body">
