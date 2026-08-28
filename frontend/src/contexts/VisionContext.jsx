@@ -61,10 +61,6 @@ const VisionContextProvider = ({ children }) => {
         }
     }, [hasStarted]);
 
-    useEffect(() => {
-        console.log("Helo");
-    }, [bestScore]);
-
     return (
         <VisionContext.Provider
             value={{

@@ -27,6 +27,7 @@ const PuzzlesSidebarBody = () => {
         started: [
             {
                 className: "hint-btn",
+                img: "/images/hint.png",
                 text: "Hint",
                 onClick: () => {
                     setShowHint(true);
@@ -44,15 +45,15 @@ const PuzzlesSidebarBody = () => {
         ],
         completed: [
             {
-                className: "back-btn",
-                text: "Back",
+                className: "back-btn grow-1 bg-gray",
+                img: "/images/back.png",
                 onClick: () => {
                     handleBack();
                 },
             },
             {
-                className: "retry-puzzle-btn",
-                text: "Replay",
+                className: "retry-puzzle-btn grow-1 bg-gray",
+                img: "/images/retry.png",
                 onClick: () => {
                     if (selectedLevel !== highestLevelReached)
                         setSelectedLevel((prev) => prev - 1);
@@ -61,8 +62,8 @@ const PuzzlesSidebarBody = () => {
                 },
             },
             {
-                className: "next-puzzle-btn",
-                text: "Next Puzzle",
+                className: "next-puzzle-btn grow-3",
+                img: "/images/next.png",
                 onClick: () => {
                     if (puzzles.length === selectedLevel) return;
 
@@ -73,15 +74,15 @@ const PuzzlesSidebarBody = () => {
         ],
         retry: [
             {
-                className: "back-btn",
-                text: "Back",
+                className: "back-btn grow-1 bg-gray",
+                img: "/images/back.png",
                 onClick: () => {
                     handleBack();
                 },
             },
             {
-                className: "retry-puzzle-btn",
-                text: "Retry Puzzle",
+                className: "retry-puzzle-btn grow-3",
+                img: "/images/retry.png",
                 onClick: () => {
                     setHasPuzzleStarted(true);
                     setSidebarMode("started");
@@ -179,7 +180,15 @@ const PuzzlesSidebarBody = () => {
                         key={i}
                         disabled={isHintButtonDisabled}
                     >
-                        {buttonData.text}
+                        {buttonData.img && (
+                            <img
+                                src={buttonData.img}
+                                alt="button-icon"
+                                width={25}
+                                height={25}
+                            />
+                        )}
+                        {buttonData.text && <p>{buttonData.text}</p>}
                     </button>
                 ))}
             </div>
