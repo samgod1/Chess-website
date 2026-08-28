@@ -166,7 +166,7 @@ const VisionChessboard = () => {
 
     useEffect(() => {
         calculateChessboardSize();
-        setBestScore(user?.bestScore || 0);
+        if (user.bestScore) setBestScore(user.bestScore);
 
         return () => {
             handleComponentUnmount();

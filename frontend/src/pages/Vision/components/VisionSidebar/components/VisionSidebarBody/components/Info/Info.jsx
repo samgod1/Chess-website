@@ -4,7 +4,7 @@ import "./Info.css";
 import { VisionContext } from "../../../../../../../../contexts/VisionContext.jsx";
 
 const Info = () => {
-    const { randomSquare, score, hasStarted, bestScore } =
+    const { randomSquare, score, hasStarted, bestScore, time, color } =
         useContext(VisionContext);
 
     return (
@@ -21,7 +21,7 @@ const Info = () => {
                     </div>
                     <div className="best">
                         <span>Best:</span>
-                        <span className="score">{bestScore}</span>
+                        <span className="score">{bestScore[color][time]}</span>
                     </div>
                 </div>
             </Activity>

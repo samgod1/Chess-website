@@ -27,8 +27,19 @@ const userSchema = new mongoose.Schema(
             type: [String],
         },
         bestScore: {
-            default: 0,
-            type: "Number",
+            default: {
+                white: {
+                    15: 0,
+                    30: 0,
+                    45: 0,
+                },
+                black: {
+                    15: 0,
+                    30: 0,
+                    45: 0,
+                },
+            },
+            type: "Object",
         },
         puzzleLevel: {
             default: 1,

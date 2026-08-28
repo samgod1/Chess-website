@@ -5,7 +5,7 @@ import { VisionContext } from "../../../../../../contexts";
 import { Progress, Options, Info } from "./components";
 
 const VisionSidebarBody = () => {
-    const { attempts, setAttempts, hasStarted } = useContext(VisionContext);
+    const { attempts, hasStarted } = useContext(VisionContext);
 
     return (
         <div className="vision-sidebar-body">

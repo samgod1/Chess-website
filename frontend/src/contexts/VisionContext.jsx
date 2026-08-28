@@ -14,7 +14,18 @@ const VisionContextProvider = ({ children }) => {
     const [hasCountdownCompleted, setHasCountdownCompleted] = useState(false);
     const [selectedColor, setSelectedColor] = useState("white");
     const [randomSquare, setRandomSquare] = useState(null);
-    const [bestScore, setBestScore] = useState(0);
+    const [bestScore, setBestScore] = useState({
+        white: {
+            15: 0,
+            30: 0,
+            45: 0,
+        },
+        black: {
+            15: 0,
+            30: 0,
+            45: 0,
+        },
+    });
     const [countdown, setCountdown] = useState(3);
     const [color, setColor] = useState("white");
 
@@ -33,11 +44,26 @@ const VisionContextProvider = ({ children }) => {
     useEffect(() => {
         if (hasStarted && selectedColor === "random") selectRandomColor();
 
-        if (!hasStarted && score > bestScore) {
-            setBestScore(score);
-            updateBestScore(score);
+        if (!hasStarted && score > bestScore[color][time]) {
+            let updatedBestScore = bestScore;
+            updatedBestScore[color][time] = score;
+
+            updateBestScore(updatedBestScore);
+            setBestScore((prev) => {
+                return {
+                    ...prev,
+                    [color]: {
+                        ...prev[color],
+                        [time]: score,
+                    },
+                };
+            });
         }
     }, [hasStarted]);
+
+    useEffect(() => {
+        console.log("Helo");
+    }, [bestScore]);
 
     return (
         <VisionContext.Provider
