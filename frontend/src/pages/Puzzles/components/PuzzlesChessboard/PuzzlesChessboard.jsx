@@ -878,6 +878,20 @@ const PuzzlesChessboard = () => {
         calculateChessboardSize();
         setSelectedLevel(user.puzzleLevel);
         setHighestLevelReached(user.puzzleLevel);
+
+        return () => {
+            // Handle page change
+            setHasPuzzleStarted(false);
+            setHasPlacedPieces(false);
+            setOpponentMoveIndex(0);
+            setUserMoveIndex(1);
+            setTurn("opponent");
+            setHintPiece(null);
+            setShowHint(false);
+            setResetBoardComplete(true);
+            setFen(defaultFen);
+            setSidebarMode("notStarted");
+        };
     }, []);
 
     return (
