@@ -1,17 +1,35 @@
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
-import { useRef } from "react";
+import { useRef, useContext } from "react";
 
 import "./ProgressBar.css";
+import { CourseContext } from "../../../../contexts/CourseContext";
 
-const ProgressBar = ({ total, completed }) => {
-    const progress = Math.floor((completed / total) * 100);
+const ProgressBar = ({ total }) => {
+    const { completed, hasCompleted, setHasCompleted } =
+        useContext(CourseContext);
 
     useGSAP(() => {
-        gsap.to(".progress", {
-            width: progress + "%",
-        });
-    }, [progress]);
+        if (hasCompleted) {
+            const progress = Math.floor((completed.length / total) * 100);
+            setHasCompleted(false);
+            gsap.fromTo(
+                ".progress",
+                {
+                    width: 0,
+                },
+                {
+                    width: progress + "%",
+                },
+            );
+        } else {
+            const progress = Math.floor((completed.length / total) * 100);
+
+            gsap.set(".progress", {
+                width: progress + "%",
+            });
+        }
+    }, [hasCompleted, completed]);
 
     return (
         <div className="progress-bar">

@@ -17,6 +17,7 @@ const CourseContextProvider = ({ children }) => {
     const [completed, setCompleted] = useState([]);
     const [isOpen, setIsOpen] = useState([false, false, false]); //The three false indicate beginner, intermediate and professional
     const [medals, setMedals] = useState([]);
+    const [hasCompleted, setHasCompleted] = useState(false);
 
     const firstRender = useRef(true);
 
@@ -78,6 +79,8 @@ const CourseContextProvider = ({ children }) => {
                 setIsOpen,
                 total,
                 medals,
+                hasCompleted,
+                setHasCompleted,
             }}
         >
             {children}

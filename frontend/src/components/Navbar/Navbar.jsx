@@ -21,11 +21,13 @@ const Navbar = () => {
     const navTl = useRef(null);
 
     const { user } = useContext(UserContext);
-    const { completed, setCompleted } = useContext(CourseContext);
+    const { completed, setCompleted, setHasCompleted } =
+        useContext(CourseContext);
 
     function finishLesson() {
         setCompleted([...completed, params.courseId]);
         navigate("/course");
+        setHasCompleted(true);
         confetti({
             size: 2,
             velocity: 300,
