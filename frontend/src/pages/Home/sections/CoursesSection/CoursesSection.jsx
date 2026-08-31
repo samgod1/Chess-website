@@ -54,7 +54,7 @@ const CoursesSection = () => {
                 const direction = coursesSectionTl.scrollTrigger.direction;
                 if (direction === 1) {
                     setCourseLevel("Intermediate");
-                    setCourseTitle("Intermediate chess openings");
+                    setCourseTitle("How to calculate in chess");
                 } else if (direction === -1) {
                     setCourseLevel("Beginner");
                     setCourseTitle("How to play chess");
@@ -81,11 +81,11 @@ const CoursesSection = () => {
             () => {
                 const direction = coursesSectionTl.scrollTrigger.direction;
                 if (direction === 1) {
-                    setCourseLevel("Professional");
-                    setCourseTitle("Professional chess openings");
+                    setCourseLevel("Advanced");
+                    setCourseTitle("Spotting weaknesses");
                 } else if (direction === -1) {
                     setCourseLevel("Intermediate");
-                    setCourseTitle("Intermediate chess openings");
+                    setCourseTitle("How to calculate in chess");
                 }
             },
             null,
@@ -124,13 +124,13 @@ const CoursesSection = () => {
                     <div className="card-container" id="first-card">
                         <div className="thumbnail-card">
                             <img
-                                src="/images/thumbnail2.jpg"
+                                src="/images/thumbnail1.jpg"
                                 alt="first-thumbnail"
                             />
                         </div>
                         <div className="thumbnail-card" id="second-card">
                             <img
-                                src="/images/thumbnail1.jpg"
+                                src="/images/thumbnail2.jpg"
                                 alt="second-thumbnail"
                             />
                         </div>

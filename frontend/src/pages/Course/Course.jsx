@@ -28,6 +28,10 @@ const Course = () => {
         }
     }, [loading]);
 
+    useEffect(() => {
+        console.log(medals);
+    }, [medals]);
+
     return (
         <div className="course-page">
             <div className="banner">

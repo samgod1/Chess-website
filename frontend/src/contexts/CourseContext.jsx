@@ -28,7 +28,6 @@ const CourseContextProvider = ({ children }) => {
         let silverMedal = true;
         let goldMedal = true;
 
-        //later: if user already has the medal don't run this...
         beginnerCourse.forEach((course) => {
             if (!completed.includes(course.courseId)) {
                 bronzeMedal = false;
@@ -46,13 +45,13 @@ const CourseContextProvider = ({ children }) => {
         });
 
         if (bronzeMedal) {
-            setMedals([...medals, "bronze"]);
+            setMedals((prev) => [...prev, "bronze"]);
         }
         if (silverMedal) {
-            setMedals([...medals, "silver"]);
+            setMedals((prev) => [...prev, "silver"]);
         }
         if (goldMedal) {
-            setMedals([...medals, "gold"]);
+            setMedals((prev) => [...prev, "gold"]);
         }
     }
 
