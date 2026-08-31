@@ -8,7 +8,7 @@ import { Accordion, ProgressBar } from "./components/index.js";
 import {
     beginnerCourse,
     intermediateCourse,
-    professionalCourse,
+    advanceCourse,
 } from "../../constants.js";
 import { CourseContext, UserContext } from "../../contexts/index.js";
 
@@ -52,9 +52,9 @@ const Course = () => {
                         index={1}
                     />
                     <Accordion
-                        text={"Professional"}
+                        text={"Advanced"}
                         image={"/images/gold-medal.png"}
-                        info={professionalCourse}
+                        info={advanceCourse}
                         isOpen={isOpen}
                         setIsOpen={setIsOpen}
                         index={2}
@@ -77,27 +77,38 @@ const Course = () => {
                         <h2>What you'll learn</h2>
                         <div className="levels-info">
                             <div className="beginner">
-                                <h3>Beginner</h3>
+                                <h3>Beginner (0 - 1000)</h3>
                                 <ul>
                                     <li>How to move pieces</li>
                                     <li>How to checkmate</li>
                                     <li>Rules of chess</li>
+                                    <li>Easy openings for both colors</li>
                                 </ul>
                             </div>
                             <div className="intermediate">
-                                <h3>Intermediate</h3>
+                                <h3>Intermediate (1000-1600)</h3>
                                 <ul>
-                                    <li>How to move pieces</li>
-                                    <li>How to checkmate</li>
-                                    <li>Rules of chess</li>
+                                    <li>
+                                        Basic principles that good players
+                                        follow
+                                    </li>
+                                    <li>Different tactics and tips</li>
+                                    <li>
+                                        Making plans and calculating positions
+                                    </li>
+                                    <li>Basic endgames</li>
+                                    <li>Analyzing your games</li>
+                                    <li>Time management</li>
                                 </ul>
                             </div>
-                            <div className="professional">
-                                <h3>Professional</h3>
+                            <div className="advanced">
+                                <h3>Advanced (1600 - 2000)</h3>
                                 <ul>
-                                    <li>How to move pieces</li>
-                                    <li>How to checkmate</li>
-                                    <li>Rules of chess</li>
+                                    <li>Simple but effective rules</li>
+                                    <li>Importance of pawn play</li>
+                                    <li>Spotting weaknesses in positions</li>
+                                    <li>The woodpecker method</li>
+                                    <li>Approaching endgames like a pro</li>
                                 </ul>
                             </div>
                         </div>

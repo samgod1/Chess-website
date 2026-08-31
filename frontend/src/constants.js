@@ -41,12 +41,6 @@ const beginnerCourse = [
         thumbnail: "https://i.ytimg.com/vi/kMn0Vf1zEdg/maxresdefault.jpg",
     },
     {
-        courseId: "aavP_NnrXS8",
-        title: "10 Chess tips",
-        desc: "Quick, actionable advice to immediately improve your general decision-making.",
-        thumbnail: "https://i.ytimg.com/vi/aavP_NnrXS8/maxresdefault.jpg",
-    },
-    {
         courseId: "TemLSMDKSMw",
         title: "The best beginner opening",
         desc: "A reliable and straightforward opening strategy to start your games strong.",
@@ -58,15 +52,15 @@ const beginnerCourse = [
         desc: "An introduction to a solid, resilient opening choice for Black against 1.e4.",
         thumbnail: "https://i.ytimg.com/vi/rmbU97iftC8/maxresdefault.jpg",
     },
-    {
-        courseId: "ylpAHvPlafc",
-        title: "How to analyze",
-        desc: "Learn how to review your games, spot mistakes, and find better alternatives.",
-        thumbnail: "https://i.ytimg.com/vi/ylpAHvPlafc/maxresdefault.jpg",
-    },
 ];
 
 const intermediateCourse = [
+    {
+        courseId: "aavP_NnrXS8",
+        title: "10 Chess tips",
+        desc: "Quick, actionable advice to immediately improve your general decision-making.",
+        thumbnail: "https://i.ytimg.com/vi/aavP_NnrXS8/maxresdefault.jpg",
+    },
     {
         courseId: "akBKIsl167Q",
         title: "Every chess tactic",
@@ -98,6 +92,12 @@ const intermediateCourse = [
         thumbnail: "https://i.ytimg.com/vi/9Ga9dP3bvN8/maxresdefault.jpg",
     },
     {
+        courseId: "ylpAHvPlafc",
+        title: "How to analyze",
+        desc: "Learn how to review your games, spot mistakes, and find better alternatives.",
+        thumbnail: "https://i.ytimg.com/vi/ylpAHvPlafc/maxresdefault.jpg",
+    },
+    {
         courseId: "wdwxErflrY0",
         title: "Time management",
         desc: "Practical strategies to handle clock pressure and avoid critical mistakes under time trouble.",
@@ -111,11 +111,36 @@ const intermediateCourse = [
     },
 ];
 
-const professionalCourse = [
+const advanceCourse = [
     {
-        title: "World",
-        desc: "alkdjflajflsjdf",
-        thumbnail: "/images/thumbnail2.jpg",
+        courseId: "J-7_RbF1USU",
+        title: "10 rules to get better than 95% of players",
+        desc: "Learn ten essential rules to elevate your game and outperform the vast majority of players.",
+        thumbnail: "https://i.ytimg.com/vi/J-7_RbF1USU/maxresdefault.jpg",
+    },
+    {
+        courseId: "eJTtVlgOg2w",
+        title: "How to use pawns",
+        desc: "Understand pawn structures and how to effectively utilize your pawns to control the board.",
+        thumbnail: "https://i.ytimg.com/vi/eJTtVlgOg2w/maxresdefault.jpg",
+    },
+    {
+        courseId: "YKEXns2Ed_0",
+        title: "Spotting weaknesses",
+        desc: "Learn how to identify and exploit tactical and positional weaknesses in your opponent's camp.",
+        thumbnail: "https://i.ytimg.com/vi/YKEXns2Ed_0/maxresdefault.jpg",
+    },
+    {
+        courseId: "O1keZYdPgD0",
+        title: "The woodpecker method",
+        desc: "Master this repetitive puzzle-solving technique to dramatically improve your tactical vision.",
+        thumbnail: "https://i.ytimg.com/vi/O1keZYdPgD0/maxresdefault.jpg",
+    },
+    {
+        courseId: "IvxhIozo_zo",
+        title: "Play endgame like magnus",
+        desc: "Discover the endgame principles and grinding techniques used by World Champion Magnus Carlsen.",
+        thumbnail: "https://i.ytimg.com/vi/IvxhIozo_zo/maxresdefault.jpg",
     },
 ];
 
@@ -172,7 +197,7 @@ export {
     visualizedMoves,
     beginnerCourse,
     intermediateCourse,
-    professionalCourse,
+    advanceCourse,
     puzzles,
     pieceImages,
 };

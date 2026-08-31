@@ -4,14 +4,12 @@ import { UserContext } from "./UserContext.jsx";
 import {
     beginnerCourse,
     intermediateCourse,
-    professionalCourse,
+    advanceCourse,
 } from "../constants.js";
 import updateCompleted from "../../apis/user/updateCompleted.js";
 
 const total =
-    beginnerCourse.length +
-    intermediateCourse.length +
-    professionalCourse.length;
+    beginnerCourse.length + intermediateCourse.length + advanceCourse.length;
 
 export const CourseContext = createContext();
 
@@ -40,7 +38,7 @@ const CourseContextProvider = ({ children }) => {
                 silverMedal = false;
             }
         });
-        professionalCourse.forEach((course) => {
+        advanceCourse.forEach((course) => {
             if (!completed.includes(course.courseId)) {
                 goldMedal = false;
             }
