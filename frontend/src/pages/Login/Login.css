@@ -91,6 +91,11 @@
 
                 .login-button {
                     background-color: var(--c-accent);
+                    transition: background-color 0.2s ease;
+                }
+
+                .login-button:hover {
+                    background-color: var(--c-accent-dark);
                 }
 
                 .divider {
@@ -100,6 +105,11 @@
                 .guest-button {
                     color: var(--c-secondary-dark);
                     background-color: var(--c-primary-light-2);
+                    transition: background-color 0.2s ease;
+                }
+
+                .guest-button:hover {
+                    background-color: var(--c-primary-light-1);
                 }
             }
 

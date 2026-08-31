@@ -39,6 +39,11 @@
                 left: 0;
                 cursor: pointer;
                 color: var(--c-secondary-dark);
+                transition: color 0.2s ease;
+            }
+
+            .back:hover {
+                color: var(--c-secondary-dark-1);
             }
 
             h1 {
@@ -91,6 +96,15 @@
                 .signup-button,
                 .continue-button {
                     background-color: var(--c-accent);
+                    transition: background-color 0.2s ease;
+                }
+
+                .signup-button:hover {
+                    background-color: var(--c-accent-dark);
+                }
+
+                .continue-button:hover {
+                    background-color: var(--c-accent-dark);
                 }
 
                 .divider {
@@ -100,6 +114,11 @@
                 .guest-button {
                     color: var(--c-secondary-dark);
                     background-color: var(--c-primary-light-2);
+                    transition: background-color 0.2s ease;
+                }
+
+                .guest-button:hover {
+                    background-color: var(--c-primary-light-1);
                 }
             }
 

@@ -78,6 +78,11 @@
             gap: 0.5rem;
             justify-content: center;
             align-items: center;
+            transition: background-color all ease;
+        }
+
+        button:hover {
+            background-color: var(--c-accent-dark);
         }
 
         .grow-1 {
@@ -92,6 +97,10 @@
 
         .bg-gray {
             background-color: var(--c-secondary-dark-3);
+        }
+
+        .bg-gray:hover {
+            background-color: var(--c-secondary-dark-2);
         }
 
         .disabled {

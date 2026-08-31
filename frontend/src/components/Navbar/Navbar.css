@@ -49,6 +49,11 @@
                 padding: 0.5rem 2rem;
                 border-radius: 0.5rem;
                 align-self: flex-start;
+                transition: background-color 0.2s ease;
+            }
+
+            .finish:hover {
+                background-color: var(--c-accent-dark);
             }
         }
 
@@ -67,9 +72,14 @@
                 justify-content: center;
                 align-items: center;
                 gap: 0.5rem;
+                transition: background-color 0.2s ease;
                 /*height is manually adjusted to make the button same height as let's go button*/
                 height: 47px;
                 width: 47px;
+            }
+
+            .user:hover {
+                background-color: var(--c-accent-dark);
             }
 
             .lets-go {
@@ -80,6 +90,11 @@
                 padding: 0.5rem 2rem;
                 border-radius: 0.5rem;
                 align-self: flex-start;
+                transition: background-color 0.2s ease;
+            }
+
+            .lets-go:hover {
+                background-color: var(--c-accent-dark);
             }
         }
     }
