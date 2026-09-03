@@ -1,0 +1,21 @@
+import toast from "react-hot-toast";
+
+const updateCompleted = async (completed) => {
+    try {
+        const token = localStorage.getItem("token");
+
+        const response = await fetch("/api/user/completed", {
+            method: "POST",
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ completed: completed }),
+        });
+    } catch (error) {
+        console.log(error?.message);
+        toast.error(error?.message);
+    }
+};
+
+export default updateCompleted;
