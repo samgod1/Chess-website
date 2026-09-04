@@ -120,6 +120,12 @@
                 .guest-button:hover {
                     background-color: var(--c-primary-light-1);
                 }
+
+                .disabled-button {
+                    background-color: var(--c-secondary-dark-3);
+                    color: var(--c-secondary-dark);
+                    cursor: not-allowed;
+                }
             }
 
             .redirect {

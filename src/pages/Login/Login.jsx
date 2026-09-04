@@ -11,8 +11,33 @@ const Login = () => {
 
     const { getUser } = useContext(UserContext);
 
-    const [email, setEmail] = useState(null);
-    const [password, setPassword] = useState(null);
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [buttonsDisabled, setButtonsDisabled] = useState(false);
+
+    async function handleLogin(e) {
+        e.preventDefault();
+        setButtonsDisabled(true);
+        const success = await login(email, password);
+        if (success) {
+            await getUser();
+            setButtonsDisabled(false);
+            navigate("/course");
+        }
+    }
+
+    async function handleLoginAsGuest(e) {
+        e.preventDefault();
+        setButtonsDisabled(true);
+
+        const success = await guest();
+
+        if (success) {
+            await getUser();
+            setButtonsDisabled(false);
+            navigate("/course");
+        }
+    }
 
     return (
         <div className="login-page">
@@ -21,17 +46,7 @@ const Login = () => {
             </div>
 
             <div className="form-container">
-                <form
-                    className="form"
-                    onSubmit={async (e) => {
-                        e.preventDefault();
-                        const success = await login(email, password);
-                        if (success) {
-                            await getUser();
-                            navigate("/course");
-                        }
-                    }}
-                >
+                <form className="form" onSubmit={handleLogin}>
                     <div
                         className="back"
                         onClick={() => {
@@ -68,21 +83,26 @@ const Login = () => {
                         </div>
                     </div>
                     <div className="buttons-container">
-                        <button className="login-button" type="submit">
+                        <button
+                            className={
+                                buttonsDisabled
+                                    ? "disabled-button"
+                                    : "login-button"
+                            }
+                            type="submit"
+                            disabled={buttonsDisabled}
+                        >
                             Login
                         </button>
                         <p className="divider">-------- or --------</p>
                         <button
-                            className="guest-button"
-                            onClick={async (e) => {
-                                e.preventDefault();
-                                const success = await guest();
-
-                                if (success) {
-                                    await getUser();
-                                    navigate("/course");
-                                }
-                            }}
+                            className={
+                                buttonsDisabled
+                                    ? "disabled-button"
+                                    : "guest-button"
+                            }
+                            onClick={handleLoginAsGuest}
+                            disabled={buttonsDisabled}
                         >
                             Login as guest
                         </button>

@@ -12,9 +12,34 @@ const Signup = () => {
     const { getUser } = useContext(UserContext);
 
     const [hasContinued, setHasContinued] = useState(false); //To switch between forms
-    const [email, setEmail] = useState(null);
-    const [password, setPassword] = useState(null);
-    const [username, setUsername] = useState(null);
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [username, setUsername] = useState("");
+    const [buttonsDisabled, setButtonsDisabled] = useState(false);
+
+    async function handleSignup(e) {
+        e.preventDefault();
+        setButtonsDisabled(true);
+
+        const success = await signup(email, password, username);
+        if (success) {
+            await getUser();
+            setButtonsDisabled(false);
+            navigate("/course");
+        }
+    }
+    async function handleLoginAsGuest(e) {
+        e.preventDefault();
+        setButtonsDisabled(true);
+
+        const success = await guest();
+
+        if (success) {
+            await getUser();
+            setButtonsDisabled(false);
+            navigate("/course");
+        }
+    }
 
     return (
         <div className="signup-page">
@@ -27,21 +52,7 @@ const Signup = () => {
 
             {hasContinued ? (
                 <div className="form-container">
-                    <form
-                        className="form"
-                        onSubmit={async (e) => {
-                            e.preventDefault();
-                            const success = await signup(
-                                email,
-                                password,
-                                username,
-                            );
-                            if (success) {
-                                await getUser();
-                                navigate("/course");
-                            }
-                        }}
-                    >
+                    <form className="form" onSubmit={handleSignup}>
                         <div
                             className="back"
                             onClick={() => {
@@ -63,16 +74,24 @@ const Signup = () => {
                                 <input
                                     type="text"
                                     placeholder="Enter username"
-                                    onChange={(e) =>
-                                        setUsername(e.target.value)
-                                    }
+                                    onChange={(e) => {
+                                        setUsername(e.target.value);
+                                    }}
                                     required={true}
                                     value={username}
                                 />
                             </div>
                         </div>
                         <div className="buttons-container">
-                            <button className="signup-button" type="submit">
+                            <button
+                                className={
+                                    buttonsDisabled
+                                        ? "disabled-button"
+                                        : "signup-button"
+                                }
+                                type="submit"
+                                disabled={buttonsDisabled}
+                            >
                                 Signup
                             </button>
                         </div>
@@ -127,20 +146,26 @@ const Signup = () => {
                             </div>
                         </div>
                         <div className="buttons-container">
-                            <button className="continue-button" type="submit">
+                            <button
+                                className={
+                                    buttonsDisabled
+                                        ? "disabled-button"
+                                        : "continue-button"
+                                }
+                                type="submit"
+                                disabled={buttonsDisabled}
+                            >
                                 Continue
                             </button>
                             <p className="divider">-------- or --------</p>
                             <button
-                                className="guest-button"
-                                onClick={async (e) => {
-                                    e.preventDefault();
-                                    const success = await guest();
-                                    if (success) {
-                                        await getUser();
-                                        navigate("/course");
-                                    }
-                                }}
+                                className={
+                                    buttonsDisabled
+                                        ? "disabled-button"
+                                        : "guest-button"
+                                }
+                                onClick={handleLoginAsGuest}
+                                disabled={buttonsDisabled}
                             >
                                 Login as guest
                             </button>

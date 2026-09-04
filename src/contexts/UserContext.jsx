@@ -13,17 +13,11 @@ const UserContextProvider = ({ children }) => {
             const token = localStorage.getItem("token");
 
             if (token) {
-                console.log(token);
                 const response = await fetch("/api/user/", {
                     method: "GET",
                     headers: { Authorization: `Bearer ${token}` },
                 });
-
-                console.log(response);
-
                 const data = await response.json();
-
-                console.log(data);
 
                 if (response.ok) {
                     setUser(data);
