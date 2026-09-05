@@ -47,3 +47,9 @@
         }
     }
 }
+
+@media (width <= 1024px) {
+    .puzzles-section {
+        display: none;
+    }
+}

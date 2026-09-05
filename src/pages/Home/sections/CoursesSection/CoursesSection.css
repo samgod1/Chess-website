@@ -84,3 +84,9 @@
         }
     }
 }
+
+@media (width <= 1024px) {
+    .courses-section {
+        display: none;
+    }
+}

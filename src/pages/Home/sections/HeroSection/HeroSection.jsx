@@ -54,11 +54,21 @@ const HeroSection = () => {
             <div className="hero-container">
                 <div className="main-content">
                     <div className="hero-text">
-                        <span className="hide-text">
-                            <p className="h-text">LEARNING</p>
+                        <span className="top">
+                            <span className="hide-text">
+                                <p className="h-text">LEARNING</p>
+                            </span>
                         </span>
-                        <span className="hide-text">
-                            <p className="h-text">CHESS IS FUN</p>
+                        <span className="bottom">
+                            <span className="hide-text">
+                                <p className="h-text">CHESS</p>
+                            </span>
+                            <span className="hide-text">
+                                <p className="h-text">IS </p>
+                            </span>
+                            <span className="hide-text">
+                                <p className="h-text">FUN</p>
+                            </span>
                         </span>
                     </div>
                     <button className="cta">Let's go</button>

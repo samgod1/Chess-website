@@ -18,8 +18,6 @@ const Navbar = () => {
     const [isWatchingCourse, setIsWatchingCourse] = useState(false);
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
-    const navTl = useRef(null);
-
     const { user } = useContext(UserContext);
     const { completed, setCompleted, setHasCompleted } =
         useContext(CourseContext);
@@ -36,23 +34,6 @@ const Navbar = () => {
     }
 
     useGSAP(() => {
-        const containerHeight =
-            document.querySelector(".nav-container").offsetHeight;
-        const navHeight = document.querySelector("nav").offsetHeight;
-        const yCenter = -((containerHeight - navHeight) / 2);
-
-        navTl.current = gsap.timeline({ paused: true });
-        navTl.current.to("nav", {
-            width: "100%",
-            y: yCenter,
-        });
-
-        if (pathname !== "/") {
-            navTl.current.progress(1);
-        }
-    }, []);
-
-    useGSAP(() => {
         if (isDropdownOpen) {
             gsap.to(".hidden", {
                 height: "auto",
@@ -63,14 +44,6 @@ const Navbar = () => {
         }
     }, [isDropdownOpen]);
 
-    useGSAP(() => {
-        if (pathname === "/") {
-            navTl.current.reverse();
-        } else {
-            navTl.current.play();
-        }
-    }, [pathname]);
-
     useEffect(() => {
         if (params.courseId) {
             setIsWatchingCourse(true);
@@ -80,28 +53,24 @@ const Navbar = () => {
     }, [params]);
 
     return (
-        <div className="nav-container">
-            <nav>
-                <Link className="logo" to="/">
-                    <img
-                        src="/images/logo.png"
-                        alt="logo"
-                        width={40}
-                        height={40}
-                    />
-                </Link>
-                {isWatchingCourse ? (
-                    <div className="buttons-container">
-                        <Link className="back" to={"/course"}>
-                            Go Back
-                        </Link>
-                        {!completed.includes(params.courseId) && (
-                            <button className="finish" onClick={finishLesson}>
-                                Finish lesson
-                            </button>
-                        )}
-                    </div>
-                ) : (
+        <nav>
+            <Link className="logo" to="/">
+                <img src="/images/logo.png" alt="logo" />
+                <p>Evochess</p>
+            </Link>
+            {isWatchingCourse ? (
+                <div className="buttons-container">
+                    <Link className="back" to={"/course"}>
+                        Go Back
+                    </Link>
+                    {!completed.includes(params.courseId) && (
+                        <button className="finish" onClick={finishLesson}>
+                            Finish lesson
+                        </button>
+                    )}
+                </div>
+            ) : (
+                <>
                     <ul>
                         <li>
                             <Link to="/course">Courses</Link>
@@ -138,13 +107,16 @@ const Navbar = () => {
                             </button>
                         )}
                     </ul>
-                )}
-                <Dropdown
-                    isDropdownOpen={isDropdownOpen}
-                    setIsDropdownOpen={setIsDropdownOpen}
-                />
-            </nav>
-        </div>
+                    <button className="hamburger-menu">
+                        <img src="/images/menu.png" alt="hamburger-menu-icon" />
+                    </button>
+                </>
+            )}
+            <Dropdown
+                isDropdownOpen={isDropdownOpen}
+                setIsDropdownOpen={setIsDropdownOpen}
+            />
+        </nav>
     );
 };
 

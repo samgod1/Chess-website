@@ -40,3 +40,9 @@
         }
     }
 }
+
+@media (width <= 1024px) {
+    .visualization-section {
+        display: none;
+    }
+}

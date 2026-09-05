@@ -26,6 +26,8 @@ const Signup = () => {
             await getUser();
             setButtonsDisabled(false);
             navigate("/course");
+        } else {
+            setButtonsDisabled(false);
         }
     }
     async function handleLoginAsGuest(e) {

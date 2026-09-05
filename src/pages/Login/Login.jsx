@@ -23,6 +23,8 @@ const Login = () => {
             await getUser();
             setButtonsDisabled(false);
             navigate("/course");
+        } else {
+            setButtonsDisabled(false);
         }
     }
 
