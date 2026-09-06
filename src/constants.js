@@ -1,6 +1,24 @@
+// For courses section
 const coursesText =
-    "Brand has courses for all levels of players. The courses are structured precisely to help you improve quickly. The courses are designed by top chess players with decades of experience.";
+    "Evochess has courses for all levels of players. The courses are structured precisely to help you improve quickly. The courses are designed by top chess players with decades of experience.";
 const coursesTextArray = coursesText.split(" ");
+const coursesInfo = [
+    {
+        level: "Beginner",
+        title: "How to play chess",
+        image: "/images/thumbnail1.jpg",
+    },
+    {
+        level: "Intermediate",
+        title: "How to calculate in chess",
+        image: "/images/thumbnail2.jpg",
+    },
+    {
+        level: "Advanced",
+        title: "Spotting weaknesses",
+        image: "/images/thumbnail3.jpg",
+    },
+];
 
 const visualizedMoves = [
     { move: "kc3", top: "4%", left: "-15%" },
@@ -194,6 +212,7 @@ const pieceImages = {
 
 export {
     coursesTextArray,
+    coursesInfo,
     visualizedMoves,
     beginnerCourse,
     intermediateCourse,

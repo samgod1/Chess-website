@@ -8,7 +8,6 @@ nav {
     padding: 0rem 3.75rem;
     height: 5.5rem;
     font-size: 1.25rem;
-    box-shadow: 3px 3px 10px var(--c-primary);
     z-index: 25;
     font-family: "Geist";
     color: var(--c-secondary);

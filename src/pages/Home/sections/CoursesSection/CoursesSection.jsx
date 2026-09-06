@@ -3,7 +3,7 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 
 import "./CoursesSection.css";
-import { coursesTextArray } from "../../../../constants";
+import { coursesTextArray, coursesInfo } from "../../../../constants";
 
 const CoursesSection = () => {
     const [courseLevel, setCourseLevel] = useState("Beginner");
@@ -147,6 +147,17 @@ const CoursesSection = () => {
                         </div>
                     </div>
                 </div>
+            </div>
+            <div className="carousel">
+                {coursesInfo.map((info, i) => (
+                    <div className="carousel-card" key={i}>
+                        <div className="text-container">
+                            <p className="level">{info.level}</p>
+                            <p className="title">{info.title}</p>
+                        </div>
+                        <img src={info.image} alt="carousel-image" />
+                    </div>
+                ))}
             </div>
         </section>
     );
