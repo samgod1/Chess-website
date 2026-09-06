@@ -10,91 +10,96 @@ const CoursesSection = () => {
     const [courseTitle, setCourseTitle] = useState("How to play chess");
 
     useGSAP(() => {
-        // Text revealing animation in courses section
-        const coursesSectionTl = gsap.timeline({
-            scrollTrigger: {
-                trigger: ".courses-section",
-                start: "top top",
-                end: "+=1000px",
-                pin: true,
-                pinSpacing: true,
-                scrub: true,
-            },
-        });
+        let mm = gsap.matchMedia();
+        mm.add("(min-width: 769px)", () => {
+            // Text revealing animation in courses section
+            const coursesSectionTl = gsap.timeline({
+                scrollTrigger: {
+                    trigger: ".courses-section",
+                    start: "top top",
+                    end: "+=1000px",
+                    pin: true,
+                    pinSpacing: true,
+                    scrub: true,
+                },
+            });
 
-        // Text Reveal Animation
-        coursesSectionTl.to(".ghost-block", {
-            opacity: 0,
-            stagger: 0.075,
-            duration: 1,
-        });
-
-        coursesSectionTl.from(
-            ".word",
-            {
+            // Text Reveal Animation
+            coursesSectionTl.to(".ghost-block", {
                 opacity: 0,
                 stagger: 0.075,
                 duration: 1,
-            },
-            "<",
-        );
+            });
 
-        // Card Stacking animation
-        coursesSectionTl.to("#second-card", {
-            top: "1rem",
-            duration: 4,
+            coursesSectionTl.from(
+                ".word",
+                {
+                    opacity: 0,
+                    stagger: 0.075,
+                    duration: 1,
+                },
+                "<",
+            );
+
+            // Card Stacking animation
+            coursesSectionTl.to("#second-card", {
+                top: "1rem",
+                duration: 4,
+            });
+
+            coursesSectionTl.to(".courseTitle", {
+                opacity: 0,
+            });
+
+            coursesSectionTl.call(
+                () => {
+                    const direction = coursesSectionTl.scrollTrigger.direction;
+                    if (direction === 1) {
+                        setCourseLevel("Intermediate");
+                        setCourseTitle("How to calculate in chess");
+                    } else if (direction === -1) {
+                        setCourseLevel("Beginner");
+                        setCourseTitle("How to play chess");
+                    }
+                },
+                null,
+                ">",
+            );
+
+            coursesSectionTl.to(".courseTitle", {
+                opacity: 1,
+            });
+
+            coursesSectionTl.to("#third-card", {
+                top: "2rem",
+                duration: 4,
+            });
+
+            coursesSectionTl.to(".courseTitle", {
+                opacity: 0,
+            });
+
+            coursesSectionTl.call(
+                () => {
+                    const direction = coursesSectionTl.scrollTrigger.direction;
+                    if (direction === 1) {
+                        setCourseLevel("Advanced");
+                        setCourseTitle("Spotting weaknesses");
+                    } else if (direction === -1) {
+                        setCourseLevel("Intermediate");
+                        setCourseTitle("How to calculate in chess");
+                    }
+                },
+                null,
+                ">",
+            );
+
+            coursesSectionTl.to(".courseTitle", {
+                opacity: 1,
+            });
         });
 
-        coursesSectionTl.to(".courseTitle", {
-            opacity: 0,
-        });
-
-        coursesSectionTl.call(
-            () => {
-                const direction = coursesSectionTl.scrollTrigger.direction;
-                if (direction === 1) {
-                    setCourseLevel("Intermediate");
-                    setCourseTitle("How to calculate in chess");
-                } else if (direction === -1) {
-                    setCourseLevel("Beginner");
-                    setCourseTitle("How to play chess");
-                }
-            },
-            null,
-            ">",
-        );
-
-        coursesSectionTl.to(".courseTitle", {
-            opacity: 1,
-        });
-
-        coursesSectionTl.to("#third-card", {
-            top: "2rem",
-            duration: 4,
-        });
-
-        coursesSectionTl.to(".courseTitle", {
-            opacity: 0,
-        });
-
-        coursesSectionTl.call(
-            () => {
-                const direction = coursesSectionTl.scrollTrigger.direction;
-                if (direction === 1) {
-                    setCourseLevel("Advanced");
-                    setCourseTitle("Spotting weaknesses");
-                } else if (direction === -1) {
-                    setCourseLevel("Intermediate");
-                    setCourseTitle("How to calculate in chess");
-                }
-            },
-            null,
-            ">",
-        );
-
-        coursesSectionTl.to(".courseTitle", {
-            opacity: 1,
-        });
+        return () => mm.revert();
     }, []);
 
     return (

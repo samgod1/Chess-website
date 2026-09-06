@@ -7,6 +7,8 @@ import "./HeroSection.css";
 
 const HeroSection = () => {
     useGSAP(() => {
+        let mm = gsap.matchMedia();
+
         const heroTl = gsap.timeline();
 
         heroTl.from(".img-container", {
@@ -35,18 +37,22 @@ const HeroSection = () => {
             "-=.5",
         );
 
-        // Stacking and shrinking page animation
-        ScrollTrigger.create({
-            trigger: ".hero-section",
-            start: "top top",
-            end: "bottom top",
-            pin: true,
-            pinSpacing: false,
-            scrub: true,
-            animation: gsap.to(".hero-container", {
-                scale: 0.9,
-            }),
+        mm.add("(min-width: 769px)", () => {
+            // Stacking and shrinking page animation
+            ScrollTrigger.create({
+                trigger: ".hero-section",
+                start: "top top",
+                end: "bottom top",
+                pin: true,
+                pinSpacing: false,
+                scrub: true,
+                animation: gsap.to(".hero-container", {
+                    scale: 0.9,
+                }),
+            });
         });
+
+        return () => mm.revert();
     }, []);
 
     return (
