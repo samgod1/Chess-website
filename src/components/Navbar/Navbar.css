@@ -99,7 +99,7 @@ nav {
             background-color: var(--c-accent-dark);
         }
     }
-    .hamburger-menu {
+    .hamburger-menu-btn {
         display: none;
         img {
             width: 1rem;
@@ -131,7 +131,7 @@ nav {
         ul {
             display: none;
         }
-        .hamburger-menu {
+        .hamburger-menu-btn {
             display: block;
         }
     }
@@ -152,9 +152,6 @@ nav {
 
         ul {
             display: none;
-        }
-        .hamburger-menu {
-            display: block;
         }
     }
 }
