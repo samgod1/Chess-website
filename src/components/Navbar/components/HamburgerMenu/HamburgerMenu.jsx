@@ -1,13 +1,14 @@
 import { useContext } from "react";
-import { Link, useLocation } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 
 import "./HamburgerMenu.css";
 import { UserContext } from "../../../../contexts";
 
 const HamburgerMenu = ({ isHamburgerMenuOpen, setIsHamburgerMenuOpen }) => {
     const { pathname } = useLocation();
+    const navigate = useNavigate();
 
-    const { setUser } = useContext(UserContext);
+    const { user, setUser } = useContext(UserContext);
 
     function logout() {
         setIsHamburgerMenuOpen(false);
@@ -73,9 +74,19 @@ const HamburgerMenu = ({ isHamburgerMenuOpen, setIsHamburgerMenuOpen }) => {
                         <Link to="/vision">Vision</Link>
                     </li>
                 </ul>
-                <button className="logout-btn" onClick={logout}>
-                    Logout
-                </button>
+                {user ? (
+                    <button className="logout-btn" onClick={logout}>
+                        Logout
+                    </button>
+                ) : (
+                    <Link
+                        to={"/signup"}
+                        onClick={() => setIsHamburgerMenuOpen(false)}
+                        className="signup-redirect"
+                    >
+                        Signup
+                    </Link>
+                )}
             </div>
         </div>
     );

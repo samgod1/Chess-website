@@ -2,6 +2,7 @@ import React from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/all";
+import { Link } from "react-router";
 
 import "./HeroSection.css";
 
@@ -77,7 +78,9 @@ const HeroSection = () => {
                             </span>
                         </span>
                     </div>
-                    <button className="cta">Let's go</button>
+                    <Link className="cta" to={"/signup"}>
+                        Let's go
+                    </Link>
                 </div>
                 <div className="img-container">
                     <img src="/images/hero-img.png" alt="image" />

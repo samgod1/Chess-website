@@ -44,6 +44,14 @@
             font-weight: 500;
         }
 
+        .signup-redirect {
+            background-color: var(--c-accent);
+            padding: 0.5rem 0rem;
+            border-radius: 0.25rem;
+            display: flex;
+            justify-content: center;
+        }
+
         .logout-btn {
             background-color: var(--c-red);
             padding: 0.5rem 0rem;

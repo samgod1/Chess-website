@@ -47,6 +47,10 @@
                 border-radius: 0.5rem;
                 align-self: flex-start;
             }
+            .cta:hover {
+                background-color: var(--c-accent-dark);
+                transition: all 0.2s ease;
+            }
         }
 
         .img-container {
