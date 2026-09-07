@@ -4,6 +4,7 @@
     padding: 0rem 3.75rem;
     padding-top: 8rem; /* Height of navbar */
     display: flex;
+    overflow: hidden;
 
     .wrapper {
         width: 50%;
@@ -37,8 +38,7 @@
         align-items: center;
 
         .svg-container {
-            width: 35.625rem;
-            height: 35.625rem;
+            width: 80%;
 
             img {
                 width: 100%;
@@ -49,7 +49,73 @@
 }
 
 @media (width <= 1024px) {
-    .puzzles-section {
-        display: none;
+    .puzzle-section {
+        padding: 0 3rem;
+
+        #first {
+            .text-container {
+                gap: 1rem;
+
+                h1 {
+                    font-size: 3rem;
+                    line-height: 3.5rem;
+                }
+                p {
+                    font-size: 1.25rem;
+                }
+            }
+        }
+    }
+}
+
+@media (width <= 768px) {
+    .puzzle-section {
+        padding: 4rem 2rem;
+        height: auto;
+        align-items: center;
+
+        #first {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            .text-container {
+                gap: 0.75rem;
+                h1 {
+                    font-size: 2.5rem;
+                    line-height: 3rem;
+                }
+                p {
+                    font-size: 1rem;
+                }
+            }
+        }
+
+        #second {
+            .svg-container {
+                width: 80%;
+                height: auto;
+            }
+        }
+    }
+}
+
+@media (width <= 425px) {
+    .puzzle-section {
+        padding: 4rem 0.75rem;
+
+        #first {
+            .text-container {
+                gap: 0.5rem;
+
+                h1 {
+                    font-size: 1.5rem;
+                    line-height: 2rem;
+                }
+                p {
+                    font-size: 0.75rem;
+                }
+            }
+        }
     }
 }
