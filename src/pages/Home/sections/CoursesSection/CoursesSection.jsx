@@ -109,7 +109,11 @@ const CoursesSection = () => {
                     {coursesTextArray.map((text, i) => (
                         <React.Fragment key={i}>
                             <span className="wrapper">
-                                <span className="word">{text}</span>
+                                <span
+                                    className={i === 0 ? "word bold" : "word"}
+                                >
+                                    {text}
+                                </span>
                                 <span className="ghost-block"></span>
                             </span>
                             <span> </span>
