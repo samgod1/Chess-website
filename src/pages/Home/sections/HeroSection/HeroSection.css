@@ -99,9 +99,6 @@
                     width: 475px;
                 }
             }
-            .gradient {
-                transform: translateX(-70%);
-            }
         }
     }
 }
@@ -132,9 +129,9 @@
                     width: 375px;
                 }
             }
-            .gradient {
-                transform: translateX(-70%);
-            }
+        }
+        .gradient {
+            z-index: 1;
         }
     }
 }
@@ -164,10 +161,9 @@
             .img-container {
                 display: none;
             }
-
-            .gradient {
-                transform: translateX(-70%);
-            }
+        }
+        .gradient {
+            transform: translate(-50%);
         }
     }
 }
