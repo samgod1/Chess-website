@@ -56,7 +56,7 @@ const CoursesSection = () => {
                     const direction = coursesSectionTl.scrollTrigger.direction;
                     if (direction === 1) {
                         setCourseLevel("Intermediate");
-                        setCourseTitle("How to calculate in chess");
+                        setCourseTitle("How to calculate");
                     } else if (direction === -1) {
                         setCourseLevel("Beginner");
                         setCourseTitle("How to play chess");
@@ -87,7 +87,7 @@ const CoursesSection = () => {
                         setCourseTitle("Spotting weaknesses");
                     } else if (direction === -1) {
                         setCourseLevel("Intermediate");
-                        setCourseTitle("How to calculate in chess");
+                        setCourseTitle("How to calculate");
                     }
                 },
                 null,

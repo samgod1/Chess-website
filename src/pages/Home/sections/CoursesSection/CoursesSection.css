@@ -44,11 +44,13 @@
         flex-direction: column;
         justify-content: flex-end;
         align-items: end;
-        padding: 0 3rem;
 
         .wrapper {
-            width: 100%;
+            width: 75%;
             .courseInfo {
+                .level {
+                    color: var(--c-secondary-dark-3);
+                }
                 .courseTitle {
                     font-size: 2.5rem;
                 }
@@ -93,6 +95,32 @@
     }
 }
 
+@media (width <= 1440px) {
+    .courses-section {
+        .text-content {
+            .text {
+                font-size: 2rem;
+                font-size: clamp(1.75rem, 0.519rem + 1.923vw, 2.25rem);
+            }
+        }
+
+        .thumbnail-content {
+            .wrapper {
+                .courseInfo {
+                    .level {
+                        font-size: 1rem;
+                        font-size: clamp(1rem, 0.385rem + 0.962vw, 1.25rem);
+                    }
+                    .courseTitle {
+                        font-size: 2rem;
+                        font-size: clamp(1.75rem, -0.096rem + 2.885vw, 2.5rem);
+                    }
+                }
+            }
+        }
+    }
+}
+
 @media (width <= 1024px) {
     .courses-section {
         padding: 3rem 3rem;
@@ -100,27 +128,31 @@
 
         .text-content {
             .text {
-                font-size: 1.75rem;
+                font-size: 1.5rem;
+                font-size: clamp(1.25rem, -0.25rem + 3.125vw, 1.75rem);
 
                 .wrapper {
                     .ghost-block {
-                        border-radius: 0.75rem;
+                        border-radius: clamp(
+                            0.5rem,
+                            -0.25rem + 1.563vw,
+                            0.75rem
+                        );
                     }
                 }
             }
         }
 
         .thumbnail-content {
-            padding: 0 2rem;
-
             .wrapper {
-                width: 100%;
                 .courseInfo {
                     .level {
                         font-size: 0.75rem;
+                        font-size: clamp(0.75rem, 0rem + 1.563vw, 1rem);
                     }
                     .courseTitle {
-                        font-size: 2rem;
+                        font-size: 1.5rem;
+                        font-size: clamp(1.5rem, 0.75rem + 1.563vw, 1.75rem);
                     }
                 }
             }
@@ -133,7 +165,7 @@
         height: auto;
         flex-direction: column;
         padding: 2rem 0rem;
-        gap: 3.5rem;
+        gap: 4.5rem;
 
         .text-content {
             width: 100%;
@@ -141,6 +173,7 @@
 
             .text {
                 font-size: 1.5rem;
+                font-size: clamp(1.5rem, 1.19rem + 1.166vw, 1.75rem);
 
                 .wrapper {
                     .ghost-block {
@@ -170,16 +203,20 @@
                 .text-container {
                     .level {
                         font-size: 0.75rem;
+                        font-size: clamp(0.75rem, 0.571rem + 0.893vw, 1rem);
+                        color: var(--c-secondary-dark-3);
                     }
                     .title {
                         font-size: 1.5rem;
+                        font-size: clamp(1.5rem, 1.321rem + 0.893vw, 1.75rem);
                     }
                 }
 
                 img {
-                    width: 50vw;
+                    width: 60vw;
                     aspect-ratio: 16/9;
                     border-radius: 0.5rem;
+                    max-width: 18.75rem;
                 }
             }
         }
@@ -193,17 +230,20 @@
 
 @media (width <= 425px) {
     .courses-section {
-        padding: 2rem 0.75rem;
+        padding: 2rem 0rem;
+        gap: clamp(3.5rem, -2.595rem + 30.476vw, 5.5rem);
+
         .text-content {
-            padding: 0rem;
+            padding: 0rem 0.75rem;
 
             .text {
-                font-size: 1rem;
+                font-size: 1.25rem;
+                font-size: clamp(1.25rem, 0.488rem + 3.81vw, 1.5rem);
             }
         }
 
         .carousel {
-            padding: 0;
+            padding: 0rem 0.75rem;
 
             .carousel-card {
                 img {

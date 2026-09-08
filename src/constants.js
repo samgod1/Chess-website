@@ -10,7 +10,7 @@ const coursesInfo = [
     },
     {
         level: "Intermediate",
-        title: "How to calculate in chess",
+        title: "How to calculate",
         image: "/images/thumbnail2.jpg",
     },
     {
