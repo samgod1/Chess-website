@@ -138,6 +138,7 @@
     .hero-section {
         padding: 0rem 2rem;
         overflow: hidden;
+        height: 100vh;
 
         .hero-container {
             display: flex;
