@@ -7,34 +7,40 @@ import { visualizedMoves } from "../../../../constants.js";
 
 const VisualizationSection = () => {
     useGSAP(() => {
-        const textSplit = SplitText.create(".visualization-heading", {
-            type: "chars",
+        let mm = gsap.matchMedia();
+
+        mm.add("(min-width: 769px)", () => {
+            const textSplit = SplitText.create(".visualization-heading", {
+                type: "chars",
+            });
+            const visualizationTl = gsap.timeline({
+                scrollTrigger: {
+                    trigger: ".visualization-section",
+                    start: "top top",
+                    pin: true,
+                    pinSpacing: true,
+                    scrub: true,
+                },
+            });
+            visualizationTl.from(textSplit.chars, {
+                autoAlpha: 0,
+                stagger: 0.05,
+            });
+            visualizationTl.to(".visualization-heading", {
+                scale: 0.9,
+                opacity: 0,
+            });
+            visualizationTl.from(".person-visualizing-img", {
+                opacity: 0,
+            });
+            visualizationTl.from(".move", {
+                opacity: 0,
+                scale: 0.9,
+                stagger: 0.05,
+            });
         });
-        const visualizationTl = gsap.timeline({
-            scrollTrigger: {
-                trigger: ".visualization-section",
-                start: "top top",
-                pin: true,
-                pinSpacing: true,
-                scrub: true,
-            },
-        });
-        visualizationTl.from(textSplit.chars, {
-            autoAlpha: 0,
-            stagger: 0.05,
-        });
-        visualizationTl.to(".visualization-heading", {
-            scale: 0.9,
-            opacity: 0,
-        });
-        visualizationTl.from(".person-visualizing-img", {
-            opacity: 0,
-        });
-        visualizationTl.from(".move", {
-            opacity: 0,
-            scale: 0.9,
-            stagger: 0.05,
-        });
+
+        return () => mm.revert();
     }, []);
 
     return (
@@ -52,12 +58,19 @@ const VisualizationSection = () => {
                             </span>
                         );
                     })}
+
                     <img
                         src="/images/visualization-person.png"
                         alt="person-visualizing-img"
                         className="person-visualizing-img"
                     />
                 </div>
+
+                <img
+                    src="/images/visualization.png"
+                    alt="visualization-image"
+                    className="visualization-image"
+                />
             </div>
         </section>
     );
