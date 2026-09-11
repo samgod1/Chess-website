@@ -7,7 +7,11 @@
     background-color: var(--c-primary);
 
     .loading-spinner {
+        width: 4rem;
+        height: 4rem;
         img {
+            height: 100%;
+            width: 100%;
             animation-name: loading;
             animation-duration: 0.5s;
             animation-iteration-count: infinite;
@@ -22,5 +26,31 @@
     }
     to {
         rotate: 360deg;
+    }
+}
+
+@media (width <= 1024px) {
+    .loading {
+        .loading-spinner {
+            width: 3.5rem;
+            height: 3.5rem;
+        }
+    }
+}
+
+@media (width <= 768px) {
+    .loading {
+        .loading-spinner {
+            width: 3rem;
+            height: 3rem;
+        }
+    }
+}
+@media (width <= 425px) {
+    .loading {
+        .loading-spinner {
+            width: 2.5rem;
+            height: 2.5rem;
+        }
     }
 }
