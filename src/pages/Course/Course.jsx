@@ -31,7 +31,16 @@ const Course = () => {
     return (
         <div className="course-page">
             <div className="banner">
-                <img src="/images/banner.png" alt="banner" />
+                <img
+                    src="/images/banner.png"
+                    alt="banner"
+                    className="desktop"
+                />
+                <img
+                    src="/images/banner-mobile.png"
+                    alt="banner-mobbile"
+                    className="mobile"
+                />
             </div>
             <div className="main-content">
                 <div className="course">
@@ -134,7 +143,7 @@ const Course = () => {
                                 </div>
                             )}
                             {medals?.includes("silver") ? (
-                                <div className="intemediate-badge">
+                                <div className="intermediate-badge">
                                     <img
                                         src="/images/silver-medal.png"
                                         alt="silver-medal"

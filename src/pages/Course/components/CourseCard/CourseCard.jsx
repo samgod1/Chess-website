@@ -25,6 +25,7 @@ const CourseCard = ({ courseId, title, desc, thumbnail, completed }) => {
                     alt="complete"
                     width={40}
                     height={40}
+                    className="complete"
                 />
             ) : (
                 <img
@@ -32,6 +33,7 @@ const CourseCard = ({ courseId, title, desc, thumbnail, completed }) => {
                     alt="incomplete"
                     width={40}
                     height={40}
+                    className="incomplete"
                 />
             )}
         </div>

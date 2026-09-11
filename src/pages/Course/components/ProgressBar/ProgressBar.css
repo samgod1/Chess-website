@@ -12,3 +12,9 @@
         width: 0%;
     }
 }
+
+@media (width <= 1024px) {
+    .progress-bar {
+        height: 0.75rem;
+    }
+}

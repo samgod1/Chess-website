@@ -123,7 +123,7 @@ const intermediateCourse = [
     },
     {
         courseId: "Vlpx04FeELI",
-        title: "How to actually get better at chess",
+        title: "How to actually get better",
         desc: "A structured approach to efficient training habits and meaningful rating growth.",
         thumbnail: "https://i.ytimg.com/vi/Vlpx04FeELI/maxresdefault.jpg",
     },
@@ -132,7 +132,7 @@ const intermediateCourse = [
 const advanceCourse = [
     {
         courseId: "J-7_RbF1USU",
-        title: "10 rules to get better than 95% of players",
+        title: "10 rules to get better",
         desc: "Learn ten essential rules to elevate your game and outperform the vast majority of players.",
         thumbnail: "https://i.ytimg.com/vi/J-7_RbF1USU/maxresdefault.jpg",
     },
