@@ -5,8 +5,8 @@
             "destination": "/api/server.js"
         },
         {
-            "source": "/((?!api|@vite|@react-refresh|src|node_modules).*)$",
-            "destination": "/"
+            "source": "/((?!api|@vite|@react-refresh|src|node_modules)[^.]*)$",
+            "destination": "/index.html"
         }
     ]
 }
