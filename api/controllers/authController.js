@@ -14,7 +14,7 @@ export const signup = async (req, res) => {
                 .json({ message: "Please fill out all the fields" });
         }
 
-        const userExists = User.findOne({ email });
+        const userExists = await User.findOne({ email });
 
         if (userExists) {
             return res.status(500).json({ message: "User already exists" });
