@@ -14,9 +14,16 @@
         pointer-events: none;
     }
 
+    .white {
+        flex-direction: column-reverse;
+    }
+
+    .black {
+        flex-direction: column;
+    }
+
     .puzzles-chessboard {
         display: flex;
-        flex-direction: column-reverse;
         border-radius: 1.25rem;
         overflow: hidden;
         -webkit-user-select: none;
@@ -102,26 +109,6 @@
                 bottom: 0;
                 right: 0;
                 rotate: 270deg;
-            }
-        }
-    }
-
-    .white {
-        rotate: 0deg;
-
-        .piece {
-            img {
-                rotate: 0deg;
-            }
-        }
-    }
-
-    .black {
-        rotate: 180deg;
-
-        .piece {
-            img {
-                rotate: 180deg;
             }
         }
     }

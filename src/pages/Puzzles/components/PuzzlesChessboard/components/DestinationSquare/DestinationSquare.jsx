@@ -1,8 +1,21 @@
 import { useDroppable } from "@dnd-kit/react";
 
-const DestinationSquare = ({ square, squareWidth, files, movePiece }) => {
-    const fileNumber = files.indexOf(square.split("")[0]);
-    const rankNumber = 7 - Number(square.split("")[1] - 1);
+const DestinationSquare = ({
+    square,
+    squareWidth,
+    files,
+    movePiece,
+    color,
+}) => {
+    console.log(color);
+    const fileNumber =
+        color == "white"
+            ? files.indexOf(square.split("")[0])
+            : 7 - files.indexOf(square.split("")[0]);
+    const rankNumber =
+        color == "white"
+            ? 7 - Number(square.split("")[1] - 1)
+            : Number(square.split("")[1] - 1);
 
     return (
         <div

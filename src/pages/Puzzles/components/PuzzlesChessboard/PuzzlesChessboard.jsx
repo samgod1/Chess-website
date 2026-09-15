@@ -920,6 +920,10 @@ const PuzzlesChessboard = () => {
                         });
                     }
                 }}
+                onDragOver={({ operation }) => {
+                    const { source, target } = operation;
+                    console.log(`${source.id} is over ${target?.id}`);
+                }}
                 onDragEnd={({ operation }) => {
                     const { source, target } = operation;
 
@@ -955,57 +959,107 @@ const PuzzlesChessboard = () => {
                         //Alternating ranks
                         return i % 2 == 0 ? (
                             <div className="rank" key={i}>
-                                {files.map((file, i) => {
-                                    //Alternating squares
-                                    return i % 2 == 0 ? (
-                                        <Square
-                                            squareColor="dark"
-                                            file={file}
-                                            rank={rank}
-                                            handleSquareClick={
-                                                handleSquareClick
-                                            }
-                                            selectedPiece={selectedPiece}
-                                        />
-                                    ) : (
-                                        <Square
-                                            squareColor="light"
-                                            file={file}
-                                            rank={rank}
-                                            handleSquareClick={
-                                                handleSquareClick
-                                            }
-                                            selectedPiece={selectedPiece}
-                                        />
-                                    );
-                                })}
+                                {color == "white"
+                                    ? files.map((file, i) => {
+                                          //Alternating squares
+                                          return i % 2 == 0 ? (
+                                              <Square
+                                                  squareColor="dark"
+                                                  file={file}
+                                                  rank={rank}
+                                                  handleSquareClick={
+                                                      handleSquareClick
+                                                  }
+                                                  selectedPiece={selectedPiece}
+                                              />
+                                          ) : (
+                                              <Square
+                                                  squareColor="light"
+                                                  file={file}
+                                                  rank={rank}
+                                                  handleSquareClick={
+                                                      handleSquareClick
+                                                  }
+                                                  selectedPiece={selectedPiece}
+                                              />
+                                          );
+                                      })
+                                    : files.toReversed().map((file, i) => {
+                                          //Alternating squares
+                                          return i % 2 == 0 ? (
+                                              <Square
+                                                  squareColor="dark"
+                                                  file={file}
+                                                  rank={rank}
+                                                  handleSquareClick={
+                                                      handleSquareClick
+                                                  }
+                                                  selectedPiece={selectedPiece}
+                                              />
+                                          ) : (
+                                              <Square
+                                                  squareColor="light"
+                                                  file={file}
+                                                  rank={rank}
+                                                  handleSquareClick={
+                                                      handleSquareClick
+                                                  }
+                                                  selectedPiece={selectedPiece}
+                                              />
+                                          );
+                                      })}
                             </div>
                         ) : (
                             <div className="rank" key={i}>
-                                {files.map((file, i) => {
-                                    // Alternating squares
-                                    return (i + 1) % 2 == 0 ? (
-                                        <Square
-                                            squareColor="dark"
-                                            file={file}
-                                            rank={rank}
-                                            handleSquareClick={
-                                                handleSquareClick
-                                            }
-                                            selectedPiece={selectedPiece}
-                                        />
-                                    ) : (
-                                        <Square
-                                            squareColor="light"
-                                            file={file}
-                                            rank={rank}
-                                            handleSquareClick={
-                                                handleSquareClick
-                                            }
-                                            selectedPiece={selectedPiece}
-                                        />
-                                    );
-                                })}
+                                {color == "white"
+                                    ? files.map((file, i) => {
+                                          // Alternating squares
+                                          return (i + 1) % 2 == 0 ? (
+                                              <Square
+                                                  squareColor="dark"
+                                                  file={file}
+                                                  rank={rank}
+                                                  handleSquareClick={
+                                                      handleSquareClick
+                                                  }
+                                                  selectedPiece={selectedPiece}
+                                              />
+                                          ) : (
+                                              <Square
+                                                  squareColor="light"
+                                                  file={file}
+                                                  rank={rank}
+                                                  handleSquareClick={
+                                                      handleSquareClick
+                                                  }
+                                                  selectedPiece={selectedPiece}
+                                              />
+                                          );
+                                      })
+                                    : files.toReversed().map((file, i) => {
+                                          // Alternating squares
+                                          return (i + 1) % 2 == 0 ? (
+                                              <Square
+                                                  squareColor="dark"
+                                                  file={file}
+                                                  rank={rank}
+                                                  handleSquareClick={
+                                                      handleSquareClick
+                                                  }
+                                                  selectedPiece={selectedPiece}
+                                              />
+                                          ) : (
+                                              <Square
+                                                  squareColor="light"
+                                                  file={file}
+                                                  rank={rank}
+                                                  handleSquareClick={
+                                                      handleSquareClick
+                                                  }
+                                                  selectedPiece={selectedPiece}
+                                              />
+                                          );
+                                      })}
                             </div>
                         );
                     })}
@@ -1026,6 +1080,7 @@ const PuzzlesChessboard = () => {
                                     handlePieceClick={handlePieceClick}
                                     isDragging={isDragging}
                                     hasPuzzleStarted={hasPuzzleStarted}
+                                    color={color}
                                 />
                             );
                         })}
@@ -1036,6 +1091,7 @@ const PuzzlesChessboard = () => {
                             squareWidth={squareWidth}
                             files={files}
                             movePiece={movePiece}
+                            color={color}
                         />
                     ))}
                     {/* Mapping out capture squares */}
@@ -1045,6 +1101,7 @@ const PuzzlesChessboard = () => {
                             squareWidth={squareWidth}
                             files={files}
                             capturePiece={capturePiece}
+                            color={color}
                         />
                     ))}
                 </div>

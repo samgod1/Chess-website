@@ -12,9 +12,16 @@ const Piece = ({
     handlePieceClick,
     isDragging,
     hasPuzzleStarted,
+    color,
 }) => {
-    let coordOfFile = files.indexOf(piece.square.split("")[0]);
-    let coordOfRank = 7 - ranks.indexOf(piece.square.split("")[1]);
+    let coordOfFile =
+        color == "white"
+            ? files.indexOf(piece.square.split("")[0])
+            : 7 - files.indexOf(piece.square.split("")[0]);
+    let coordOfRank =
+        color == "white"
+            ? 7 - ranks.indexOf(piece.square.split("")[1])
+            : ranks.indexOf(piece.square.split("")[1]);
 
     let x = coordOfFile * squareWidth;
     let y = coordOfRank * squareWidth;
