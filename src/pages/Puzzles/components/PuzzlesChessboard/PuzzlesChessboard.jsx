@@ -1,11 +1,17 @@
 import { useState, useRef, useEffect, useContext } from "react";
 import gsap from "gsap";
+import { useDraggable } from "@dnd-kit/react";
 
 import "./PuzzlesChessboard.css";
 import Coords from "./components/Coords/Coords";
 import { puzzles, pieceImages } from "../../../../constants.js";
 import { PuzzlesContext, UserContext } from "../../../../contexts/index.js";
 import updatePuzzleLevel from "../../../../apis/user/updatePuzzleLevel.js";
+import Piece from "./components/Piece/Piece.jsx";
+import Square from "./components/Square/Square.jsx";
+import { DragDropProvider } from "@dnd-kit/react";
+import DestinationSquare from "./components/DestinationSquare/DestinationSquare.jsx";
+import CaptureSquare from "./components/CaptureSquare/CaptureSquare.jsx";
 
 const PuzzlesChessboard = () => {
     const {
@@ -69,6 +75,7 @@ const PuzzlesChessboard = () => {
     const [userMoveIndex, setUserMoveIndex] = useState(1);
     const [opponentMoveIndex, setOpponentMoveIndex] = useState(0);
     const [hasPlacedPieces, setHasPlacedPieces] = useState(false);
+    const [isDragging, setIsDragging] = useState(false);
     const [resetBoardComplete, setResetBoardComplete] = useState(false);
     const [colorChanged, setColorChanged] = useState(false);
 
@@ -846,6 +853,7 @@ const PuzzlesChessboard = () => {
 
     useEffect(() => {
         setHasPlacedPieces(true);
+        setIsDragging(false);
     }, [pieces]);
 
     useEffect(() => {
@@ -899,161 +907,148 @@ const PuzzlesChessboard = () => {
             className="puzzles-chessboard-container"
             ref={chessboardContainerRef}
         >
-            <div
-                className={`puzzles-chessboard ${color}`}
-                style={{ height: chessboardSize, width: chessboardSize }}
+            <DragDropProvider
+                onDragStart={({ operation }) => {
+                    const { source } = operation;
+                    setIsDragging(true);
+                    const dragPiece = pieces.find((p) => p.id === source.id);
+                    if (dragPiece) {
+                        setSelectedPiece(dragPiece);
+                        gsap.to(pieceRefs.current[source.id], {
+                            backgroundColor: "var(--c-highlight)",
+                            duration: 0,
+                        });
+                    }
+                }}
+                onDragEnd={({ operation }) => {
+                    const { source, target } = operation;
+
+                    if (target) {
+                        const destination = target.id;
+
+                        // Separate functionality for dropping piece on destination or capture square
+                        if (destinationSquares.includes(destination)) {
+                            movePiece(destination);
+                            return;
+                        }
+
+                        if (captureSquares.includes(destination)) {
+                            capturePiece(destination);
+                            return;
+                        }
+
+                        if (selectedPiece.square != target.id) {
+                            resetSquares();
+                            return;
+                        }
+                    } else {
+                        resetSquares();
+                    }
+                }}
             >
-                {/* Ranks and Files */}
-                {ranks.map((rank, i) => {
-                    //Alternating ranks
-                    return i % 2 == 0 ? (
-                        <div className="rank" key={i}>
-                            {files.map((file, i) => {
-                                //Alternating squares
-                                return i % 2 == 0 ? (
-                                    <div
-                                        className="square dark"
-                                        id={file + rank}
-                                        onClick={handleSquareClick}
-                                        key={i}
-                                    ></div>
-                                ) : (
-                                    <div
-                                        className="square light"
-                                        id={file + rank}
-                                        onClick={handleSquareClick}
-                                        key={i}
-                                    ></div>
-                                );
-                            })}
-                        </div>
-                    ) : (
-                        <div className="rank" key={i}>
-                            {files.map((file, i) => {
-                                // Alternating squares
-                                return (i + 1) % 2 == 0 ? (
-                                    <div
-                                        className="square dark"
-                                        id={file + rank}
-                                        onClick={handleSquareClick}
-                                        key={i}
-                                    ></div>
-                                ) : (
-                                    <div
-                                        className="square light"
-                                        id={file + rank}
-                                        onClick={handleSquareClick}
-                                        key={i}
-                                    ></div>
-                                );
-                            })}
-                        </div>
-                    );
-                })}
-
-                {/* Coordinates */}
-                <Coords files={files} ranks={ranks} color={color} />
-
-                {/* Mapping out pieces*/}
-                {pieces.length > 0 &&
-                    squareWidth > 0 &&
-                    pieces.map((piece) => {
-                        let coordOfFile = files.indexOf(
-                            piece.square.split("")[0],
-                        );
-                        let coordOfRank =
-                            7 - ranks.indexOf(piece.square.split("")[1]);
-
-                        let x = coordOfFile * squareWidth;
-                        let y = coordOfRank * squareWidth;
-
-                        return (
-                            <div
-                                key={piece.id}
-                                className={"piece"}
-                                style={{
-                                    transform: `translate(${x}px, ${y}px)`,
-                                    transition: hasPlacedPieces
-                                        ? "transform 0.1s ease-in-out"
-                                        : "none",
-                                }}
-                                onClick={() => {
-                                    handlePieceClick(piece);
-                                }}
-                            >
-                                <img
-                                    src={`/images/chess-piece-set/${pieceImages[piece.pieceNotation]}`}
-                                    alt="piece"
-                                    ref={(element) => {
-                                        if (element)
-                                            pieceRefs.current[piece.id] =
-                                                element;
-                                        else delete pieceRefs.current[piece.id];
-                                    }}
-                                />
+                <div
+                    className={`puzzles-chessboard ${color}`}
+                    style={{ height: chessboardSize, width: chessboardSize }}
+                >
+                    {/* Ranks and Files */}
+                    {ranks.map((rank, i) => {
+                        //Alternating ranks
+                        return i % 2 == 0 ? (
+                            <div className="rank" key={i}>
+                                {files.map((file, i) => {
+                                    //Alternating squares
+                                    return i % 2 == 0 ? (
+                                        <Square
+                                            squareColor="dark"
+                                            file={file}
+                                            rank={rank}
+                                            handleSquareClick={
+                                                handleSquareClick
+                                            }
+                                            selectedPiece={selectedPiece}
+                                        />
+                                    ) : (
+                                        <Square
+                                            squareColor="light"
+                                            file={file}
+                                            rank={rank}
+                                            handleSquareClick={
+                                                handleSquareClick
+                                            }
+                                            selectedPiece={selectedPiece}
+                                        />
+                                    );
+                                })}
+                            </div>
+                        ) : (
+                            <div className="rank" key={i}>
+                                {files.map((file, i) => {
+                                    // Alternating squares
+                                    return (i + 1) % 2 == 0 ? (
+                                        <Square
+                                            squareColor="dark"
+                                            file={file}
+                                            rank={rank}
+                                            handleSquareClick={
+                                                handleSquareClick
+                                            }
+                                            selectedPiece={selectedPiece}
+                                        />
+                                    ) : (
+                                        <Square
+                                            squareColor="light"
+                                            file={file}
+                                            rank={rank}
+                                            handleSquareClick={
+                                                handleSquareClick
+                                            }
+                                            selectedPiece={selectedPiece}
+                                        />
+                                    );
+                                })}
                             </div>
                         );
                     })}
-
-                {/* Mapping out destination squares */}
-                {destinationSquares.map((square, i) => {
-                    const fileNumber = files.indexOf(square.split("")[0]);
-                    const rankNumber = 7 - Number(square.split("")[1] - 1);
-
-                    return (
-                        <div
-                            className="destSquare"
-                            style={{
-                                transform: `translate(${fileNumber * squareWidth}px, ${rankNumber * squareWidth}px)`,
-                            }}
-                            key={i}
-                            squareid={square}
-                            onClick={() => {
-                                movePiece(square);
-                            }}
-                        >
-                            <img src="/images/dot.png" alt="dot" />
-                        </div>
-                    );
-                })}
-
-                {/* Mapping out capture squares */}
-                {captureSquares.map((square, i) => {
-                    const fileNumber = files.indexOf(square.split("")[0]);
-                    const rankNumber = 7 - Number(square.split("")[1] - 1);
-
-                    return (
-                        <div
-                            className="captureSquare"
-                            style={{
-                                transform: `translate(${fileNumber * squareWidth}px, ${rankNumber * squareWidth}px)`,
-                            }}
-                            key={i}
-                            squareid={square}
-                            onClick={() => {
-                                capturePiece(square);
-                            }}
-                        >
-                            <img
-                                className="top-left"
-                                src="/images/triangle.png"
-                            />
-                            <img
-                                className="top-right"
-                                src="/images/triangle.png"
-                            />
-                            <img
-                                className="bottom-left"
-                                src="/images/triangle.png"
-                            />
-                            <img
-                                className="bottom-right"
-                                src="/images/triangle.png"
-                            />
-                        </div>
-                    );
-                })}
-            </div>
+                    {/* Coordinates */}
+                    <Coords files={files} ranks={ranks} color={color} />
+                    {/* Mapping out pieces*/}
+                    {pieces.length > 0 &&
+                        squareWidth > 0 &&
+                        pieces.map((piece) => {
+                            return (
+                                <Piece
+                                    piece={piece}
+                                    hasPlacedPieces={hasPlacedPieces}
+                                    pieceRefs={pieceRefs}
+                                    files={files}
+                                    ranks={ranks}
+                                    squareWidth={squareWidth}
+                                    handlePieceClick={handlePieceClick}
+                                    isDragging={isDragging}
+                                    hasPuzzleStarted={hasPuzzleStarted}
+                                />
+                            );
+                        })}
+                    {/* Mapping out destination squares */}
+                    {destinationSquares.map((square) => (
+                        <DestinationSquare
+                            square={square}
+                            squareWidth={squareWidth}
+                            files={files}
+                            movePiece={movePiece}
+                        />
+                    ))}
+                    {/* Mapping out capture squares */}
+                    {captureSquares.map((square) => (
+                        <CaptureSquare
+                            square={square}
+                            squareWidth={squareWidth}
+                            files={files}
+                            capturePiece={capturePiece}
+                        />
+                    ))}
+                </div>
+            </DragDropProvider>
             <audio src="/sounds/move-piece.mp3" ref={moveAudioRef} />
             <audio src="/sounds/capture-piece.mp3" ref={captureAudioRef} />
             <audio

@@ -2,7 +2,6 @@ import User from "../schema/userSchema.js";
 
 const getUser = async (req, res) => {
     try {
-        console.log("helo");
         const userId = req.userId;
 
         const user = await User.findOne({ _id: userId }).select("-password");
