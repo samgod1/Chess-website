@@ -81,6 +81,7 @@ const PuzzlesChessboard = () => {
 
     const chessboardContainerRef = useRef(null);
     const pieceRefs = useRef({});
+    const squareRefs = useRef({});
     const moveAudioRef = useRef(null);
     const captureAudioRef = useRef(null);
     const puzzleCompleteAudioRef = useRef(null);
@@ -123,7 +124,7 @@ const PuzzlesChessboard = () => {
         // Don't allow user to select opponent's piece
         if (pieceColor === color) {
             // Change the background chessboardColor of selected piece
-            gsap.to(pieceRefs.current[clickedPiece.id], {
+            gsap.to(`#${clickedPiece.square}`, {
                 backgroundColor: "var(--c-highlight)",
                 duration: 0,
             });
@@ -143,11 +144,12 @@ const PuzzlesChessboard = () => {
         setSelectedPiece(null);
         setCaptureSquares([]);
         // Change the background chessboardColor of selected piece
-        if (selectedPiece)
-            gsap.to(pieceRefs.current[selectedPiece.id], {
-                backgroundColor: "",
+        if (selectedPiece) {
+            gsap.to(`#${selectedPiece.square}`, {
+                clearProps: "backgroundColor",
                 duration: 0,
             });
+        }
     }
 
     function movePiece(destination) {
@@ -307,7 +309,7 @@ const PuzzlesChessboard = () => {
         if (isMoveCorrect) {
             // The 100 ms delay for the transition piece move transition to end
             setTimeout(() => {
-                playCorrectAnimation();
+                playCorrectAnimation(destination);
             }, 100);
         } else {
             setHasPuzzleStarted(false);
@@ -319,8 +321,8 @@ const PuzzlesChessboard = () => {
         }
     }
 
-    function playCorrectAnimation() {
-        gsap.to(pieceRefs.current[selectedPiece.id], {
+    function playCorrectAnimation(destination) {
+        gsap.to(`#${destination}`, {
             backgroundColor: "var(--c-green)",
             duration: 0.2,
             yoyo: true,
@@ -334,10 +336,10 @@ const PuzzlesChessboard = () => {
         });
     }
 
-    function playIncorrectAnimation() {
-        gsap.to(pieceRefs.current[selectedPiece.id], {
-            backgroundColor: "var(--c-red)",
-            duration: 0.3,
+    function playIncorrectAnimation(destination) {
+        gsap.to(`#${destination}`, {
+            backgroundColor: "#ff0f0f",
+            duration: 0.2,
             yoyo: true,
             repeat: 1,
         });
@@ -914,7 +916,7 @@ const PuzzlesChessboard = () => {
                     const dragPiece = pieces.find((p) => p.id === source.id);
                     if (dragPiece) {
                         setSelectedPiece(dragPiece);
-                        gsap.to(pieceRefs.current[source.id], {
+                        gsap.to(`#${dragPiece.square}`, {
                             backgroundColor: "var(--c-highlight)",
                             duration: 0,
                         });
@@ -968,7 +970,6 @@ const PuzzlesChessboard = () => {
                                                   handleSquareClick={
                                                       handleSquareClick
                                                   }
-                                                  selectedPiece={selectedPiece}
                                                   key={file + rank}
                                               />
                                           ) : (
@@ -979,7 +980,6 @@ const PuzzlesChessboard = () => {
                                                   handleSquareClick={
                                                       handleSquareClick
                                                   }
-                                                  selectedPiece={selectedPiece}
                                                   key={file + rank}
                                               />
                                           );
@@ -994,7 +994,6 @@ const PuzzlesChessboard = () => {
                                                   handleSquareClick={
                                                       handleSquareClick
                                                   }
-                                                  selectedPiece={selectedPiece}
                                                   key={file + rank}
                                               />
                                           ) : (
@@ -1005,7 +1004,6 @@ const PuzzlesChessboard = () => {
                                                   handleSquareClick={
                                                       handleSquareClick
                                                   }
-                                                  selectedPiece={selectedPiece}
                                                   key={file + rank}
                                               />
                                           );
@@ -1024,8 +1022,8 @@ const PuzzlesChessboard = () => {
                                                   handleSquareClick={
                                                       handleSquareClick
                                                   }
-                                                  selectedPiece={selectedPiece}
                                                   key={file + rank}
+                                                  squareRefs={squareRefs}
                                               />
                                           ) : (
                                               <Square
@@ -1035,7 +1033,6 @@ const PuzzlesChessboard = () => {
                                                   handleSquareClick={
                                                       handleSquareClick
                                                   }
-                                                  selectedPiece={selectedPiece}
                                                   key={file + rank}
                                               />
                                           );
@@ -1050,7 +1047,6 @@ const PuzzlesChessboard = () => {
                                                   handleSquareClick={
                                                       handleSquareClick
                                                   }
-                                                  selectedPiece={selectedPiece}
                                                   key={file + rank}
                                               />
                                           ) : (
@@ -1061,7 +1057,6 @@ const PuzzlesChessboard = () => {
                                                   handleSquareClick={
                                                       handleSquareClick
                                                   }
-                                                  selectedPiece={selectedPiece}
                                                   key={file + rank}
                                               />
                                           );
