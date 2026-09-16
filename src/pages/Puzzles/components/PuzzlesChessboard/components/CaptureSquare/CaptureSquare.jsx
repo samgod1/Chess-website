@@ -17,7 +17,6 @@ const CaptureSquare = ({ square, squareWidth, files, capturePiece, color }) => {
             style={{
                 transform: `translate(${fileNumber * squareWidth}px, ${rankNumber * squareWidth}px)`,
             }}
-            key={square}
             squareid={square}
             onClick={() => {
                 capturePiece(square);

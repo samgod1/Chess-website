@@ -7,7 +7,6 @@ const DestinationSquare = ({
     movePiece,
     color,
 }) => {
-    console.log(color);
     const fileNumber =
         color == "white"
             ? files.indexOf(square.split("")[0])
@@ -23,7 +22,6 @@ const DestinationSquare = ({
             style={{
                 transform: `translate(${fileNumber * squareWidth}px, ${rankNumber * squareWidth}px)`,
             }}
-            key={square}
             squareid={square}
             onClick={() => {
                 movePiece(square);

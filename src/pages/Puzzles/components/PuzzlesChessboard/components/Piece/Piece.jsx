@@ -33,7 +33,6 @@ const Piece = ({
 
     return (
         <div
-            key={piece.id}
             className={"piece"}
             style={{
                 transform: `translate(${x}px, ${y}px)`,

@@ -246,16 +246,6 @@ const PuzzlesChessboard = () => {
             return;
         }
 
-        // Moving the opponent piece
-        setPieces((prevPieces) => {
-            return prevPieces.map((piece) => {
-                if (piece.square === position) {
-                    return { ...piece, square: destination };
-                }
-                return piece;
-            });
-        });
-
         // Capture piece of player if there's any
         setPieces((prevPieces) => {
             let isCapturing = false;
@@ -282,6 +272,16 @@ const PuzzlesChessboard = () => {
             }
 
             return updatedPieces;
+        });
+
+        // Moving the opponent piece
+        setPieces((prevPieces) => {
+            return prevPieces.map((piece) => {
+                if (piece.square === position) {
+                    return { ...piece, square: destination };
+                }
+                return piece;
+            });
         });
 
         setIsHintButtonDisabled(false);
@@ -920,15 +920,13 @@ const PuzzlesChessboard = () => {
                         });
                     }
                 }}
-                onDragOver={({ operation }) => {
-                    const { source, target } = operation;
-                    console.log(`${source.id} is over ${target?.id}`);
-                }}
                 onDragEnd={({ operation }) => {
                     const { source, target } = operation;
 
                     if (target) {
                         const destination = target.id;
+
+                        setIsDragging(false);
 
                         // Separate functionality for dropping piece on destination or capture square
                         if (destinationSquares.includes(destination)) {
@@ -971,6 +969,7 @@ const PuzzlesChessboard = () => {
                                                       handleSquareClick
                                                   }
                                                   selectedPiece={selectedPiece}
+                                                  key={file + rank}
                                               />
                                           ) : (
                                               <Square
@@ -981,6 +980,7 @@ const PuzzlesChessboard = () => {
                                                       handleSquareClick
                                                   }
                                                   selectedPiece={selectedPiece}
+                                                  key={file + rank}
                                               />
                                           );
                                       })
@@ -995,6 +995,7 @@ const PuzzlesChessboard = () => {
                                                       handleSquareClick
                                                   }
                                                   selectedPiece={selectedPiece}
+                                                  key={file + rank}
                                               />
                                           ) : (
                                               <Square
@@ -1005,6 +1006,7 @@ const PuzzlesChessboard = () => {
                                                       handleSquareClick
                                                   }
                                                   selectedPiece={selectedPiece}
+                                                  key={file + rank}
                                               />
                                           );
                                       })}
@@ -1023,6 +1025,7 @@ const PuzzlesChessboard = () => {
                                                       handleSquareClick
                                                   }
                                                   selectedPiece={selectedPiece}
+                                                  key={file + rank}
                                               />
                                           ) : (
                                               <Square
@@ -1033,6 +1036,7 @@ const PuzzlesChessboard = () => {
                                                       handleSquareClick
                                                   }
                                                   selectedPiece={selectedPiece}
+                                                  key={file + rank}
                                               />
                                           );
                                       })
@@ -1047,6 +1051,7 @@ const PuzzlesChessboard = () => {
                                                       handleSquareClick
                                                   }
                                                   selectedPiece={selectedPiece}
+                                                  key={file + rank}
                                               />
                                           ) : (
                                               <Square
@@ -1057,6 +1062,7 @@ const PuzzlesChessboard = () => {
                                                       handleSquareClick
                                                   }
                                                   selectedPiece={selectedPiece}
+                                                  key={file + rank}
                                               />
                                           );
                                       })}
@@ -1081,6 +1087,7 @@ const PuzzlesChessboard = () => {
                                     isDragging={isDragging}
                                     hasPuzzleStarted={hasPuzzleStarted}
                                     color={color}
+                                    key={piece.id}
                                 />
                             );
                         })}
@@ -1092,6 +1099,7 @@ const PuzzlesChessboard = () => {
                             files={files}
                             movePiece={movePiece}
                             color={color}
+                            key={square}
                         />
                     ))}
                     {/* Mapping out capture squares */}
@@ -1102,6 +1110,7 @@ const PuzzlesChessboard = () => {
                             files={files}
                             capturePiece={capturePiece}
                             color={color}
+                            key={square}
                         />
                     ))}
                 </div>

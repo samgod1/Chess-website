@@ -16,7 +16,6 @@ const Square = ({
             className={"square " + squareColor}
             id={file + rank}
             onClick={handleSquareClick}
-            key={file + rank}
             ref={ref}
         ></div>
     );
