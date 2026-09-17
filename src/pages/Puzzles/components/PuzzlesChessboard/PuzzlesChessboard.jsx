@@ -3,7 +3,7 @@ import gsap from "gsap";
 import { useDraggable } from "@dnd-kit/react";
 
 import "./PuzzlesChessboard.css";
-import Coords from "./components/Coords/Coords";
+import PuzzlesCoords from "./components/PuzzlesCoords/PuzzlesCoords.jsx";
 import { puzzles, pieceImages } from "../../../../constants.js";
 import { PuzzlesContext, UserContext } from "../../../../contexts/index.js";
 import updatePuzzleLevel from "../../../../apis/user/updatePuzzleLevel.js";
@@ -885,6 +885,10 @@ const PuzzlesChessboard = () => {
     }, [showHint]);
 
     useEffect(() => {
+        console.log(isDragging);
+    }, [isDragging]);
+
+    useEffect(() => {
         calculateChessboardSize();
         setSelectedLevel(user.puzzleLevel);
         setHighestLevelReached(user.puzzleLevel);
@@ -928,8 +932,6 @@ const PuzzlesChessboard = () => {
                     if (target) {
                         const destination = target.id;
 
-                        setIsDragging(false);
-
                         // Separate functionality for dropping piece on destination or capture square
                         if (destinationSquares.includes(destination)) {
                             movePiece(destination);
@@ -945,6 +947,8 @@ const PuzzlesChessboard = () => {
                             resetSquares();
                             return;
                         }
+
+                        setIsDragging(false);
                     } else {
                         resetSquares();
                     }
@@ -988,7 +992,7 @@ const PuzzlesChessboard = () => {
                                           //Alternating squares
                                           return i % 2 == 0 ? (
                                               <Square
-                                                  squareColor="dark"
+                                                  squareColor="light"
                                                   file={file}
                                                   rank={rank}
                                                   handleSquareClick={
@@ -998,7 +1002,7 @@ const PuzzlesChessboard = () => {
                                               />
                                           ) : (
                                               <Square
-                                                  squareColor="light"
+                                                  squareColor="dark"
                                                   file={file}
                                                   rank={rank}
                                                   handleSquareClick={
@@ -1041,7 +1045,7 @@ const PuzzlesChessboard = () => {
                                           // Alternating squares
                                           return (i + 1) % 2 == 0 ? (
                                               <Square
-                                                  squareColor="dark"
+                                                  squareColor="light"
                                                   file={file}
                                                   rank={rank}
                                                   handleSquareClick={
@@ -1051,7 +1055,7 @@ const PuzzlesChessboard = () => {
                                               />
                                           ) : (
                                               <Square
-                                                  squareColor="light"
+                                                  squareColor="dark"
                                                   file={file}
                                                   rank={rank}
                                                   handleSquareClick={
@@ -1065,7 +1069,7 @@ const PuzzlesChessboard = () => {
                         );
                     })}
                     {/* Coordinates */}
-                    <Coords files={files} ranks={ranks} color={color} />
+                    <PuzzlesCoords files={files} ranks={ranks} color={color} />
                     {/* Mapping out pieces*/}
                     {pieces.length > 0 &&
                         squareWidth > 0 &&

@@ -1,4 +1,4 @@
-import "./Coords.css";
+import "./PuzzlesCoords.css";
 
 const Coords = ({ files, ranks, color }) => {
     return (
