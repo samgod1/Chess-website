@@ -1,6 +1,6 @@
-import "./Coords.css";
+import "./VisionCoords.css";
 
-const Coords = ({ files, ranks, color }) => {
+const VisionCoords = ({ files, ranks, color }) => {
     return (
         <div className={`coords ${color}`}>
             <div className="files">
@@ -55,4 +55,4 @@ const Coords = ({ files, ranks, color }) => {
     );
 };
 
-export default Coords;
+export default VisionCoords;

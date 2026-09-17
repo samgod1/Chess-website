@@ -1,6 +1,6 @@
 import "./PuzzlesCoords.css";
 
-const Coords = ({ files, ranks, color }) => {
+const PuzzlesCoords = ({ files, ranks, color }) => {
     return (
         <div className={`coords ${color}`}>
             <div className="files">
@@ -55,4 +55,4 @@ const Coords = ({ files, ranks, color }) => {
     );
 };
 
-export default Coords;
+export default PuzzlesCoords;

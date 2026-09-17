@@ -3,7 +3,7 @@ import gsap from "gsap";
 
 import "./VisionChessboard.css";
 import { UserContext, VisionContext } from "../../../../contexts";
-import Coords from "./components/Coords/Coords";
+import VisionCoords from "./components/VisionCoords/VisionCoords";
 
 const VisionChessboard = () => {
     const [files, setFiles] = useState([
@@ -237,7 +237,7 @@ const VisionChessboard = () => {
                 })}
 
                 {isCoordinates && (
-                    <Coords files={files} ranks={ranks} color={color} />
+                    <VisionCoords files={files} ranks={ranks} color={color} />
                 )}
             </div>
             <audio src="/sounds/success.mp3" ref={correctAudioRef} />
