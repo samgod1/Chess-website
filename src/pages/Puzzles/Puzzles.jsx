@@ -6,11 +6,14 @@ import "./Puzzles.css";
 import PuzzlesChessboard from "./components/PuzzlesChessboard/PuzzlesChessboard";
 import PuzzlesSidebar from "./components/PuzzlesSidebar/PuzzlesSidebar";
 import { UserContext, VisionContext, PuzzlesContext } from "../../contexts";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
 
 const Puzzles = () => {
     const navigate = useNavigate();
 
     const { user, loading } = useContext(UserContext);
+    const { hasPuzzleStarted } = useContext(PuzzlesContext);
 
     useEffect(() => {
         if (!loading && !user) {

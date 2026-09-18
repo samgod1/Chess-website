@@ -113,3 +113,9 @@
         }
     }
 }
+
+@media (width <= 425px) {
+    .puzzles-chessboard-container {
+        /* visibility: hidden; */
+    }
+}

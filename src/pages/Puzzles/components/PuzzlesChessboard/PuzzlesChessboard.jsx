@@ -865,6 +865,20 @@ const PuzzlesChessboard = () => {
         }
     }, [sidebarMode]);
 
+    useEffect(() => {
+        if (chessboardSize) {
+            const mm = gsap.matchMedia();
+
+            mm.add("(max-width: 768px)", () => {
+                gsap.set(".puzzles-chessboard-container", {
+                    display: sidebarMode != "notStarted" ? "block" : "none",
+                });
+            });
+
+            return () => mm.revert();
+        }
+    }, [chessboardSize, sidebarMode]);
+
     // Hint related stuff
     useEffect(() => {
         if (showHint) {
@@ -883,10 +897,6 @@ const PuzzlesChessboard = () => {
             setHintPiece(correctPiece);
         }
     }, [showHint]);
-
-    useEffect(() => {
-        console.log(isDragging);
-    }, [isDragging]);
 
     useEffect(() => {
         calculateChessboardSize();

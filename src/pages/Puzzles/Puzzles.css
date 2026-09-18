@@ -6,4 +6,16 @@
     display: flex;
     gap: 2rem;
     font-family: "Geist";
+    overflow: hidden;
+}
+
+@media (width <= 425px) {
+    .puzzles-page {
+        padding: 0rem 0.75rem;
+        padding-top: calc(5.5rem + 1rem) /* Height of navbar + padding */;
+        padding-bottom: 1rem;
+        flex-direction: column;
+        min-height: 100vh;
+        gap: 1rem;
+    }
 }

@@ -22,7 +22,6 @@
             border-radius: 1.25rem;
             border: 1px solid var(--c-secondary-dark-2);
             font-size: 1.5rem;
-            aspect-ratio: 1/1;
             transition: all 0.2s ease;
         }
 
@@ -107,6 +106,29 @@
             background-color: var(--c-secondary-dark-3);
             color: var(--c-secondary-dark);
             transition: all 0.2s ease;
+        }
+    }
+}
+
+@media (width <= 425px) {
+    .puzzles-sidebar-body {
+        padding: 1rem;
+
+        .levels-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(3rem, 1fr));
+            grid-template-rows: repeat(auto-fill, minmax(3rem, 1fr));
+            gap: 0.5rem;
+
+            .level-btn {
+                font-size: 1rem;
+                border-radius: 1rem;
+            }
+        }
+
+        .buttons-container {
+            button {
+            }
         }
     }
 }
