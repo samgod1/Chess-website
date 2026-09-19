@@ -7,3 +7,14 @@
     border-bottom: 1px solid var(--c-secondary-dark-1);
     padding: 1rem 2rem;
 }
+
+@media (width <= 425px) {
+    .puzzles-sidebar-header {
+        font-size: 1.25rem;
+
+        img {
+            width: 1.25rem;
+            height: 1.25rem;
+        }
+    }
+}

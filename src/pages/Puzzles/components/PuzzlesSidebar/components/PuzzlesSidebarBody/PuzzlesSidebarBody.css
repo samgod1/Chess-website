@@ -52,6 +52,13 @@
         .player-color {
             display: flex;
             gap: 0.5rem;
+            align-items: center;
+
+            .square {
+                height: 1.5rem;
+                width: 1.5rem;
+                border-radius: 0.25rem;
+            }
         }
 
         .hint-text {
@@ -107,6 +114,33 @@
             color: var(--c-secondary-dark);
             transition: all 0.2s ease;
         }
+
+        .disabled:hover {
+            background-color: var(--c-secondary-dark-3);
+        }
+    }
+}
+
+@media (width<= 768px) {
+    .puzzles-sidebar-body {
+        padding: 1rem;
+
+        .levels-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(4rem, 1fr));
+            grid-template-rows: repeat(auto-fill, minmax(4rem, 1fr));
+            gap: 0.5rem;
+
+            .level-btn {
+                font-size: 1.5rem;
+                border-radius: 1rem;
+            }
+        }
+
+        .buttons-container {
+            button {
+            }
+        }
     }
 }
 
@@ -126,8 +160,29 @@
             }
         }
 
+        .hint-container {
+            .player-color {
+                font-size: 1rem;
+
+                .square {
+                    height: 1rem;
+                    width: 1rem;
+                }
+            }
+
+            .hint-text {
+                font-size: 1rem;
+            }
+        }
+
         .buttons-container {
             button {
+                font-size: 1rem;
+
+                img {
+                    width: 1.25rem;
+                    height: 1.25rem;
+                }
             }
         }
     }

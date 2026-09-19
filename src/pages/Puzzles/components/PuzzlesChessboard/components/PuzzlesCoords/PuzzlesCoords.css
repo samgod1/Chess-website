@@ -4,6 +4,7 @@
     height: 100%;
     border-radius: 1.25rem;
     pointer-events: none;
+    z-index: 50;
 }
 
 .white {
@@ -68,5 +69,31 @@
             height: 12.5%;
             padding-top: 0.5rem;
         }
+    }
+}
+
+@media (width <= 768px) {
+    .coords {
+        font-size: clamp(0.5rem, -0.12rem + 2.332vw, 1rem);
+    }
+
+    .white,
+    .black {
+        .files {
+            .file {
+                padding-left: 0.25rem;
+            }
+        }
+        .ranks {
+            .rank {
+                padding-top: 0.25rem;
+            }
+        }
+    }
+}
+
+@media (width <= 425px) {
+    .coords {
+        font-size: 0.5rem;
     }
 }

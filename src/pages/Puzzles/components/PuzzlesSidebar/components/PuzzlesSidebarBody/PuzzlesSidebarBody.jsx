@@ -147,9 +147,6 @@ const PuzzlesSidebarBody = () => {
                         <div
                             className="square"
                             style={{
-                                height: "1.5rem",
-                                width: "1.5rem",
-                                borderRadius: "0.25rem",
                                 backgroundColor:
                                     color == "white"
                                         ? "var(--c-secondary)"

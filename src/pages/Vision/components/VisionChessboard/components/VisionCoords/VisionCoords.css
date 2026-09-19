@@ -70,3 +70,10 @@
         }
     }
 }
+
+@media (width <= 425px) {
+    .coords {
+        font-size: 0.5rem;
+        z-index: 50;
+    }
+}
