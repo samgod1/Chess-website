@@ -55,8 +55,7 @@ const PuzzlesSidebarBody = () => {
                 className: "retry-puzzle-btn grow-1 bg-gray",
                 img: "/images/retry.png",
                 onClick: () => {
-                    if (selectedLevel !== highestLevelReached)
-                        setSelectedLevel((prev) => prev - 1);
+                    setSelectedLevel((prev) => prev - 1);
                     setHasPuzzleStarted(true);
                     setSidebarMode("started");
                 },
