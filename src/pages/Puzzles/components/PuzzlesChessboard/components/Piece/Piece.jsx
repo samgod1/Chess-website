@@ -26,9 +26,14 @@ const Piece = ({
     let x = coordOfFile * squareWidth;
     let y = coordOfRank * squareWidth;
 
+    let pieceColor =
+        piece.pieceNotation == piece.pieceNotation.toUpperCase()
+            ? "white"
+            : "black";
+
     const { ref } = useDraggable({
         id: piece.id,
-        disabled: !hasPuzzleStarted,
+        disabled: !hasPuzzleStarted || pieceColor != color,
     });
 
     return (
