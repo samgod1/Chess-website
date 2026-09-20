@@ -15,6 +15,7 @@ const PuzzlesSidebarBody = () => {
         setSidebarMode,
         selectedLevel,
         setSelectedLevel,
+        secondLastLevelCompleted,
         highestLevelReached,
         hintPiece,
         showHint,
@@ -64,7 +65,13 @@ const PuzzlesSidebarBody = () => {
                 className: "next-puzzle-btn grow-3",
                 img: "/images/next.png",
                 onClick: () => {
-                    if (puzzles.length === selectedLevel) return;
+                    // Disabling next when last level is reached
+                    // Also preventing next puzzle button from not working on secondLastLevel
+                    if (
+                        puzzles.length === selectedLevel &&
+                        !secondLastLevelCompleted
+                    )
+                        return;
 
                     setHasPuzzleStarted(true);
                     setSidebarMode("started");

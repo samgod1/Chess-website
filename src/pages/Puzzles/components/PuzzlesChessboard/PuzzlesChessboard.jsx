@@ -21,6 +21,7 @@ const PuzzlesChessboard = () => {
         setHasPuzzleStarted,
         selectedLevel,
         setSelectedLevel,
+        setSecondLastLevelCompleted,
         highestLevelReached,
         setHighestLevelReached,
         sidebarMode,
@@ -236,10 +237,19 @@ const PuzzlesChessboard = () => {
 
             puzzleCompleteAudioRef.current.play();
 
+            // This is for next puzzle button to work on secondLastLevel
+            if (selectedLevel == puzzles.length - 1) {
+                setSecondLastLevelCompleted(true);
+            } else {
+                setSecondLastLevelCompleted(false);
+            }
+
             //Do nothing if it's last level
             if (puzzles.length === selectedLevel) return;
 
+            // Moving to next level
             setSelectedLevel((prev) => prev + 1);
+
             // Only update the level if user has completed their highestLevel
             if (selectedLevel === highestLevelReached) {
                 setHighestLevelReached(selectedLevel + 1);

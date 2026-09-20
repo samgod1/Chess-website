@@ -6,6 +6,8 @@ const PuzzlesContextProvider = ({ children }) => {
     const [color, setColor] = useState("white");
     const [hasPuzzleStarted, setHasPuzzleStarted] = useState(false);
     const [selectedLevel, setSelectedLevel] = useState(1);
+    const [secondLastLevelCompleted, setSecondLastLevelCompleted] =
+        useState(false);
     const [highestLevelReached, setHighestLevelReached] = useState(null);
     const [sidebarMode, setSidebarMode] = useState("notStarted");
     const [colorChangeTrigger, setColorChangeTrigger] = useState(0);
@@ -22,6 +24,8 @@ const PuzzlesContextProvider = ({ children }) => {
                 setHasPuzzleStarted,
                 selectedLevel,
                 setSelectedLevel,
+                secondLastLevelCompleted,
+                setSecondLastLevelCompleted,
                 highestLevelReached,
                 setHighestLevelReached,
                 sidebarMode,
