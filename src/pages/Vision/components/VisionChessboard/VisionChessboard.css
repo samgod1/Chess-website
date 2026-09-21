@@ -123,3 +123,25 @@
         }
     }
 }
+
+@media (width <= 1440px) {
+    .vision-chessboard-container {
+        max-height: 500px;
+        max-height: clamp(31.25rem, 0.481rem + 48.077vw, 43.75rem);
+    }
+}
+
+@media (width <= 1024px) {
+    .vision-chessboard-container {
+        max-height: 400px;
+        max-height: clamp(21.875rem, -15.625rem + 78.125vw, 34.375rem);
+    }
+}
+
+@media (width <= 768px) {
+    .vision-chessboard-container {
+        height: auto;
+        width: 100%;
+        max-height: none;
+    }
+}

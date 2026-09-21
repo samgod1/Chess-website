@@ -174,7 +174,7 @@ const puzzles = [
     "2r3k1/p4pp1/1pPR2r1/8/1P2p3/P1Q1B1pq/4PP1P/2R3K1 w - - 0 34,d6g6 h3h2 g1f1 h2h1",
     "2rq2k1/1p3p1p/p3p1pP/3pP1Q1/1P1P4/5N2/2R2PP1/6K1 b - - 0 39,d8g5 c2c8 g5d8 c8d8",
     "8/kp6/p7/8/8/2Q2b2/PPPq1P1b/R5K1 w - - 2 30,g1h2 d2f2 h2h3 f2g2 h3h4 g2g4",
-    "4rr1k/p1pp3p/1p4p1/3Q4/2P4q/8/PP2RPPP/R5K1 w - - 5 19,a1e1 h4f2 e2f2 e8e1 f2f1 e1f1",
+    "q3k1nr/1pp1nQpp/3p4/1P2p3/4P3/B1PP1b2/B5PP/5K2 b k - 0 17,e8d7 a2e6 d7d8 f7f8",
     "5r1k/5prp/1p1N1Q2/p7/1P2p3/P2n2q1/2B4R/5R1K w - - 3 32,d6f5 d3f2 h2f2 g3h3 f2h2 h3f1",
     "r2q3k/5Pb1/2n3Bp/3p2pP/pp1P2Q1/6B1/1PP5/6K1 b - - 0 39,g7d4 g4d4 c6d4 g3e5 d8f6 e5f6",
     "5R2/p2rp1k1/7p/1p3Qp1/3P1p2/1BP5/P1Pq1KPP/8 w - - 7 33,f2f3 d2e3 f3g4 e3e2 g4h3 e2h5",
@@ -185,14 +185,14 @@ const puzzles = [
     "3r2k1/R4p1p/1Q3bp1/1B1b3r/PP4q1/4P1P1/3N1PP1/1R4K1 w - - 1 28,b6f6 h5h1 g1h1 g4h3 h1g1 h3g2",
     "6k1/p2Q4/3p2p1/8/3qPn2/5P2/PPR3PP/6K1 w - - 2 37,c2f2 f4e2 g1h1 d4d1 f2f1 d1f1",
     "1r1r3k/q3Nppp/3Qb3/8/8/P2B2P1/1PP5/1K5R b - - 4 35,h7h6 h1h6 g7h6 d6e5 f7f6 e5f6",
-    "r3kb1r/5ppp/p4n1q/1p3P2/3BB1Q1/8/PPP3PP/3RR1K1 b kq - 0 18,f6g4 e4c6 e8d8 d4b6 d8c8 e1e8",
+    "Q1b2r1k/p2np2p/5bp1/q7/5P2/4B3/PPP3PP/2KR1B1R w - - 1 17,d1d7 a5e1 d7d1 e1e3 c1b1 e3b6",
     "2r1Q1k1/p4ppp/1pp5/2b3Bn/2P5/5P1q/PPP2P1P/3RR1K1 b - - 6 22,c8e8 e1e8 c5f8 e8f8 g8f8 d1d8",
     "6k1/pp2rnp1/2p5/3p3B/3P2Q1/1P6/PKPq4/5R2 b - - 3 32,f7h6 f1f8 g8f8 g4c8 e7e8 c8e8",
     "8/8/4p1p1/1r1p1kP1/1P1P1P2/6Kp/1R6/8 b - - 1 44,h3h2 b2e2 h2h1n g3f3 e6e5 e2e5",
     "5rk1/pppq2pp/8/2Q5/5B2/P5P1/1n5P/5RK1 b - - 1 31,b2a4 c5f8 g8f8 f4d6 f8g8 f1f8",
     "rnb2rk1/ppp1pp1p/6pQ/4P2P/4p3/8/PqP2PP1/3RKBNR b K - 1 12,c8f5 h6f8 g8f8 d1d8 f8g7 h5h6",
     "1r2r1kb/2q1Bp1p/3R2B1/p7/5P2/1Pp4P/P1Q3R1/1K6 b - - 0 33,h7g6 d6g6 f7g6 c2g6 h8g7 g6g7",
-    "r2q1b1r/pp2nQpk/8/3P1N1p/2Pn1PP1/N2p2P1/PP6/R1B1K2R b KQ - 0 17,e7f5 h1h5 f5h6 h5h6 h7h6 f7h5",
+    "r3r1k1/p4ppp/2p2n2/1p6/3P1qb1/2NQR3/PPB2PP1/R1B3K1 w - - 5 18,e3g3 e8e1 g1h2 e1c1 a1c1 f4h6 h2g1 h6c1",
 ];
 
 const pieceImages = {

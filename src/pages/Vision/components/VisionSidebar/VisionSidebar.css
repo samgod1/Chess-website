@@ -8,3 +8,23 @@
     display: flex;
     flex-direction: column;
 }
+
+@media (width <= 1440px) {
+    .vision-sidebar {
+        max-width: 500px;
+    }
+}
+
+@media (width <= 1024px) {
+    .vision-sidebar {
+        min-width: 250px;
+        max-width: none;
+    }
+}
+
+@media (width <= 768px) {
+    .vision-sidebar {
+        min-height: 300px;
+        height: 100%;
+    }
+}

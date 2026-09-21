@@ -145,6 +145,20 @@ const VisionChessboard = () => {
     }, [hasStarted]);
 
     useEffect(() => {
+        if (chessboardSize) {
+            const mm = gsap.matchMedia();
+
+            mm.add("(max-width: 768px)", () => {
+                gsap.set(".vision-chessboard-container", {
+                    display: hasStarted ? "block" : "none",
+                });
+            });
+
+            return () => mm.revert();
+        }
+    }, [chessboardSize, hasStarted]);
+
+    useEffect(() => {
         // Handle countdown finish
         if (countdown <= 0) {
             clearInterval(countdownInterval.current);

@@ -6,4 +6,27 @@
     display: flex;
     gap: 2rem;
     font-family: "Geist";
+    justify-content: space-evenly;
+}
+
+@media (width<= 768px) {
+    .vision-page {
+        padding: 2rem 2rem;
+        padding-top: calc(5.5rem + 2rem) /* Height of navbar + Actual padding */;
+        flex-direction: column;
+        gap: 1rem;
+        height: 100vh;
+        overflow: scroll;
+    }
+}
+
+@media (width <= 425px) {
+    .vision-page {
+        padding: 0rem 0.75rem;
+        padding-top: calc(5.5rem + 1rem) /* Height of navbar + padding */;
+        padding-bottom: 1rem;
+        flex-direction: column;
+        height: 100vh;
+        gap: 1rem;
+    }
 }

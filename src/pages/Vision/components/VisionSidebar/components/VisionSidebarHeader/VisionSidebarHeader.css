@@ -7,3 +7,33 @@
     border-bottom: 1px solid var(--c-secondary-dark-1);
     padding: 1rem 2rem;
 }
+
+@media (width <= 1024px) {
+    .vision-sidebar-header {
+        font-size: 1rem;
+        font-size: clamp(1rem, 0.25rem + 1.563vw, 1.25rem);
+        padding: 1rem;
+
+        img {
+            width: 1.5rem;
+            height: 1.5rem;
+        }
+    }
+}
+
+@media (width <= 768px) {
+    .vision-sidebar-header {
+        font-size: 2rem;
+    }
+}
+
+@media (width <= 425px) {
+    .vision-sidebar-header {
+        font-size: 1.25rem;
+
+        img {
+            width: 1.25rem;
+            height: 1.25rem;
+        }
+    }
+}
