@@ -51,7 +51,6 @@ const Signup = () => {
                     alt="signup-page-image"
                 />
             </div>
-
             {hasContinued ? (
                 <div className="form-container">
                     <form className="form" onSubmit={handleSignup}>

@@ -2,27 +2,38 @@
     padding: 3.75rem;
     background-color: var(--c-primary);
     height: 100dvh;
-    display: grid;
-    gap: 1.25rem;
-    grid-template-columns: 1fr 1fr;
     font-family: "Geist";
+    display: flex;
+    gap: 1.25rem;
 
     .img-container {
-        border-radius: 2rem;
-        overflow: hidden;
-
+        width: 45%;
         img {
+            border-radius: 2rem;
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
     }
 
+    .form-container::-webkit-scrollbar {
+        display: none;
+    }
+
     .form-container {
-        flex: 1;
         padding: 1rem;
+        height: 100%;
+        overflow-y: auto;
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+        display: flex;
+        justify-content: center;
+        width: 55%;
+        display: flex;
+        justify-content: center;
 
         .form {
+            min-height: 600px;
             color: var(--c-secondary);
             width: 100%;
             height: 100%;
@@ -30,6 +41,7 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
+            max-width: 550px;
 
             .back {
                 position: absolute;
@@ -40,6 +52,11 @@
                 left: 0;
                 cursor: pointer;
                 color: var(--c-secondary-dark);
+                transition: color 0.2s ease;
+            }
+
+            .back:hover {
+                color: var(--c-secondary-dark-1);
             }
 
             h1 {
@@ -91,11 +108,11 @@
 
                 .login-button {
                     background-color: var(--c-accent);
+                    transition: background-color 0.2s ease;
                 }
 
                 .login-button:hover {
                     background-color: var(--c-accent-dark);
-                    transition: background-color 0.2s ease;
                 }
 
                 .divider {
@@ -105,11 +122,11 @@
                 .guest-button {
                     color: var(--c-secondary-dark);
                     background-color: var(--c-primary-light-2);
+                    transition: background-color 0.2s ease;
                 }
 
                 .guest-button:hover {
                     background-color: var(--c-primary-light-1);
-                    transition: background-color 0.2s ease;
                 }
 
                 .disabled-button {
@@ -149,7 +166,7 @@
             justify-content: center;
 
             .form {
-                max-width: 500px;
+                min-height: clamp(34.375rem, 26.683rem + 12.019vw, 37.5rem);
 
                 .back {
                     font-size: 1rem;
@@ -162,6 +179,7 @@
 
                 h1 {
                     font-size: 1.5rem;
+                    font-size: clamp(1.5rem, 0.269rem + 1.923vw, 2rem);
                 }
 
                 .input-container {
@@ -171,18 +189,25 @@
 
                     .input-group {
                         label {
-                            font-size: 1.25rem;
+                            font-size: 1.5rem;
+                            font-size: clamp(
+                                1.25rem,
+                                0.019rem + 1.923vw,
+                                1.75rem
+                            );
                         }
 
                         input {
                             font-size: 1rem;
                             padding: 0.75rem;
+                            padding: clamp(0.75rem, 0.135rem + 0.962vw, 1rem);
                         }
                     }
                 }
 
                 .buttons-container {
                     font-size: 1rem;
+                    font-size: clamp(1rem, 0.385rem + 0.962vw, 1.25rem);
                     gap: 0.25rem;
                 }
             }
@@ -193,12 +218,16 @@
 @media (width <= 1024px) {
     .login-page {
         padding: 1.5rem;
-        display: flex;
         gap: 1rem;
 
         .img-container {
             width: 45%;
             height: 100%;
+
+            img {
+                border-radius: 1.25rem;
+                border-radius: clamp(1rem, -0.5rem + 3.125vw, 1.5rem);
+            }
         }
 
         .form-container {
@@ -206,21 +235,29 @@
             padding: clamp(1rem, 0.25rem + 1.563vw, 1.25rem);
             display: flex;
             justify-content: center;
+            height: 100%;
+            min-height: 0;
+            overflow: scroll;
 
             .form {
                 max-width: 400px;
+                min-height: 550px;
+
                 .back {
                     font-size: 0.5rem;
+                    font-size: clamp(0.5rem, -0.25rem + 1.563vw, 0.75rem);
 
                     img {
                         width: 1rem;
+                        width: clamp(1rem, 0.25rem + 1.563vw, 1.25rem);
                         height: 1rem;
+                        height: clamp(1rem, 0.25rem + 1.563vw, 1.25rem);
                     }
                 }
 
                 h1 {
-                    font-size: 1rem;
-                    font-size: clamp(1rem, 0.25rem + 1.563vw, 1.25rem);
+                    font-size: 1.25rem;
+                    font-size: clamp(1rem, -0.5rem + 3.125vw, 1.5rem);
                 }
 
                 .input-container {
@@ -231,6 +268,7 @@
                     .input-group {
                         label {
                             font-size: 1rem;
+                            font-size: clamp(1rem, 0.25rem + 1.563vw, 1.25rem);
                         }
 
                         input {
@@ -338,8 +376,7 @@
                         padding: clamp(0.5rem, -0.041rem + 2.703vw, 0.75rem);
                     }
 
-                    .signup-button,
-                    .continue-button,
+                    .login-button,
                     .guest-button {
                         font-size: 1rem;
                         font-size: clamp(1rem, 0.459rem + 2.703vw, 1.25rem);
