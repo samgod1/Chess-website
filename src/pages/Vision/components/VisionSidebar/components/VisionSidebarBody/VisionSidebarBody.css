@@ -125,40 +125,29 @@
     .vision-sidebar-body {
         padding: 1rem;
 
-        .levels-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(3rem, 1fr));
-            grid-template-rows: repeat(auto-fill, minmax(3rem, 1fr));
-            gap: 0.5rem;
+        .info {
+            .square-container {
+                span {
+                    font-size: 1.25rem;
+                    font-size: clamp(1.25rem, 0.488rem + 3.81vw, 1.5rem);
 
-            .level-btn {
-                font-size: 1rem;
-                border-radius: 1rem;
-            }
-        }
-
-        .hint-container {
-            .player-color {
-                font-size: 1rem;
-
-                .square {
-                    height: 1rem;
-                    width: 1rem;
+                    .square {
+                        width: 1.25rem;
+                        height: 1.25rem;
+                    }
                 }
             }
 
-            .hint-text {
+            .scores-container {
                 font-size: 1rem;
-            }
-        }
+                font-size: clamp(0.75rem, -0.012rem + 3.81vw, 1rem);
 
-        .buttons-container {
-            button {
-                font-size: 1rem;
-
-                img {
-                    width: 1.25rem;
-                    height: 1.25rem;
+                .current,
+                .best {
+                    .score {
+                        font-size: 1.25rem;
+                        font-size: clamp(1rem, -0.524rem + 7.619vw, 1.5rem);
+                    }
                 }
             }
         }
