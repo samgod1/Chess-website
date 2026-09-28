@@ -121,10 +121,13 @@
     }
 }
 
-@media (width <= 1024px) {
+@media (width <= 1024px) and (width > 768) {
     .puzzles-chessboard-container {
         max-height: 400px;
         max-height: clamp(21.875rem, -15.625rem + 78.125vw, 34.375rem);
+        .puzzles-chessboard {
+            border-radius: 0.75rem;
+        }
     }
 }
 

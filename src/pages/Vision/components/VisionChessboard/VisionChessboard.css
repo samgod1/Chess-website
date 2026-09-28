@@ -135,6 +135,10 @@
     .vision-chessboard-container {
         max-height: 400px;
         max-height: clamp(21.875rem, -15.625rem + 78.125vw, 34.375rem);
+
+        .vision-chessboard {
+            border-radius: 0.75rem;
+        }
     }
 }
 

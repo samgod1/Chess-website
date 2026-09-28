@@ -9,6 +9,13 @@
     justify-content: space-evenly;
 }
 
+@media (width <= 1024px) {
+    .vision-page {
+        padding: 1rem 3rem;
+        padding-top: calc(5.5rem + 1rem) /* Height of navbar + Actual padding */;
+    }
+}
+
 @media (width<= 768px) {
     .vision-page {
         padding: 2rem 2rem;

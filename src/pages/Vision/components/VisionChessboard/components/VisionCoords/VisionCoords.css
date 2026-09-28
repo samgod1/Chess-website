@@ -71,9 +71,35 @@
     }
 }
 
+@media (width <= 1024px) {
+    .coords {
+        font-size: 0.75rem;
+        font-size: clamp(0.75rem, 0rem + 1.563vw, 1rem);
+    }
+}
+
+@media (width <= 768px) {
+    .coords {
+        font-size: clamp(0.5rem, -0.12rem + 2.332vw, 1rem);
+    }
+
+    .white,
+    .black {
+        .files {
+            .file {
+                padding-left: 0.25rem;
+            }
+        }
+        .ranks {
+            .rank {
+                padding-top: 0.25rem;
+            }
+        }
+    }
+}
+
 @media (width <= 425px) {
     .coords {
         font-size: 0.5rem;
-        z-index: 50;
     }
 }
