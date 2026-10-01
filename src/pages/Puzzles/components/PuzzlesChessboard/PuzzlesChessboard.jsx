@@ -79,6 +79,7 @@ const PuzzlesChessboard = () => {
     const [isDragging, setIsDragging] = useState(false);
     const [resetBoardComplete, setResetBoardComplete] = useState(false);
     const [colorChanged, setColorChanged] = useState(false);
+    const [firstMove, setFirstMove] = useState(true);
 
     const chessboardContainerRef = useRef(null);
     const pieceRefs = useRef({});
@@ -144,6 +145,7 @@ const PuzzlesChessboard = () => {
         setCaptureSquares([]);
         setSelectedPiece(null);
         setCaptureSquares([]);
+        setFirstMove(true);
         // Change the background chessboardColor of selected piece
         if (selectedPiece) {
             gsap.to(`#${selectedPiece.square}`, {
@@ -334,14 +336,19 @@ const PuzzlesChessboard = () => {
     function playCorrectAnimation(destination) {
         gsap.to(`#${destination}`, {
             backgroundColor: "var(--c-green)",
-            duration: 0.2,
+            duration: 0.1,
             yoyo: true,
             repeat: 1,
             onComplete: () => {
                 setUserMoveIndex((prev) => prev + 2);
-                setTimeout(() => {
+                if (firstMove) {
+                    setTimeout(() => {
+                        moveOpponentPiece();
+                        setFirstMove(false);
+                    }, 200);
+                } else {
                     moveOpponentPiece();
-                }, 200);
+                }
             },
         });
     }
@@ -366,6 +373,7 @@ const PuzzlesChessboard = () => {
         setHintPiece(null);
         setShowHint(false);
         setResetBoardComplete(true);
+        setFirstMove(true);
     }
 
     function createDestSquares({ pieceNotation, square }) {
@@ -935,6 +943,7 @@ const PuzzlesChessboard = () => {
         >
             <DragDropProvider
                 onDragStart={({ operation }) => {
+                    resetSquares();
                     const { source } = operation;
                     setIsDragging(true);
                     const dragPiece = pieces.find((p) => p.id === source.id);
@@ -1107,6 +1116,7 @@ const PuzzlesChessboard = () => {
                                     hasPuzzleStarted={hasPuzzleStarted}
                                     color={color}
                                     key={piece.id}
+                                    turn={turn}
                                 />
                             );
                         })}

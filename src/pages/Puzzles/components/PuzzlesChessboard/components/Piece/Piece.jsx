@@ -13,6 +13,7 @@ const Piece = ({
     isDragging,
     hasPuzzleStarted,
     color,
+    turn,
 }) => {
     let coordOfFile =
         color == "white"
@@ -33,7 +34,7 @@ const Piece = ({
 
     const { ref } = useDraggable({
         id: piece.id,
-        disabled: !hasPuzzleStarted || pieceColor != color,
+        disabled: !hasPuzzleStarted || pieceColor != color || turn != "player",
     });
 
     return (
