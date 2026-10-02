@@ -943,10 +943,14 @@ const PuzzlesChessboard = () => {
         >
             <DragDropProvider
                 onDragStart={({ operation }) => {
-                    resetSquares();
                     const { source } = operation;
                     setIsDragging(true);
                     const dragPiece = pieces.find((p) => p.id === source.id);
+
+                    if (selectedPiece && dragPiece.id != selectedPiece?.id) {
+                        resetSquares();
+                    }
+
                     if (dragPiece) {
                         setSelectedPiece(dragPiece);
                         gsap.to(`#${dragPiece.square}`, {
