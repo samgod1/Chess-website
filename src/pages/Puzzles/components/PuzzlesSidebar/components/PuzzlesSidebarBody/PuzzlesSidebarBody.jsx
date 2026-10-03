@@ -130,21 +130,23 @@ const PuzzlesSidebarBody = () => {
         <div className="puzzles-sidebar-body">
             {sidebarMode === "notStarted" && (
                 <div className="levels-container">
-                    {[...Array(puzzles.length)].map((_, i) => {
-                        return (
-                            <div
-                                className={getLevelClassName(i + 1)}
-                                key={i + 1}
-                                onClick={() => {
-                                    if (i + 1 <= highestLevelReached) {
-                                        setSelectedLevel(i + 1);
-                                    }
-                                }}
-                            >
-                                {i + 1}
-                            </div>
-                        );
-                    })}
+                    <div className="wrapper">
+                        {[...Array(puzzles.length)].map((_, i) => {
+                            return (
+                                <div
+                                    className={getLevelClassName(i + 1)}
+                                    key={i + 1}
+                                    onClick={() => {
+                                        if (i + 1 <= highestLevelReached) {
+                                            setSelectedLevel(i + 1);
+                                        }
+                                    }}
+                                >
+                                    {i + 1}
+                                </div>
+                            );
+                        })}
+                    </div>
                 </div>
             )}
             {sidebarMode !== "notStarted" && (
