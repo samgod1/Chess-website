@@ -5,7 +5,17 @@ import { VisionContext } from "../../../../../../contexts";
 import { Progress, Options, Info } from "./components";
 
 const VisionSidebarBody = () => {
-    const { attempts, hasStarted } = useContext(VisionContext);
+    const { hasStarted } = useContext(VisionContext);
+    const attempts = [
+        { square: "e4", isCorrect: true },
+        { square: "e4", isCorrect: true },
+        { square: "e4", isCorrect: true },
+        { square: "e4", isCorrect: true },
+        { square: "e4", isCorrect: true },
+        { square: "e4", isCorrect: true },
+        { square: "e4", isCorrect: true },
+        { square: "e4", isCorrect: true },
+    ];
 
     return (
         <div className="vision-sidebar-body">
