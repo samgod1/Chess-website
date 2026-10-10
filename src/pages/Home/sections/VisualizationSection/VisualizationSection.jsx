@@ -13,6 +13,21 @@ const VisualizationSection = () => {
             const textSplit = SplitText.create(".visualization-heading", {
                 type: "chars",
             });
+
+            const entranceTl = gsap.timeline({
+                scrollTrigger: {
+                    trigger: ".visualization-section",
+                    start: "-50% top",
+                    end: "top top",
+                    scrub: true,
+                },
+            });
+
+            entranceTl.from(textSplit.chars, {
+                autoAlpha: 0,
+                stagger: 0.05,
+            });
+
             const visualizationTl = gsap.timeline({
                 scrollTrigger: {
                     trigger: ".visualization-section",
@@ -22,10 +37,7 @@ const VisualizationSection = () => {
                     scrub: true,
                 },
             });
-            visualizationTl.from(textSplit.chars, {
-                autoAlpha: 0,
-                stagger: 0.05,
-            });
+
             visualizationTl.to(".visualization-heading", {
                 scale: 0.9,
                 opacity: 0,
