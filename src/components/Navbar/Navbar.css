@@ -135,6 +135,19 @@ nav {
         .hamburger-menu-btn {
             display: block;
         }
+
+        .buttons-container {
+            gap: 0.5rem;
+
+            .back {
+                font-size: 0.75rem;
+            }
+
+            .finish {
+                padding: 0.5rem 1rem;
+                font-size: 1rem;
+            }
+        }
     }
 }
 
@@ -155,6 +168,18 @@ nav {
 
         ul {
             display: none;
+        }
+
+        .buttons-container {
+            gap: 0.5rem;
+
+            .back {
+                font-size: 0.5rem;
+            }
+
+            .finish {
+                font-size: 0.75rem;
+            }
         }
     }
 }
