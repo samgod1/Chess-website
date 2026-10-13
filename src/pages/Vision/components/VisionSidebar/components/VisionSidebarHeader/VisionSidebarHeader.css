@@ -2,6 +2,7 @@
     display: flex;
     gap: 0.25rem;
     gap: clamp(0.25rem, -0.365rem + 0.962vw, 0.5rem);
+    font-size: 1.5rem;
     font-size: clamp(1.5rem, 0.269rem + 1.923vw, 2rem);
     align-items: center;
     background-color: var(--c-primary-light-1);
