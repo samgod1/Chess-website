@@ -24,8 +24,10 @@ const Puzzles = () => {
 
     return (
         <div className="puzzles-page">
-            <PuzzlesChessboard />
-            <PuzzlesSidebar />
+            <div className="page-wrapper">
+                <PuzzlesChessboard />
+                <PuzzlesSidebar />
+            </div>
         </div>
     );
 };

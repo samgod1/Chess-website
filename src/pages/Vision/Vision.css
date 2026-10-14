@@ -1,39 +1,55 @@
 .vision-page {
     background-color: var(--c-primary);
-    height: 100dvh;
-    padding: calc(8rem) /* Height of navbar + padding */ 3.75rem;
-    padding-bottom: 1.5rem;
     display: flex;
-    gap: 2rem;
-    font-family: "Geist";
-    justify-content: space-evenly;
+    justify-content: center;
+
+    .page-wrapper {
+        background-color: var(--c-primary);
+        height: 100dvh;
+        padding: calc(8rem) /* Height of navbar + padding */ 3.75rem;
+        padding-bottom: 1.5rem;
+        display: flex;
+        gap: 2rem;
+        font-family: "Geist";
+        justify-content: space-evenly;
+        max-width: 1600px;
+        width: 100%;
+    }
 }
 
 @media (width <= 1024px) {
     .vision-page {
-        padding: 1rem 3rem;
-        padding-top: calc(5.5rem + 1rem) /* Height of navbar + Actual padding */;
+        .page-wrapper {
+            padding: 1rem 3rem;
+            padding-top: calc(5.5rem + 1rem)
+                /* Height of navbar + Actual padding */;
+        }
     }
 }
 
 @media (width<= 768px) {
     .vision-page {
-        padding: 2rem 2rem;
-        padding-top: calc(5.5rem + 2rem) /* Height of navbar + Actual padding */;
-        flex-direction: column;
-        gap: 1rem;
-        height: 100vh;
-        overflow: scroll;
+        .page-wrapper {
+            padding: 2rem 2rem;
+            padding-top: calc(5.5rem + 2rem)
+                /* Height of navbar + Actual padding */;
+            flex-direction: column;
+            gap: 1rem;
+            height: 100vh;
+            overflow: scroll;
+        }
     }
 }
 
 @media (width <= 425px) {
     .vision-page {
-        padding: 0rem 0.75rem;
-        padding-top: calc(5.5rem + 1rem) /* Height of navbar + padding */;
-        padding-bottom: 1rem;
-        flex-direction: column;
-        height: 100vh;
-        gap: 1rem;
+        .page-wrapper {
+            padding: 0rem 0.75rem;
+            padding-top: calc(5.5rem + 1rem) /* Height of navbar + padding */;
+            padding-bottom: 1rem;
+            flex-direction: column;
+            height: 100vh;
+            gap: 1rem;
+        }
     }
 }

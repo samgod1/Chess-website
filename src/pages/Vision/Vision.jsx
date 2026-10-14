@@ -21,8 +21,10 @@ const Vision = () => {
 
     return (
         <div className="vision-page">
-            <VisionChessboard />
-            <VisionSidebar />
+            <div className="page-wrapper">
+                <VisionChessboard />
+                <VisionSidebar />
+            </div>
         </div>
     );
 };
